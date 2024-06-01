@@ -295,7 +295,7 @@ If everything goes well, you can access the following services at given location
 * Discovery Server - http://localhost:8761
 * Config Server - http://localhost:8888
 * AngularJS frontend (API Gateway) - http://localhost:8080
-* Customers, Vets and Visits Services - random port, check Eureka Dashboard 
+* Customers, Vets and Visits Services - random port, check Eureka Dashboard
 * Tracing Server (Zipkin) - http://localhost:9411/zipkin/ (we use [openzipkin](https://github.com/openzipkin/zipkin/tree/master/zipkin-server))
 * Admin Server (Spring Boot Admin) - http://localhost:9090
 * Grafana Dashboards - http://localhost:3000
@@ -307,9 +307,9 @@ You can tell Config Server to use your local Git repository by using `native` Sp
 
 ## Starting services locally with docker-compose
 
-In order to start entire infrastructure using Docker, you have to build images by executing `./mvnw clean install -P buildDocker` 
+In order to start entire infrastructure using Docker, you have to build images by executing `./mvnw clean install -P buildDocker`
 from a project root. Once images are ready, you can start them with a single command
-`docker-compose up`. Containers startup order is coordinated with [`dockerize` script](https://github.com/jwilder/dockerize). 
+`docker-compose up`. Containers startup order is coordinated with [`dockerize` script](https://github.com/jwilder/dockerize).
 After starting services it takes a while for API Gateway to be in sync with service registry,
 so don't be scared of initial Spring Cloud Gateway timeouts. You can track services availability using Eureka dashboard
 available by default at http://localhost:8761.
@@ -318,7 +318,6 @@ The `master` branch uses an  Alpine linux  with JRE 8 as Docker base. You will f
 
 *NOTE: Under MacOSX or Windows, make sure that the Docker VM has enough memory to run the microservices. The default settings
 are usually not enough and make the `docker-compose up` painfully slow.*
-
 
 ## In case you find a bug/suggested improvement for Spring Petclinic Microservices
 
@@ -349,11 +348,10 @@ You may also manually create the PetClinic database and data by executing the `"
 In the `application.yml` of the [Configuration repository], set the `initialization-mode` to `never`.
 
 If you are running the microservices with Docker, you have to add the `mysql` profile into the (Dockerfile)[docker/Dockerfile]:
-```
 ENV SPRING_PROFILES_ACTIVE docker,mysql
 ```
 In the `mysql section` of the `application.yml` from the [Configuration repository], you have to change 
-the host and port of your MySQL JDBC connection string. 
+the host and port of your MySQL JDBC connection string.
 
 ## Custom metrics monitoring
 
@@ -426,3 +424,6 @@ For pull requests, editor preferences are available in the [editor config](.edit
 
 [Configuration repository]: https://github.com/spring-petclinic/spring-petclinic-microservices-config
 [Spring Boot Actuator Production Ready Metrics]: https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html
+
+# petclinic-application-cloud
+
