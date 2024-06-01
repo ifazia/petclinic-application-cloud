@@ -1,0 +1,15 @@
+name: Customers Service Workflow
+run-name: Customers Service build Triggered by ${{ github.actor }} 
+on: 
+  push:
+    branches:
+      - "main"
+    paths:
+      - "spring-petclinic-customers-service/**"
+jobs:
+  customers-service-build-job:
+    uses: ./.github/workflows/micro-service-build.yml
+    with:
+      service-name: "spring-petclinic-customers-service"
+    secrets: inherit
+    

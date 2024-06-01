@@ -1,0 +1,15 @@
+name: Vets Service Workflow
+run-name: Vets Service build Triggered by ${{ github.actor }} 
+on: 
+  push:
+    branches:
+      - "main"
+    paths:
+      - "spring-petclinic-vets-service/**"
+jobs:
+  vets-service-build-job:
+    uses: ./.github/workflows/micro-service-build.yml
+    with:
+      service-name: "spring-petclinic-vets-service"
+    secrets: inherit
+    

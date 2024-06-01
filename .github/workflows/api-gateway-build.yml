@@ -1,0 +1,15 @@
+name: Api Gateway Workflow
+run-name: Api Gateway build Triggered by ${{ github.actor }} 
+on: 
+  push:
+    branches:
+      - "main"
+    paths:
+      - "spring-petclinic-api-gateway/**"
+jobs:
+  api-gateway-build-job:
+    uses: ./.github/workflows/micro-service-build.yml
+    with:
+      service-name: "spring-petclinic-api-gateway"
+    secrets: inherit
+    

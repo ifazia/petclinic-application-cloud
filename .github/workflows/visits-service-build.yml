@@ -1,0 +1,15 @@
+name: Visits Service Workflow
+run-name: Visits Service build Triggered by ${{ github.actor }} 
+on: 
+  push:
+    branches:
+      - "main"
+    paths:
+      - "spring-petclinic-visits-service/**"
+jobs:
+  visits-service-build-job:
+    uses: ./.github/workflows/micro-service-build.yml
+    with:
+      service-name: "spring-petclinic-visits-service"
+    secrets: inherit
+    
