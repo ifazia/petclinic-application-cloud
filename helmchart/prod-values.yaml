@@ -12,7 +12,7 @@ customersservice:
 
 vetsservice:
   image: iguetoulene/spring-petclinic-vets-service
-  version: 9321663668-4
+  version: 9337702851-2
   replicaCount: 1
 
 visitsservice:
