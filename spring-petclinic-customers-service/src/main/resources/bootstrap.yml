@@ -51,6 +51,16 @@ spring:
         enabled: true
         name: petclinic-config
 management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
   endpoint:
-    restart:
-      enabled: true
+    health:
+      group:
+        readiness:
+          include: readinessProbe
+      probes:
+        enabled: true
