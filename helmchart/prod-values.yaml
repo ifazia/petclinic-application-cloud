@@ -7,12 +7,12 @@ apigateway:
 
 customersservice:
   image: iguetoulene/spring-petclinic-customers-service
-  version: 9339446482-7
+  version: 9339531375-8
   replicaCount: 1
 
 vetsservice:
   image: iguetoulene/spring-petclinic-vets-service
-  version: 9338102378-3
+  version: 9339531373-4
   replicaCount: 1
 
 visitsservice:
@@ -22,6 +22,6 @@ visitsservice:
 
 database:
   host: petclinic-db.czoc8a8mks78.eu-west-3.rds.amazonaws.com:3306
-  name: petclinicdb
+  name: petclinic-db
   username: petclinic
   password: redacted
