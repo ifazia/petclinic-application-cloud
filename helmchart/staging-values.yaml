@@ -21,7 +21,7 @@ visitsservice:
   replicaCount: 1
 
 database:
-  host: petclinic-db.c9mu0cykmyng.eu-west-3.rds.amazonaws.com:3306
+  host: petclinic-db.czoc8a8mks78.eu-west-3.rds.amazonaws.com:3306
   name: petclinicdb
   username: petclinic
   password: redacted
