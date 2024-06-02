@@ -26,7 +26,7 @@ import org.springframework.samples.petclinic.vets.system.VetsProperties;
 @SpringBootApplication
 @EnableConfigurationProperties(VetsProperties.class)
 public class VetsServiceApplication {
-
+// just for test
 	public static void main(String[] args) {
 		SpringApplication.run(VetsServiceApplication.class, args);
 	}
