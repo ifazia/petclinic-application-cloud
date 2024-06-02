@@ -17,7 +17,7 @@ vetsservice:
 
 visitsservice:
   image: iguetoulene/spring-petclinic-visits-service
-  version: 9322681739-8
+  version: 9337717578-2
   replicaCount: 1
 
 database:
