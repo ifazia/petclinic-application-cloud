@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(VisitResource.class)
 @ActiveProfiles("test")
 class VisitResourceTest {
-// just for test
+
     @Autowired
     MockMvc mvc;
 

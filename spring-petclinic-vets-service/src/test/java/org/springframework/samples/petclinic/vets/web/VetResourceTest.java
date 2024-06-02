@@ -32,7 +32,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(VetResource.class)
 @ActiveProfiles("test")
 class VetResourceTest {
-// just for test
+
     @Autowired
     MockMvc mvc;
 

@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 @SpringBootTest
 class ApiGatewayApplicationTests {
-
+// just for test
 	@Test
 	void contextLoads() {
 	}

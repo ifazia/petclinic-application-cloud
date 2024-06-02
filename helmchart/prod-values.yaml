@@ -7,17 +7,17 @@ apigateway:
 
 customersservice:
   image: iguetoulene/spring-petclinic-customers-service
-  version: 9339531375-8
+  version: 9339664015-9
   replicaCount: 1
 
 vetsservice:
   image: iguetoulene/spring-petclinic-vets-service
-  version: 9339531373-4
+  version: 9339664018-5
   replicaCount: 1
 
 visitsservice:
   image: iguetoulene/spring-petclinic-visits-service
-  version: 9338111506-3
+  version: 9339664020-4
   replicaCount: 1
 
 database:
