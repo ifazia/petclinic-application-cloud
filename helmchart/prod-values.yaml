@@ -2,12 +2,12 @@ namespace: production
 
 apigateway:
   image: iguetoulene/spring-petclinic-api-gateway
-  version: 9333295210-3
+  version: 9337591902-4
   replicaCount: 2
 
 customersservice:
   image: iguetoulene/spring-petclinic-customers-service
-  version: 9322681740-9
+  version: 9337673133-2
   replicaCount: 1
 
 vetsservice:
