@@ -30,7 +30,7 @@ spec:
           httpGet:
             port: 8080
             path: /actuator/health/readiness
-          initialDelaySeconds: 90
+          initialDelaySeconds: 15
         lifecycle:
           preStop:
             exec:
