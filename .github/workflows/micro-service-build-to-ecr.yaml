@@ -37,23 +37,23 @@ jobs:
         run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
 
       - name: Building the docker Image for ${{ inputs.service-name }}
+        id: build-image
         run: |
           cd ${{ inputs.service-name }}
           chmod +x ./mvnw
           ./mvnw spring-boot:build-image -Pk8s -DREPOSITORY_PREFIX=${{ secrets.ECR_REGISTRY }}
-        # Récupérer le nom de l'image construite
-          IMAGE_NAME=$(docker images -q ${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }} --format "{{.Repository}}:{{.Tag}}")
-          echo "::set-output name=image-name::$IMAGE_NAME"
-      - name: Tagging built image
-        run: |
+          IMAGE_NAME=${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+      #- name: Tagging built image
+        #run: |
           #docker tag ${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }} ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
-          IMAGE_NAME="${{ steps.build-image.outputs.image-name }}"
-          docker tag $IMAGE_NAME ${{ secrets.ECR_REGISTRY }}/$IMAGE_NAME
+          #IMAGE_NAME="${{ steps.build-image.outputs.image-name }}"
+          #docker tag $IMAGE_NAME ${{ secrets.ECR_REGISTRY }}/$IMAGE_NAME
 
       - name: Pushing ${{ inputs.service-name }} to Amazon ECR
         run: |
-          docker push ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
-
+          #docker push ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
+          docker push ${{ env.IMAGE_NAME }}
   deploy-job:
     uses: ./.github/workflows/deploy-staging.yml
     with:
