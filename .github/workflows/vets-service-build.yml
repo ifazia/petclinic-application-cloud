@@ -8,7 +8,8 @@ on:
       - "spring-petclinic-vets-service/**"
 jobs:
   vets-service-build-job:
-    uses: ./.github/workflows/micro-service-build.yml
+    #uses: ./.github/workflows/micro-service-build.yml
+    uses: ./.github/workflows/micro-service-build-to-ecr.yaml
     with:
       service-name: "spring-petclinic-vets-service"
     secrets: inherit
