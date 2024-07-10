@@ -43,11 +43,18 @@ jobs:
           cd ${{ inputs.service-name }}
           chmod +x ./mvnw
           ./mvnw spring-boot:build-image -Pk8s -DREPOSITORY_PREFIX=${{ secrets.ECR_REGISTRY }}
+           IMAGE_ID=$(docker images -q ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:latest)
+          if [ -z "$IMAGE_ID" ]; then
+            echo "Error: Image not found."
+            exit 1
+          fi
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
           IMAGE_NAME=${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+
       - name: Tagging built image
         run: |
-          docker tag ${{ env.IMAGE_NAME }} ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker tag ${{ env.IMAGE_ID }} ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Pushing ${{ inputs.service-name }} to Amazon ECR
         run: |
