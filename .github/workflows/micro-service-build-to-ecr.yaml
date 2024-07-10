@@ -27,7 +27,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION1 }}
 
       - name: Log in to Amazon ECR
         id: login-ecr
@@ -43,11 +43,11 @@ jobs:
 
       - name: Tagging built image
         run: |
-          docker tag ${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }} ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY_NAME }}:${{ github.run_id }}-${{ github.run_number }}
+          docker tag ${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }} ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
 
       - name: Pushing ${{ inputs.service-name }} to Amazon ECR
         run: |
-          docker push ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY_NAME }}:${{ github.run_id }}-${{ github.run_number }}
+          docker push ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
 
   deploy-job:
     uses: ./.github/workflows/deploy-staging.yml
