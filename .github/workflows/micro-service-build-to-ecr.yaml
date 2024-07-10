@@ -58,7 +58,7 @@ jobs:
 
       - name: Pushing ${{ inputs.service-name }} to Amazon ECR
         run: |
-          docker push --all-tags ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker push ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
   
   deploy-job:
     uses: ./.github/workflows/deploy-staging.yml
