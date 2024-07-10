@@ -24,7 +24,7 @@ jobs:
       - name: Get Latest Image Versions from ECR and Update prod-values.yaml
         run: |
           # Log in to ECR registry
-          aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
 
           # Fetch latest tag for each service
           LATEST_APIGATEWAY_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-api-gateway --query 'sort_by(imageDetails,&imagePushedAt)[-1].imageTags[0]' --output text)
