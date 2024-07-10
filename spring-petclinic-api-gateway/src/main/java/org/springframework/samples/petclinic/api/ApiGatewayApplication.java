@@ -54,7 +54,7 @@ public class ApiGatewayApplication {
     RestTemplate loadBalancedRestTemplate() {
         return new RestTemplate();
     }
-
+//just for test
     @Bean
     @LoadBalanced
     public WebClient.Builder loadBalancedWebClientBuilder() {

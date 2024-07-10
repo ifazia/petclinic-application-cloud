@@ -43,17 +43,15 @@ jobs:
           cd ${{ inputs.service-name }}
           chmod +x ./mvnw
           ./mvnw spring-boot:build-image -Pk8s -DREPOSITORY_PREFIX=${{ secrets.ECR_REGISTRY }}
-          IMAGE_NAME=${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
+          IMAGE_NAME=${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
-      #- name: Tagging built image
-        #run: |
-          #docker tag ${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }} ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
-          #IMAGE_NAME="${{ steps.build-image.outputs.image-name }}"
-          #docker tag $IMAGE_NAME ${{ secrets.ECR_REGISTRY }}/$IMAGE_NAME
+      - name: Tagging built image
+        run: |
+          docker tag ${{ env.IMAGE_NAME }} ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Pushing ${{ inputs.service-name }} to Amazon ECR
         run: |
-          docker push ${{ env.IMAGE_NAME }}
+          docker push --all-tags ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
   
   deploy-job:
     uses: ./.github/workflows/deploy-staging.yml
