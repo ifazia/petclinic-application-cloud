@@ -1,4 +1,4 @@
-name: Service Build Workflow
+name: Service Build Workflow to ECR
 run-name: Starting to build ${{ inputs.service-name }}
 on:
   workflow_call:
