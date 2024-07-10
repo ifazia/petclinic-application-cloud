@@ -44,7 +44,7 @@ import io.github.resilience4j.timelimiter.TimeLimiterConfig;
  */
 @SpringBootApplication
 public class ApiGatewayApplication {
-// just for tests
+
     public static void main(String[] args) {
         SpringApplication.run(ApiGatewayApplication.class, args);
     }

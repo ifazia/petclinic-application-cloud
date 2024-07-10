@@ -34,7 +34,8 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         with:
           region: us-east-1  
-        run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
 
       - name: Building the docker Image for ${{ inputs.service-name }}
         id: build-image
@@ -52,12 +53,12 @@ jobs:
 
       - name: Pushing ${{ inputs.service-name }} to Amazon ECR
         run: |
-          #docker push ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
           docker push ${{ env.IMAGE_NAME }}
-  deploy-job:
-    uses: ./.github/workflows/deploy-staging.yml
-    with:
-      service-name: ${{ inputs.service-name }}
-      service-version: ${{ github.run_id }}-${{ github.run_number }}
-    secrets: inherit
-    needs: [build-and-publish-service]
+  
+    deploy-job:
+      uses: ./.github/workflows/deploy-staging.yml
+      with:
+        service-name: ${{ inputs.service-name }}
+        service-version: ${{ github.run_id }}-${{ github.run_number }}
+      secrets: inherit
+      needs: [build-and-publish-service]
