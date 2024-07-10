@@ -33,7 +33,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
         with:
-          region: us-east-1  
+          region: ${{ secrets.AWS_REGION_1 }} 
 
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
 
