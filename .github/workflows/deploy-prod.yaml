@@ -1,0 +1,51 @@
+name: Production Deploy Workflow
+
+on:
+  push:
+    branches:
+      - main
+  paths:
+    - "helmchart/prod-values.yaml"
+
+jobs:
+  deploy-the-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-3
+
+      - name: Get Latest Image Versions from ECR and Update prod-values.yaml
+        run: |
+          # Log in to ECR registry
+          aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+
+          # Fetch latest tag for each service
+          LATEST_APIGATEWAY_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-api-gateway --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text)
+          LATEST_CUSTOMERSSERVICE_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-customers-service --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text)
+          LATEST_VETSSERVICE_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-vets-service --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text)
+          LATEST_VISITSSERVICE_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-visits-service --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text)
+
+          # Replace 'latest' with the actual version from ECR for each service in prod-values.yaml
+          sed -i "s|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-api-gateway:latest|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-api-gateway:${LATEST_APIGATEWAY_VERSION}}|" helmchart/prod-values.yaml
+          sed -i "s|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-customers-service:latest|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-customers-service:${LATEST_CUSTOMERSSERVICE_VERSION}}|" helmchart/prod-values.yaml
+          sed -i "s|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-vets-service:latest|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-vets-service:${LATEST_VETSSERVICE_VERSION}}|" helmchart/prod-values.yaml
+          sed -i "s|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-visits-service:latest|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-visits-service:${LATEST_VISITSSERVICE_VERSION}}|" helmchart/prod-values.yaml
+
+      - name: Deploy Helm to Production
+        uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-3
+          cluster-name: petclinic-eks
+          config-files: helmchart/prod-values.yaml
+          chart-path: helmchart/
+          values: database.password="${{ secrets.DB_PASSWORD_BASE64 }}"
+          name: petclinic-production

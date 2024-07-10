@@ -1,0 +1,58 @@
+name: Service Build Workflow
+run-name: Starting to build ${{ inputs.service-name }}
+on:
+  workflow_call:
+    inputs:
+      service-name:
+        required: true
+        type: string
+jobs:
+  build-and-publish-service:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setting up Java for the Runner
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+          cache: maven
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+
+      - name: Building the docker Image for ${{ inputs.service-name }}
+        run: |
+          cd ${{ inputs.service-name }}
+          chmod +x ./mvnw
+          ./mvnw spring-boot:build-image -Pk8s -DREPOSITORY_PREFIX=${{ secrets.ECR_REGISTRY }}
+
+      - name: Tagging built image
+        run: |
+          docker tag ${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }} ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY_NAME }}:${{ github.run_id }}-${{ github.run_number }}
+
+      - name: Pushing ${{ inputs.service-name }} to Amazon ECR
+        run: |
+          docker push ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY_NAME }}:${{ github.run_id }}-${{ github.run_number }}
+
+  deploy-job:
+    uses: ./.github/workflows/deploy-staging.yml
+    with:
+      service-name: ${{ inputs.service-name }}
+      service-version: ${{ github.run_id }}-${{ github.run_number }}
+    secrets: inherit
+    needs: [build-and-publish-service]
