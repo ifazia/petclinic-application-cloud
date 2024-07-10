@@ -55,10 +55,10 @@ jobs:
         run: |
           docker push ${{ env.IMAGE_NAME }}
   
-    deploy-job:
-      uses: ./.github/workflows/deploy-staging.yml
-      with:
-        service-name: ${{ inputs.service-name }}
-        service-version: ${{ github.run_id }}-${{ github.run_number }}
-      secrets: inherit
-      needs: [build-and-publish-service]
+  deploy-job:
+    uses: ./.github/workflows/deploy-staging.yml
+    with:
+      service-name: ${{ inputs.service-name }}
+      service-version: ${{ github.run_id }}-${{ github.run_number }}
+    secrets: inherit
+    needs: [build-and-publish-service]
