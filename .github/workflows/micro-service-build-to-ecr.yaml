@@ -34,7 +34,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         with:
           region: us-east-1  
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+        run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
 
       - name: Building the docker Image for ${{ inputs.service-name }}
         run: |
@@ -49,7 +49,7 @@ jobs:
           #docker tag ${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }} ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
           IMAGE_NAME="${{ steps.build-image.outputs.image-name }}"
           docker tag $IMAGE_NAME ${{ secrets.ECR_REGISTRY }}/$IMAGE_NAME
-          
+
       - name: Pushing ${{ inputs.service-name }} to Amazon ECR
         run: |
           docker push ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
