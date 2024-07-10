@@ -1,12 +1,12 @@
 namespace: production
 
 apigateway:
-  image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
+  image: __ECR_REGISTRY__/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
   version: __APIGATEWAY_VERSION__ #9339762518-5
   replicaCount: 2
 
 customersservice:
-  image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
+  image: __ECR_REGISTRY__/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
   version: __CUSTOMERSSERVICE_VERSION__ #9339664015-9
   replicaCount: 1
   database:
@@ -16,7 +16,7 @@ customersservice:
     password: redacted
 
 vetsservice:
-  image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
+  image: __ECR_REGISTRY__/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
   version: __VETSSERVICE_VERSION__ #9339762516-6
   replicaCount: 1
   database:
@@ -26,7 +26,7 @@ vetsservice:
     password: redacted
 
 visitsservice:
-  image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
+  image: __ECR_REGISTRY__/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
   version: __VISITSSERVICE_VERSION__ #9339762528-5
   replicaCount: 1
   database:

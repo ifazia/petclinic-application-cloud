@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-  paths:
-    - "helmchart/prod-values.yaml"
+    paths:
+      - "helmchart/prod-values.yaml"
 
 jobs:
   deploy-the-service:
@@ -27,16 +27,17 @@ jobs:
           aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
 
           # Fetch latest tag for each service
-          LATEST_APIGATEWAY_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-api-gateway --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text)
-          LATEST_CUSTOMERSSERVICE_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-customers-service --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text)
-          LATEST_VETSSERVICE_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-vets-service --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text)
-          LATEST_VISITSSERVICE_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-visits-service --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text)
+          LATEST_APIGATEWAY_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-api-gateway --query 'sort_by(imageDetails,&imagePushedAt)[-1].imageTags[0]' --output text)
+          LATEST_CUSTOMERSSERVICE_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-customers-service --query 'sort_by(imageDetails,&imagePushedAt)[-1].imageTags[0]' --output text)
+          LATEST_VETSSERVICE_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-vets-service --query 'sort_by(imageDetails,&imagePushedAt)[-1].imageTags[0]' --output text)
+          LATEST_VISITSSERVICE_VERSION=$(aws ecr describe-images --repository-name spring-petclinic-visits-service --query 'sort_by(imageDetails,&imagePushedAt)[-1].imageTags[0]' --output text)
 
-          # Replace 'latest' with the actual version from ECR for each service in prod-values.yaml
-          sed -i "s|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-api-gateway:latest|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-api-gateway:${LATEST_APIGATEWAY_VERSION}}|" helmchart/prod-values.yaml
-          sed -i "s|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-customers-service:latest|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-customers-service:${LATEST_CUSTOMERSSERVICE_VERSION}}|" helmchart/prod-values.yaml
-          sed -i "s|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-vets-service:latest|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-vets-service:${LATEST_VETSSERVICE_VERSION}}|" helmchart/prod-values.yaml
-          sed -i "s|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-visits-service:latest|image: ${{ secrets.ECR_REGISTRY }}/spring-petclinic-visits-service:${LATEST_VISITSSERVICE_VERSION}}|" helmchart/prod-values.yaml
+          # Replace placeholders with the actual versions from ECR in prod-values.yaml
+          sed -i "s|__ECR_REGISTRY__|${{ secrets.ECR_REGISTRY }}|g" helmchart/prod-values.yaml
+          sed -i "s|__APIGATEWAY_VERSION__|${LATEST_APIGATEWAY_VERSION}|g" helmchart/prod-values.yaml
+          sed -i "s|__CUSTOMERSSERVICE_VERSION__|${LATEST_CUSTOMERSSERVICE_VERSION}|g" helmchart/prod-values.yaml
+          sed -i "s|__VETSSERVICE_VERSION__|${LATEST_VETSSERVICE_VERSION}|g" helmchart/prod-values.yaml
+          sed -i "s|__VISITSSERVICE_VERSION__|${LATEST_VISITSSERVICE_VERSION}|g" helmchart/prod-values.yaml
 
       - name: Deploy Helm to Production
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
