@@ -20,6 +20,9 @@ management:
     export:
       wavefront:
         apiToken: ""
+  endpoint:
+    restart:
+      enabled: true
 ---
 spring:
   config:
