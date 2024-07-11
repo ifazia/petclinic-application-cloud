@@ -33,6 +33,8 @@ spring:
       config:
         enabled: true
         name: petclinic-config
+      secrets:
+        enabled: true
 management:
   endpoint:
     restart:
