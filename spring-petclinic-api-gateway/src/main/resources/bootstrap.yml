@@ -28,7 +28,7 @@ spring:
       on-profile: kubernetes
   cloud:
     config:
-      enabled: false
+      enabled: true
     kubernetes:
       reload:
         strategy: restart-context
