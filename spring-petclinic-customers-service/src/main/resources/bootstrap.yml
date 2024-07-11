@@ -1,53 +1,40 @@
 spring:
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: http://config-server:8888
   application:
     name: customers-service
 ---
 spring:
-  config:
-    activate:
-      on-profile: docker
+  profiles: docker
   cloud:
     config:
+      enabled: true
       uri: http://config-server:8888
 ---
 spring:
-  config:
-    activate:
-      on-profile: kubernetes
+  profiles: kubernetes
   cloud:
     config:
       enabled: false
     kubernetes:
+      enabled: true
       reload:
-        strategy: restart-context
+        strategy: restart_context
         enabled: true
       config:
         enabled: true
         name: petclinic-config
-      secrets:
-        enabled: true
-management:
-  endpoint:
-    restart:
-      enabled: true
-  metrics:
-    export:
-      wavefront:
-        enabled: false
 ---
 spring:
-  config:
-    activate:
-      on-profile: tas4k8s
+  profiles: tas4k8s
   cloud:
     config:
       enabled: false
     kubernetes:
+      enabled: true
       reload:
-        strategy: restart-context
+        strategy: restart_context
         enabled: true
       config:
         enabled: true
