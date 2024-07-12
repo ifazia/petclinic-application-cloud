@@ -2,7 +2,7 @@ namespace: staging
 
 apigateway:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
-  version: latest
+  version: aws ecr describe-images --repository-name public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway --query "reverse(sort_by(imageDetails,& imagePushedAt))[0].imageTags[0]")
   replicaCount: 2
 
 customersservice:
