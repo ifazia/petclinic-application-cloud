@@ -1,0 +1,15 @@
+name: Admin server Workflow
+run-name: Admin server build Triggered by ${{ github.actor }} 
+on: 
+  push:
+    branches:
+      - "main"
+    paths:
+      - "spring-petclinic-admin-server/**"
+jobs:
+  api-gateway-build-job:
+    uses: ./.github/workflows/micro-service-build-to-ecr.yml
+    with:
+      service-name: "spring-petclinic-admin-server"
+    secrets: inherit
+    

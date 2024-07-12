@@ -1,0 +1,15 @@
+name: Discovery server Workflow
+run-name: Discovery server build Triggered by ${{ github.actor }} 
+on: 
+  push:
+    branches:
+      - "main"
+    paths:
+      - "spring-petclinic-discovery-server/**"
+jobs:
+  api-gateway-build-job:
+    uses: ./.github/workflows/micro-service-build-to-ecr.yml
+    with:
+      service-name: "spring-petclinic-discovery-server"
+    secrets: inherit
+    

@@ -1,0 +1,15 @@
+name: Config server Workflow
+run-name: Config server build Triggered by ${{ github.actor }} 
+on: 
+  push:
+    branches:
+      - "main"
+    paths:
+      - "spring-petclinic-config-server/**"
+jobs:
+  api-gateway-build-job:
+    uses: ./.github/workflows/micro-service-build-to-ecr.yml
+    with:
+      service-name: "spring-petclinic-config-server"
+    secrets: inherit
+    
