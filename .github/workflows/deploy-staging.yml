@@ -33,6 +33,15 @@ jobs:
             spring-petclinic-visits-service)
               echo "SERVICE_KEY=visitsservice" >> $GITHUB_ENV
               ;;
+            spring-petclinic-admin-server)
+              echo "SERVICE_KEY=adminserver" >> $GITHUB_ENV
+              ;;
+            spring-petclinic-config-server)
+              echo "SERVICE_KEY=configserver" >> $GITHUB_ENV
+              ;;
+            spring-petclinic-discovery-server)
+              echo "SERVICE_KEY=discoveryserver" >> $GITHUB_ENV
+              ;;
           esac
 
       - name: Set outputs
