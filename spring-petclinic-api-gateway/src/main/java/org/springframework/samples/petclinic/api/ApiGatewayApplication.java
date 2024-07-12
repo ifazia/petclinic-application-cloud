@@ -60,7 +60,7 @@ public class ApiGatewayApplication {
     public WebClient.Builder loadBalancedWebClientBuilder() {
         return WebClient.builder();
     }
-
+//just for test
     @Value("classpath:/static/index.html")
     private Resource indexHtml;
 
