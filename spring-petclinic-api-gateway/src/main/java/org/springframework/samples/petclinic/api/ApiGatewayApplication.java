@@ -63,7 +63,7 @@ public class ApiGatewayApplication {
 
     @Value("classpath:/static/index.html")
     private Resource indexHtml;
-
+//just for tests
     /**
      * workaround solution for forwarding to index.html
      * @see <a href="https://github.com/spring-projects/spring-boot/issues/9785">#9785</a>
@@ -75,7 +75,7 @@ public class ApiGatewayApplication {
                 request -> ServerResponse.ok().contentType(MediaType.TEXT_HTML).bodyValue(indexHtml));
         return router;
     }
-//just for tests
+
     /**
      * Default Resilience4j circuit breaker configuration
      */
