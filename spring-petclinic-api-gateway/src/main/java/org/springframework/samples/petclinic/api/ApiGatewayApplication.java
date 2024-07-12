@@ -75,7 +75,7 @@ public class ApiGatewayApplication {
                 request -> ServerResponse.ok().contentType(MediaType.TEXT_HTML).bodyValue(indexHtml));
         return router;
     }
-
+//just for tests
     /**
      * Default Resilience4j circuit breaker configuration
      */
