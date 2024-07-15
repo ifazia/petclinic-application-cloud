@@ -68,7 +68,7 @@ jobs:
           ./update-images.sh
 
       - name: List files to debug
-        run: ls ./helmchart
+        run: ls -R ./helmchart
 
       - name: Check for updated staging-values.yaml
         run: |
@@ -81,8 +81,8 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add staging-values.yaml
-          git commit -m "Update image versions in staging-values.yaml"
+          git add helmchart/staging-values.yaml
+          git commit -m "Update image versions in helmchart/staging-values.yaml"
           git push
 
   deploy-job:
