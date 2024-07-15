@@ -62,7 +62,11 @@ jobs:
         run: |
           docker push ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
 
-     
+      - name: Update Image Versions
+        run: |
+          chmod +x ./update-values.sh
+          ./update-values.sh ${{ inputs.service-name }} ${{ github.run_id }}-${{ github.run_number }}
+
   deploy-job:
     uses: ./.github/workflows/deploy-staging.yml
     with:

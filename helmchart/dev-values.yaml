@@ -1,4 +1,4 @@
-namespace: staging
+namespace: dev
 
 apigateway:
   image: __ECR_REGISTRY__/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
