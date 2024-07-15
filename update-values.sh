@@ -6,7 +6,7 @@ get_latest_image_tag() {
   aws ecr-public describe-images --repository-name "$repository_name" --query "reverse(sort_by(imageDetails, &imagePushedAt))[0].imageTags[0]" --output text
 }
 
-# Repositories and services with their ECR paths
+# Repositories and services
 declare -A services=(
   ["apigateway"]="public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway"
   ["customersservice"]="public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service"
@@ -22,8 +22,8 @@ for service in "${!services[@]}"; do
   repository="${services[$service]}"
   latest_tag=$(get_latest_image_tag "$repository")
   if [ "$latest_tag" != "None" ]; then
-    echo "Updating $repository to tag $latest_tag"
-    sed -i "s|image: ${repository}.*|image: ${repository}:${latest_tag}|g" helmchart/staging-values.yaml
+    echo "Updating $service in staging-values.yaml to tag $latest_tag"
+    yq e -i ".${service}.version = \"${latest_tag}\"" helmchart/staging-values.yaml
   else
     echo "No tag found for $repository"
   fi
