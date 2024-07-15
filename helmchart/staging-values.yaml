@@ -2,12 +2,12 @@ namespace: staging
 
 apigateway:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
-  version: :latest
+  version: aws ecr-public describe-images --repository-name "$repository_name" --query "reverse(sort_by(imageDetails, &imagePushedAt))[0].imageTags[0]")
   replicaCount: 2
 
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
-  version: :latest
+  version: aws ecr-public describe-images --repository-name "$repository_name" --query "reverse(sort_by(imageDetails, &imagePushedAt))[0].imageTags[0]")
   replicaCount: 1
   database:
     host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
@@ -17,7 +17,7 @@ customersservice:
 
 vetsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
-  version: :latest
+  version: aws ecr-public describe-images --repository-name "$repository_name" --query "reverse(sort_by(imageDetails, &imagePushedAt))[0].imageTags[0]")
   replicaCount: 1
   database:
     host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
@@ -27,7 +27,7 @@ vetsservice:
 
 visitsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
-  version: :latest
+  version: aws ecr-public describe-images --repository-name "$repository_name" --query "reverse(sort_by(imageDetails, &imagePushedAt))[0].imageTags[0]")
   replicaCount: 1
   database:
     host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
