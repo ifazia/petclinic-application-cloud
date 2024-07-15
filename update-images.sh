@@ -17,9 +17,6 @@ declare -A services=(
 # Ensure the script runs from the correct directory
 cd "$(dirname "$0")"
 
-# Backup the original file
-cp helmchart/staging-values.yaml helmchart/staging-values.yaml.bak
-
 # Iterate over services and update staging-values.yaml
 for service in "${!services[@]}"; do
   repository="${services[$service]}"
