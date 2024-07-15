@@ -50,8 +50,8 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add helmchart/staging-values.yaml
-          git commit -m "Update image tags in staging-values.yaml"
-          git push origin main
+          git commit -m "Update image tags in staging-values.yaml" || echo "No changes to commit"
+          git push origin main || echo "Nothing to push"
 
       - name: Deploy to Kubernetes
         run: |
