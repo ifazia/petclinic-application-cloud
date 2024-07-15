@@ -66,6 +66,13 @@ jobs:
         run: |
           chmod +x ./update-images.sh
           ./update-images.sh
+          
+      - name: Check for updated staging-values.yaml
+        run: |
+          if [ ! -f "staging-values.yaml" ]; then
+            echo "Error: staging-values.yaml not found."
+            exit 1
+          fi
 
       - name: Commit and push updated staging-values.yaml
         run: |
