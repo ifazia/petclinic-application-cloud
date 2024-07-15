@@ -14,6 +14,9 @@ declare -A services=(
   ["visitsservice"]="public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service"
 )
 
+# Ensure the script runs from the correct directory
+cd "$(dirname "$0")"
+
 # Backup the original file
 cp helmchart/staging-values.yaml helmchart/staging-values.yaml.bak
 
