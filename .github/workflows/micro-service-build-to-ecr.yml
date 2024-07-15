@@ -1,16 +1,11 @@
-name: Service Build Workflow to ECR
-run-name: Starting to build ${{ inputs.service-name }}
-on:
-  workflow_call:
-    inputs:
-      service-name:
-        required: true
-        type: string
+name: Micro Service Build and Deploy to ECR
+
+on: [workflow_call]
 
 jobs:
-  jobs:
   build-and-publish-service:
     runs-on: ubuntu-22.04
+
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4

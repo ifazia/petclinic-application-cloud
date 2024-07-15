@@ -1,16 +1,16 @@
-name: Vets Service Workflow
-run-name: Vets Service build Triggered by ${{ github.actor }} 
-on: 
+name: Build and Deploy Vets Service
+
+on:
   push:
     branches:
-      - "main"
-    paths:
-      - "spring-petclinic-vets-service/**"
+      - main
+
 jobs:
-  vets-service-build-job:
-    #uses: ./.github/workflows/micro-service-build.yml
+  build-and-deploy:
     uses: ./.github/workflows/micro-service-build-to-ecr.yml
     with:
-      service-name: "spring-petclinic-vets-service"
-    secrets: inherit
-    
+      service-name: 'spring-petclinic-vets-service'
+      aws-region: ${{ secrets.AWS_REGION_1 }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
