@@ -76,7 +76,12 @@ jobs:
             echo "Error: staging-values.yaml not found."
             exit 1
           fi
-
+      - name: Display git status
+        run: git status
+  
+      - name: Display git diff for staging-values.yaml
+        run: git diff helmchart/staging-values.yaml
+  
       - name: Commit and push updated staging-values.yaml
         run: |
           git config --global user.name "github-actions"
