@@ -15,7 +15,7 @@ declare -A services=(
 )
 
 # Backup the original file
-cp staging-values.yaml staging-values.yaml.bak
+cp helmchart/staging-values.yaml helmchart/staging-values.yaml.bak
 
 # Iterate over services and update staging-values.yaml
 for service in "${!services[@]}"; do
@@ -23,7 +23,7 @@ for service in "${!services[@]}"; do
   latest_tag=$(get_latest_image_tag "$repository")
   if [ "$latest_tag" != "None" ]; then
     echo "Updating $repository to tag $latest_tag"
-    sed -i "s|\(${repository}:\).*|\1${latest_tag}|g" staging-values.yaml
+    sed -i "s|\(${repository}:\).*|\1${latest_tag}|g" helmchart/staging-values.yaml
   else
     echo "No tag found for $repository"
   fi
