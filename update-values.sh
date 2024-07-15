@@ -9,7 +9,8 @@ update_service_version() {
   echo "Updating $service_name in $values_file to tag $image_tag"
 
   # Utilisation de sed pour remplacer le tag de version dans le fichier YAML
-  sed -i "s|^\(\s*${service_name}:\s*\n\s*image:\s*public.ecr.aws/i7s8l3z4/${service_name}\s*\n\s*version:\s*\).*|\1${image_tag}|" "$values_file"
+  sed -i "s|^\(\s*${service_name}:\s*\n\s*image:\s*public\.ecr\.aws/i7s8l3z4/${service_name}\s*\n\s*version:\s*\).*|\1${image_tag}|" "$values_file"
+
 }
 
 # Liste des microservices à mettre à jour
