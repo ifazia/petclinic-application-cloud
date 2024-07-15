@@ -1,30 +1,35 @@
 #!/bin/bash
 
-# Function to get the latest image tag from ECR
-get_latest_image_tag() {
-  local repository_name=$1
-  aws ecr-public describe-images --repository-name "$repository_name" --query "reverse(sort_by(imageDetails, &imagePushedAt))[0].imageTags[0]" --output text
+# Fonction pour mettre à jour l'image et le tag dans staging-values.yaml
+update_service_image_tag() {
+  local service_name="$1"
+  local values_file="helmchart/staging-values.yaml"
+
+  # Récupérer le tag d'image pour le service spécifié
+  local image_tag=$(aws ecr-public describe-images --repository-name "$service_name" --query "reverse(sort_by(imageDetails, &imagePushedAt))[0].imageTags[0]" --output text)
+
+  if [ -z "$image_tag" ]; then
+    echo "Error: Failed to retrieve image tag for $service_name from ECR Public."
+    exit 1
+  fi
+
+  echo "Updating $service_name in $values_file to tag $image_tag"
+
+  # Utilisation de sed pour remplacer l'image et le tag dans le fichier YAML
+  sed -i "s|^\(\s*${service_name}:\s*\n\s*image: public.ecr.aws/i7s8l3z4/$service_name\s*\n\s*version:\s*\).*|\1$image_tag|" "$values_file"
 }
 
-# Repositories and services
-declare -A services=(
-  ["apigateway"]="public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway"
-  ["customersservice"]="public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service"
-  ["vetsservice"]="public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service"
-  ["visitsservice"]="public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service"
+# Liste des microservices à mettre à jour
+services=(
+  "spring-petclinic-api-gateway"
+  "spring-petclinic-customers-service"
+  "spring-petclinic-vets-service"
+  "spring-petclinic-visits-service"
 )
 
-# Ensure the script runs from the correct directory
-cd "$(dirname "$0")"
-
-# Iterate over services and update staging-values.yaml
-for service in "${!services[@]}"; do
-  repository="${services[$service]}"
-  latest_tag=$(get_latest_image_tag "$repository")
-  if [ "$latest_tag" != "None" ]; then
-    echo "Updating $service in staging-values.yaml to tag $latest_tag"
-    yq e -i ".${service}.version = \"${latest_tag}\"" helmchart/staging-values.yaml
-  else
-    echo "No tag found for $repository"
-  fi
+# Parcourir chaque microservice et mettre à jour le tag d'image dans staging-values.yaml
+for service in "${services[@]}"; do
+  update_service_image_tag "$service"
 done
+
+echo "Values updated successfully."
