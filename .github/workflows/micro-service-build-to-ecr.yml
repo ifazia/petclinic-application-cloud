@@ -1,6 +1,11 @@
-name: Micro Service Build and Deploy to ECR
+name: Service Build Workflow to ECR
 run-name: Starting to build ${{ inputs.service-name }}
-on: [workflow_call]
+on:
+  workflow_call:
+    inputs:
+      service-name:
+        required: true
+        type: string
 
 jobs:
   build-and-publish-service:
