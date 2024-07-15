@@ -66,10 +66,13 @@ jobs:
         run: |
           chmod +x ./update-images.sh
           ./update-images.sh
-          
+
+      - name: List files to debug
+        run: ls ./helmchart
+
       - name: Check for updated staging-values.yaml
         run: |
-          if [ ! -f "staging-values.yaml" ]; then
+          if [ ! -f "helmchart/staging-values.yaml" ]; then
             echo "Error: staging-values.yaml not found."
             exit 1
           fi
