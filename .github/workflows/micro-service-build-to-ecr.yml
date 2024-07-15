@@ -1,5 +1,5 @@
 name: Micro Service Build and Deploy to ECR
-
+run-name: Starting to build ${{ inputs.service-name }}
 on: [workflow_call]
 
 jobs:
