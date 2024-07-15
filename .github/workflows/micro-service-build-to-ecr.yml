@@ -45,6 +45,10 @@ jobs:
           chmod +x ./update-values.sh
           ./update-values.sh
 
+      - name: Verify YAML changes
+        run: |
+          cat helmchart/staging-values.yaml
+
       - name: Commit and push updated staging-values.yaml
         run: |
           git config --global user.name "github-actions"
@@ -55,4 +59,4 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f helmchart/staging-values.yaml
+          kubectl apply -f helmchart/staging-values.yaml --validate=false

@@ -10,8 +10,6 @@ update_service_version() {
 
   # Utilisation de sed pour remplacer le tag de version dans le fichier YAML
   sed -i "s|^\(\s*${service_name}:\s*\n\s*image:\s*public.ecr.aws/i7s8l3z4/${service_name}\s*\n\s*version:\s*\).*|\1${image_tag}|" "$values_file"
-  echo "Updated $values_file:"
-  cat "$values_file"
 }
 
 # Liste des microservices à mettre à jour
@@ -35,3 +33,4 @@ for service in "${services[@]}"; do
 done
 
 echo "Values updated successfully."
+cat helmchart/staging-values.yaml
