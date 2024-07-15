@@ -57,6 +57,10 @@ jobs:
           git commit -m "Update image tags in staging-values.yaml" || echo "No changes to commit"
           git push origin main || echo "Nothing to push"
 
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f helmchart/staging-values.yaml --validate=false
+  deploy-job:
+    uses: ./.github/workflows/deploy-staging.yml
+    with:
+      service-name: ${{ inputs.service-name }}
+      service-version: ${{ github.run_id }}-${{ github.run_number }}
+    secrets: inherit
+    needs: [build-and-publish-service]
