@@ -42,13 +42,19 @@ jobs:
             spring-petclinic-discovery-server)
               echo "SERVICE_KEY=discoveryserver" >> $GITHUB_ENV
               ;;
+            *)
+              echo "Error: Unknown service name ${{ inputs.service-name }}"
+              exit 1
+              ;;
           esac
 
       - name: Set outputs
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-        ## check https://github.com/marketplace/actions/deploy-helm-chart-to-aws-eks-cluster
+      - name: Check for content staging-values.yaml
+        run: cat helmchart/staging-values.yaml
+
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
         with:
@@ -58,5 +64,7 @@ jobs:
           cluster-name: petclinic-eks
           config-files: helmchart/staging-values.yaml
           chart-path: helmchart/
-          values: database.password="${{ secrets.DB_PASSWORD_BASE64 }}",${{ env.SERVICE_KEY }}.version=${{ inputs.service-version }}
+          values: |
+            database.password="${{ secrets.DB_PASSWORD_BASE64 }}"
+            ${{ env.SERVICE_KEY }}.version=${{ inputs.service-version }}
           name: petclinic-staging
