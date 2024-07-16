@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Vérifiez si yq est installé, sinon installez-le
+if ! command -v yq &> /dev/null; then
+    echo "yq could not be found, installing..."
+    wget https://github.com/mikefarah/yq/releases/download/v4.16.1/yq_linux_amd64 -O /usr/bin/yq
+    chmod +x /usr/bin/yq
+fi
+
 # Fonction pour mettre à jour le tag de version dans staging-values.yaml
 update_service_version() {
   local service_name="$1"
@@ -29,8 +36,8 @@ update_service_version() {
 
   echo "Updating $service_key in $values_file to tag $image_tag"
 
-  # Utilisation de sed pour remplacer le tag de version dans le fichier YAML
-  sed -i "s|\(\s*${service_key}:\s*\n\s*image:\s*public\.ecr\.aws/i7s8l3z4/${service_name}\s*\n\s*version:\s*\).*|\1${image_tag}|" "$values_file"
+  # Utilisation de yq pour remplacer le tag de version dans le fichier YAML
+  yq eval ".${service_key}.version = \"${image_tag}\"" -i "$values_file"
 }
 
 # Liste des microservices à mettre à jour
