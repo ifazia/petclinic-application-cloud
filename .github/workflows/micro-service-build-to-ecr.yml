@@ -64,8 +64,8 @@ jobs:
 
       - name: Update Image Versions
         run: |
-          chmod +x ./update-images.sh
-          ./update-images.sh
+          chmod +x ./update-values.sh
+          ./update-values.sh
 
       - name: Check for updated staging-values.yaml
         run: |
