@@ -5,11 +5,32 @@ update_service_version() {
   local service_name="$1"
   local image_tag="$2"
   local values_file="helmchart/staging-values.yaml"
+  local service_key
 
-  echo "Updating $service_name in $values_file to tag $image_tag"
+  # Map service name to the key used in the YAML file
+  case "$service_name" in
+    spring-petclinic-api-gateway)
+      service_key="apigateway"
+      ;;
+    spring-petclinic-customers-service)
+      service_key="customersservice"
+      ;;
+    spring-petclinic-vets-service)
+      service_key="vetsservice"
+      ;;
+    spring-petclinic-visits-service)
+      service_key="visitsservice"
+      ;;
+    *)
+      echo "Error: Unknown service name $service_name"
+      exit 1
+      ;;
+  esac
+
+  echo "Updating $service_key in $values_file to tag $image_tag"
 
   # Utilisation de sed pour remplacer le tag de version dans le fichier YAML
-  sed -i "s|^\(\s*${service_name}:\s*\n\s*image:\s*public\.ecr\.aws/i7s8l3z4/${service_name}\s*\n\s*version:\s*\).*|\1${image_tag}|" "$values_file"
+  sed -i "s|\(\s*${service_key}:\s*\n\s*image:\s*public\.ecr\.aws/i7s8l3z4/${service_name}\s*\n\s*version:\s*\).*|\1${image_tag}|" "$values_file"
 }
 
 # Liste des microservices à mettre à jour
