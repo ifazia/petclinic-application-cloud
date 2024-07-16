@@ -14,7 +14,7 @@ customersservice:
     password: redacted
 vetsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
-  version: 9957452805-29
+  version: 9958031460-30
   replicaCount: 1
   database:
     host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
