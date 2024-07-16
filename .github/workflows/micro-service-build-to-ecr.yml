@@ -10,10 +10,11 @@ on:
 jobs:
   build-and-publish-service:
     runs-on: ubuntu-22.04
-
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setting up Java for the Runner
         uses: actions/setup-java@v4
@@ -34,28 +35,57 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         with:
           registry-type: public
-          region: ${{ secrets.AWS_REGION_1 }}
+          region: ${{ secrets.AWS_REGION_1 }} 
 
-      - name: Build and push Docker images
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+
+      - name: Building the docker Image for ${{ inputs.service-name }}
+        id: build-image
         run: |
-          # Vos commandes pour construire et pousser les images Docker
+          cd ${{ inputs.service-name }}
+          chmod +x ./mvnw
+          ./mvnw spring-boot:build-image -Pk8s -DREPOSITORY_PREFIX=${{ secrets.ECR_REGISTRY }}
+          IMAGE_ID=$(docker images -q ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:latest)
+          if [ -z "$IMAGE_ID" ]; then
+            echo "Error: Image not found."
+            exit 1
+          fi
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
+          IMAGE_NAME=${{ inputs.service-name }}:${{ github.run_id }}-${{ github.run_number }}
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
 
-      - name: Update Image Versions in staging-values.yaml
+      - name: Tagging built image
         run: |
-          chmod +x ./update-values.sh
-          ./update-values.sh
+          docker tag ${{ env.IMAGE_ID }} ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Verify YAML changes
+      - name: Pushing ${{ inputs.service-name }} to Amazon ECR
         run: |
-          cat helmchart/staging-values.yaml
+          docker push ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Update Image Versions
+        run: |
+          chmod +x ./update-images.sh
+          ./update-images.sh
+
+      - name: Check for updated staging-values.yaml
+        run: |
+          if [ ! -f "helmchart/staging-values.yaml" ]; then
+            echo "Error: staging-values.yaml not found."
+            exit 1
+          fi
+      - name: Display git status
+        run: git status
+  
+      - name: Display git diff for staging-values.yaml
+        run: git diff helmchart/staging-values.yaml
+  
       - name: Commit and push updated staging-values.yaml
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add helmchart/staging-values.yaml
-          git commit -m "Update image tags in staging-values.yaml" || echo "No changes to commit"
-          git push origin main || echo "Nothing to push"
+          git commit -m "Update image versions in helmchart/staging-values.yaml"
+          git push
 
   deploy-job:
     uses: ./.github/workflows/deploy-staging.yml
