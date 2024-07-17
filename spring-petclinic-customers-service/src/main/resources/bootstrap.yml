@@ -4,27 +4,40 @@ spring:
       uri: http://config-server:8888
   application:
     name: customers-service
+management:
+  metrics:
+    export:
+      wavefront:
+        apiToken: ""
+  endpoint:
+    restart:
+      enabled: true
 ---
 spring:
-  profiles: docker
+  config:
+    activate:
+      on-profile: docker
   cloud:
     config:
-      enabled: true
       uri: http://config-server:8888
 ---
 spring:
-  profiles: kubernetes
+  config:
+    activate:
+      on-profile: kubernetes
   cloud:
     config:
       enabled: false
     kubernetes:
-      enabled: true
       reload:
-        strategy: restart_context
+        strategy: restart-context
         enabled: true
       config:
         enabled: true
         name: petclinic-config
+      secrets:
+        enabled: true
+
 ---
 spring:
   profiles: tas4k8s
