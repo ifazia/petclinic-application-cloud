@@ -94,6 +94,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-3
+          customer-db-password: ${{ secrets.DB_PASSWORD_CUSTOMER }}
+          vet-db-password: ${{ secrets.DB_PASSWORD_VET }}
+          visit-db-password: ${{ secrets.DB_PASSWORD_VISIT }}
           cluster-name: petclinic-eks
           config-files: helmchart/staging-values.yaml
           chart-path: helmchart/
@@ -102,8 +105,3 @@ jobs:
           dry-run: false
           timeout: 0s
           update-deps: true
-        env:
-          CUSTOMERS_DB_PASSWORD: ${{ secrets.DB_PASSWORD_CUSTOMER }}
-          VETS_DB_PASSWORD: ${{ secrets.DB_PASSWORD_VET }}
-          VISITS_DB_PASSWORD: ${{ secrets.DB_PASSWORD_VISIT }}
-          
