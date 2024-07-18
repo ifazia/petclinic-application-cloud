@@ -13,4 +13,3 @@ jobs:
     with:
       service-name: "spring-petclinic-visits-service"
     secrets: inherit
-    
