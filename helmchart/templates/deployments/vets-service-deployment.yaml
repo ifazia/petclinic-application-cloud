@@ -41,7 +41,7 @@ spec:
         - name: DATABASE_URL
           value: {{ .Values.vetsservice.database.jdbcUrl }}
         - name: SPRING_DATASOURCE_USERNAME
-          value: {{ .Values.database.username }}
+          value: {{ .Values.vetsservice.database.username }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
              secretKeyRef:
