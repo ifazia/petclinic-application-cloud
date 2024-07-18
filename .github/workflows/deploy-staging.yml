@@ -1,5 +1,6 @@
 name: Staging Deploy Workflow
 run-name: Starting to deploy ${{ inputs.service-name }} to staging
+
 on:
   workflow_call:
     inputs:
@@ -19,7 +20,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Find the value key for helm 
+      - name: Set service key based on service name
+        id: set-service-key
         run: |
           case "${{ inputs.service-name }}" in
             spring-petclinic-api-gateway)
@@ -40,13 +42,64 @@ jobs:
               ;;
           esac
 
-      - name: Set outputs
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
-      - name: Check staging-values.yaml content
-        run: cat helmchart/staging-values.yaml
-
+      - name: Update staging-values.yaml
+        id: update-staging-values
+        run: |
+          if [ "${{ env.SERVICE_KEY }}" == "apigateway" ]; then
+            cat <<EOF > helmchart/staging-values.yaml
+            namespace: staging
+            apigateway:
+              image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
+              version: ${{ inputs.service-version }}
+              replicaCount: 2
+            EOF
+          elif [ "${{ env.SERVICE_KEY }}" == "customersservice" ]; then
+            cat <<EOF > helmchart/staging-values.yaml
+            namespace: staging
+            customersservice:
+              image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
+              version: ${{ inputs.service-version }}
+              replicaCount: 1
+              database:
+                host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+                name: customerdb
+                username: petclinic
+                password: "${{ secrets.DB_PASSWORD_CUSTOMER }}"
+                jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=${{ secrets.DB_PASSWORD_CUSTOMER }}
+            EOF
+          elif [ "${{ env.SERVICE_KEY }}" == "vetsservice" ]; then
+            cat <<EOF > helmchart/staging-values.yaml
+            namespace: staging
+            vetsservice:
+              image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
+              version: ${{ inputs.service-version }}
+              replicaCount: 1
+              database:
+                host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+                name: vetsdb
+                username: petclinic
+                password: "${{ secrets.DB_PASSWORD_VET }}"
+                jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=${{ secrets.DB_PASSWORD_VET }}
+            EOF
+          elif [ "${{ env.SERVICE_KEY }}" == "visitsservice" ]; then
+            cat <<EOF > helmchart/staging-values.yaml
+            namespace: staging
+            visitsservice:
+              image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
+              version: ${{ inputs.service-version }}
+              replicaCount: 1
+              database:
+                host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+                name: visitsdb
+                username: petclinic
+                password: "${{ secrets.DB_PASSWORD_VISIT }}"
+                jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=${{ secrets.DB_PASSWORD_VISIT }}
+            EOF
+          else
+            echo "Unsupported service: ${{ inputs.service-name }}"  # Log an error message
+            exit 1  # Exit the script with an error
+          fi
+        
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
         with:
@@ -56,17 +109,6 @@ jobs:
           cluster-name: petclinic-eks
           config-files: helmchart/staging-values.yaml
           chart-path: helmchart/
-          values: |
-            {{ if eq(env.SERVICE_KEY, 'customersservice') }}
-              database.password="${{ secrets.DB_PASSWORD_CUSTOMER }}",customersservice.version=${{ inputs.service-version }}
-            {{ else if eq(env.SERVICE_KEY, 'vetsservice') }}
-              database.password="${{ secrets.DB_PASSWORD_VET }}",vetsservice.version=${{ inputs.service-version }}
-            {{ else if eq(env.SERVICE_KEY, 'visitsservice') }}  
-              database.password="${{ secrets.DB_PASSWORD_VISIT }}",visitsservice.version=${{ inputs.service-version }}
-            {{ else }}
-              echo "Unsupported service: ${{ inputs.service-name }}"  # Log an error message
-              exit 1  # Exit the script with an error
-            {{ end }}
           name: petclinic-staging
           action: install
           dry-run: false
