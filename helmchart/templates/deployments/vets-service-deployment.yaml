@@ -38,15 +38,15 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: kubernetes
-        - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://{{ .Values.database.host }}/{{ .Values.database.name }}?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=vets-db
+        - name: DATABASE_URL
+          value: {{ .Values.vetsservice.jdbcUrl }}
         - name: SPRING_DATASOURCE_USERNAME
           value: {{ .Values.database.username }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
              secretKeyRef:
                name: database-secret
-               key: dbpassword
+               key: dbvetpassword
         ports:
         - containerPort: 8080
         resources: {}
