@@ -11,7 +11,7 @@ customersservice:
     host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
     name: customerdb
     username: petcliniccustomer
-    password: redacted
+    #password: redacted
     jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
 vetsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
@@ -21,7 +21,7 @@ vetsservice:
     host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
     name: vetdb
     username: petclinicvet
-    password: redacted
+    #password: redacted
     jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
 visitsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
@@ -31,7 +31,7 @@ visitsservice:
     host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
     name: visitdb
     username: petclinicvisit
-    password: redacted
+    #password: redacted
     jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted
 adminserver:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-admin-server
