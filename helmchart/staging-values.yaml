@@ -22,11 +22,10 @@ vetsservice:
   replicaCount: 1
   database:
     host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-    name: vetsdb
+    name: vetdb
     username: petclinic
     password: redacted
     jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
-
 
 visitsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
@@ -34,7 +33,7 @@ visitsservice:
   replicaCount: 1
   database:
     host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-    name: visitsdb
+    name: visitdb
     username: petclinic
     password: redacted
     jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted

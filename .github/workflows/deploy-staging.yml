@@ -1,5 +1,4 @@
 name: Staging Deploy Workflow
-run-name: Starting to deploy ${{ inputs.service-name }} to staging
 
 on:
   workflow_call:
@@ -88,7 +87,7 @@ jobs:
             Unsupported service: ${{ inputs.service-name }}
           {{ end }}
           EOF
-       
+
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
         with:
