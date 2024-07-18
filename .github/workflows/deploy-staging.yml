@@ -88,17 +88,6 @@ jobs:
           {{ end }}
           EOF
 
-      - name: Commit and push changes
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add .
-          git commit -m "Update image versions in helmchart/staging-values.yaml and other files"
-          git pull --rebase origin main
-          git add .
-          git commit --amend --no-edit # Amend the previous commit to include any changes from the rebase
-          git push --force
-
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
         with:
