@@ -15,7 +15,7 @@ customersservice:
     jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
 vetsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
-  version: 9990807242-32
+  version: 9992014286-34
   replicaCount: 1
   database:
     host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
@@ -23,7 +23,6 @@ vetsservice:
     username: petclinic
     password: redacted
     jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
-
 visitsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
   version: 9989635725-13
@@ -34,17 +33,14 @@ visitsservice:
     username: petclinic
     password: redacted
     jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted
-
 adminserver:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-admin-server
   version: latest
   replicaCount: 1
-
 configserver:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-config-server
   version: latest
   replicaCount: 1
-
 discoveryserver:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-discovery-server
   version: latest
