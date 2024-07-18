@@ -10,4 +10,3 @@ import org.springframework.context.annotation.Profile;
 public class ApiGatewayDiscoveryConfig {
 
 }
-//just for tests

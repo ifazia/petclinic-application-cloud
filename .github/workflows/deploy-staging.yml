@@ -44,60 +44,50 @@ jobs:
 
       - name: Generate staging-values.yaml
         run: |
-          if [ "${{ env.SERVICE_KEY }}" == "apigateway" ]; then
-            cat > helmchart/staging-values.yaml <<EOF
-            namespace: staging
-            apigateway:
-              image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
-              version: ${{ inputs.service-version }}
-              replicaCount: 2
-            EOF
-          elif [ "${{ env.SERVICE_KEY }}" == "customersservice" ]; then
-            cat > helmchart/staging-values.yaml <<EOF
-            namespace: staging
-            customersservice:
-              image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
-              version: ${{ inputs.service-version }}
-              replicaCount: 1
-              database:
-                host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-                name: customerdb
-                username: petclinic
-                password: "${{ secrets.DB_PASSWORD_CUSTOMER }}"
-                jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=${{ secrets.DB_PASSWORD_CUSTOMER }}
-            EOF
-          elif [ "${{ env.SERVICE_KEY }}" == "vetsservice" ]; then
-            cat > helmchart/staging-values.yaml <<EOF
-            namespace: staging
-            vetsservice:
-              image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
-              version: ${{ inputs.service-version }}
-              replicaCount: 1
-              database:
-                host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-                name: vetdb
-                username: petclinic
-                password: "${{ secrets.DB_PASSWORD_VET }}"
-                jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=${{ secrets.DB_PASSWORD_VET }}
-            EOF
-          elif [ "${{ env.SERVICE_KEY }}" == "visitsservice" ]; then
-            cat > helmchart/staging-values.yaml <<EOF
-            namespace: staging
-            visitsservice:
-              image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
-              version: ${{ inputs.service-version }}
-              replicaCount: 1
-              database:
-                host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-                name: visitdb
-                username: petclinic
-                password: "${{ secrets.DB_PASSWORD_VISIT }}"
-                jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=${{ secrets.DB_PASSWORD_VISIT }}
-            EOF
-          else
-            echo "Unsupported service: ${{ inputs.service-name }}"  # Log an error message
-            exit 1  # Exit the script with an error
-          fi
+          cat > helmchart/staging-values.yaml <<EOF
+          namespace: staging
+          {{ if eq(env.SERVICE_KEY, 'apigateway') }}
+          apigateway:
+            image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
+            version: ${{ inputs.service-version }}
+            replicaCount: 2
+          {{ else if eq(env.SERVICE_KEY, 'customersservice') }}
+          customersservice:
+            image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
+            version: ${{ inputs.service-version }}
+            replicaCount: 1
+            database:
+              host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+              name: customerdb
+              username: petclinic
+              password: "${{ secrets.DB_PASSWORD_CUSTOMER }}"
+              jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=${{ secrets.DB_PASSWORD_CUSTOMER }}
+          {{ else if eq(env.SERVICE_KEY, 'vetsservice') }}
+          vetsservice:
+            image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
+            version: ${{ inputs.service-version }}
+            replicaCount: 1
+            database:
+              host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+              name: vetdb
+              username: petclinic
+              password: "${{ secrets.DB_PASSWORD_VET }}"
+              jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=${{ secrets.DB_PASSWORD_VET }}
+          {{ else if eq(env.SERVICE_KEY, 'visitsservice') }}
+          visitsservice:
+            image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
+            version: ${{ inputs.service-version }}
+            replicaCount: 1
+            database:
+              host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+              name: visitdb
+              username: petclinic
+              password: "${{ secrets.DB_PASSWORD_VISIT }}"
+              jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=${{ secrets.DB_PASSWORD_VISIT }}
+          {{ else }}
+          Unsupported service: ${{ inputs.service-name }}
+          {{ end }}
+          EOF
 
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
