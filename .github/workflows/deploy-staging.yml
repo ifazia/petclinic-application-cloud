@@ -9,6 +9,7 @@ on:
       service-version:
         required: true
         type: string
+
 jobs:
   deploy-the-service:
     runs-on: ubuntu-22.04
@@ -33,15 +34,19 @@ jobs:
             spring-petclinic-visits-service)
               echo "SERVICE_KEY=visitsservice" >> $GITHUB_ENV
               ;;
-            
+            *)
+              echo "Unsupported service: ${{ inputs.service-name }}"  # Log an error message
+              exit 1  # Exit the script with an error
+              ;;
           esac
 
       - name: Set outputs
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - name:  Check for content staging-values.yaml
+
+      - name: Check staging-values.yaml content
         run: cat helmchart/staging-values.yaml
-        ## check https://github.com/marketplace/actions/deploy-helm-chart-to-aws-eks-cluster
+
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
         with:
@@ -52,15 +57,18 @@ jobs:
           config-files: helmchart/staging-values.yaml
           chart-path: helmchart/
           values: |
-            if eq(env.SERVICE_KEY, 'customersservice') }}
-              database.password= "${{ secrets.DB_PASSWORD_CUSTOMER }}",customersservice.version=${{ inputs.service-version }}
+            {{ if eq(env.SERVICE_KEY, 'customersservice') }}
+              database.password="${{ secrets.DB_PASSWORD_CUSTOMER }}",customersservice.version=${{ inputs.service-version }}
             {{ else if eq(env.SERVICE_KEY, 'vetsservice') }}
-              database.password= "${{ secrets.DB_PASSWORD_VET }}",vetsservice.version=${{ inputs.service-version }}
+              database.password="${{ secrets.DB_PASSWORD_VET }}",vetsservice.version=${{ inputs.service-version }}
             {{ else if eq(env.SERVICE_KEY, 'visitsservice') }}  
-              database.password= "${{ secrets.DB_PASSWORD_VISIT }}",visitsservice.version=${{ inputs.service-version }}
+              database.password="${{ secrets.DB_PASSWORD_VISIT }}",visitsservice.version=${{ inputs.service-version }}
             {{ else }}
-              # Handle the case where SERVICE_KEY is unknown
               echo "Unsupported service: ${{ inputs.service-name }}"  # Log an error message
               exit 1  # Exit the script with an error
             {{ end }}
           name: petclinic-staging
+          action: install
+          dry-run: false
+          timeout: 0s
+          update-deps: true
