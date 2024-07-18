@@ -1,5 +1,5 @@
 name: Staging Deploy Workflow
-
+run-name: Starting to deploy ${{ inputs.service-name }} to staging
 on:
   workflow_call:
     inputs:
@@ -44,7 +44,7 @@ jobs:
       - name: Generate staging-values.yaml
         run: |
           cat > helmchart/staging-values.yaml <<EOF
-          namespace: staging
+          #namespace: staging
           $(if [ "$SERVICE_KEY" == "apigateway" ]; then echo "
             apigateway:
               image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
