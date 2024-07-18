@@ -8,7 +8,6 @@ on:
       - "spring-petclinic-visits-service/**"
 jobs:
   visits-service-build-job:
-    #uses: ./.github/workflows/micro-service-build.yml
     uses: ./.github/workflows/micro-service-build-to-ecr.yml
     with:
       service-name: "spring-petclinic-visits-service"
