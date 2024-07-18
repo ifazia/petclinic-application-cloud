@@ -59,5 +59,6 @@ jobs:
           cluster-name: petclinic-eks
           config-files: helmchart/staging-values.yaml
           chart-path: helmchart/
-          values: database.password="${{ secrets.DB_PASSWORD_CUSTOMER }}","${{ secrets.DB_PASSWORD_VET }}","${{ secrets.DB_PASSWORD_VISIT }}",${{ env.SERVICE_KEY }}.version=${{ inputs.service-version }}
+          values: |
+            database.password="${{ secrets.DB_PASSWORD_CUSTOMER }}","${{ secrets.DB_PASSWORD_VET }}","${{ secrets.DB_PASSWORD_VISIT }}",${{ env.SERVICE_KEY }}.version=${{ inputs.service-version }}
           name: petclinic-staging
