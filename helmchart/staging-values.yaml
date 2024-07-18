@@ -3,10 +3,9 @@ apigateway:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
   version: 9971415119-46
   replicaCount: 2
-
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
-  version: 9989319901-26
+  version: 9989930229-27
   replicaCount: 1
   database:
     host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
@@ -14,7 +13,6 @@ customersservice:
     username: petclinic
     password: redacted
   jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
-
 vetsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
   version: 9958031460-30
