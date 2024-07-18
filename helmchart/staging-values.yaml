@@ -10,8 +10,8 @@ customersservice:
   database:
     host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
     name: customerdb
-    username: petclinic
-    #password: redacted
+    username: petcliniccustomer
+    password: redacted
     jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
 vetsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
@@ -20,8 +20,8 @@ vetsservice:
   database:
     host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
     name: vetdb
-    username: petclinic
-    #password: redacted
+    username: petclinicvet
+    password: redacted
     jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
 visitsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
@@ -30,8 +30,8 @@ visitsservice:
   database:
     host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
     name: visitdb
-    username: petclinic
-    #password: redacted
+    username: petclinicvisit
+    password: redacted
     jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted
 adminserver:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-admin-server
