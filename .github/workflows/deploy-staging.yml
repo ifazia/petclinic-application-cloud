@@ -33,15 +33,7 @@ jobs:
             spring-petclinic-visits-service)
               echo "SERVICE_KEY=visitsservice" >> $GITHUB_ENV
               ;;
-            spring-petclinic-admin-server)
-              echo "SERVICE_KEY=adminserver" >> $GITHUB_ENV
-              ;;
-            spring-petclinic-config-server)
-              echo "SERVICE_KEY=configserver" >> $GITHUB_ENV
-              ;;
-            spring-petclinic-discovery-server)
-              echo "SERVICE_KEY=discoveryserver" >> $GITHUB_ENV
-              ;;
+            
           esac
 
       - name: Set outputs
@@ -60,5 +52,15 @@ jobs:
           config-files: helmchart/staging-values.yaml
           chart-path: helmchart/
           values: |
-            database.password="${{ secrets.DB_PASSWORD_CUSTOMER }}","${{ secrets.DB_PASSWORD_VET }}","${{ secrets.DB_PASSWORD_VISIT }}",${{ env.SERVICE_KEY }}.version=${{ inputs.service-version }}
+            if eq(env.SERVICE_KEY, 'customersservice') }}
+              database.password= "${{ secrets.DB_PASSWORD_CUSTOMER }}",customersservice.version=${{ inputs.service-version }}
+            {{ else if eq(env.SERVICE_KEY, 'vetsservice') }}
+              database.password= "${{ secrets.DB_PASSWORD_VET }}",vetsservice.version=${{ inputs.service-version }}
+            {{ else if eq(env.SERVICE_KEY, 'visitsservice') }}  
+              database.password= "${{ secrets.DB_PASSWORD_VISIT }}",visitsservice.version=${{ inputs.service-version }}
+            {{ else }}
+              # Handle the case where SERVICE_KEY is unknown
+              echo "Unsupported service: ${{ inputs.service-name }}"  # Log an error message
+              exit 1  # Exit the script with an error
+            {{ end }}
           name: petclinic-staging
