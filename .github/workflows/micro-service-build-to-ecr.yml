@@ -85,8 +85,10 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add helmchart/staging-values.yaml
           git commit -m "Update image versions in helmchart/staging-values.yaml"
+          git stash # Mettre de côté les modifications non validées
           git pull --rebase origin main || (git rebase --abort && exit 1)
-          git add helmchart/staging-values.yaml # Ré-ajouter le fichier si nécessaire après le rebase
+          git stash pop # Réappliquer les modifications mises de côté
+          git add helmchart/staging-values.yaml 
           git commit --amend --no-edit # Modifie le commit précédent pour inclure les modifications résultant du rebase
           git push --force
 
