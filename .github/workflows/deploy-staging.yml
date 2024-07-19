@@ -85,9 +85,10 @@ jobs:
             jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=${{ secrets.DB_PASSWORD_VISIT }}
           EOF
 
-      - name: Create service-specific values.yaml
+      - name: Create service-specific values.yaml with hierarchy
         run: |
-          yq eval '.${{ env.SERVICE_KEY }}' helmchart/staging-values.yaml > helmchart/service-values.yaml
+          SERVICE_KEY=${{ env.SERVICE_KEY }}
+          yq eval '{"${SERVICE_KEY}": .${SERVICE_KEY}}' helmchart/staging-values.yaml > helmchart/service-values.yaml
 
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
