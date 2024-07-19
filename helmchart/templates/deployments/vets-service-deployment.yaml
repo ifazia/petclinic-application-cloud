@@ -39,7 +39,7 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: kubernetes
         - name: DATABASE_URL
-          value: {{ .Values.databasevets.jdbcUrl }}
+          value: {{ .Values.vetjdbcUrl }}
         - name: SPRING_DATASOURCE_USERNAME
           value: {{ .Values.databasevets.username }}
         - name: SPRING_DATASOURCE_PASSWORD

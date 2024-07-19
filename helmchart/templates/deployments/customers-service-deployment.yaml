@@ -41,7 +41,7 @@ spec:
         - name: SPRING_DATASOURCE_USERNAME
           value: {{ .Values.databasecustomers.username }}
         - name: DATABASE_URL
-          value: {{ .Values.databasecustomers.jdbcUrl }}
+          value: {{ .Values.customerjdbcUrl }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
              secretKeyRef:

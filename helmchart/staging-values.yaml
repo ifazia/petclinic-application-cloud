@@ -12,7 +12,7 @@ databasecustomers:
   name: customerdb
   username: petcliniccustomer
   password: redacted
-  jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
+customerjdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
 vetsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
   version: 10005573818-40
@@ -22,7 +22,7 @@ databasevets:
   name: vetdb
   username: petclinicvet
   password: redacted
-  jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
+vetjdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
 visitsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
   version: 9989635725-13
@@ -32,4 +32,4 @@ databasevisits:
   name: visitdb
   username: petclinicvisit
   password: redacted
-  jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted
+visitjdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted
