@@ -88,7 +88,7 @@ jobs:
       - name: Create service-specific values.yaml with hierarchy
         run: |
           SERVICE_KEY=${{ env.SERVICE_KEY }}
-          yq eval '{"${SERVICE_KEY}": .${SERVICE_KEY}}' helmchart/staging-values.yaml > helmchart/service-values.yaml
+          yq eval "{\"${SERVICE_KEY}\": .${SERVICE_KEY}}" helmchart/staging-values.yaml > helmchart/service-values.yaml
 
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
