@@ -86,24 +86,6 @@ jobs:
             jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=${{ secrets.DB_PASSWORD_VISIT }}
           EOF
 
-      - name: Generate service-specific values.yaml
-        run: |
-          SERVICE_KEY=${{ env.SERVICE_KEY }}
-          if [ -z "${SERVICE_KEY}" ]; then
-            echo "SERVICE_KEY is not set" >&2
-            exit 1
-          fi
-          yq eval ".${SERVICE_KEY}" helmchart/staging-values.yaml > helmchart/service-values.yaml
-
-      - name: Combine values
-        run: |
-          yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' helmchart/service-values.yaml helmchart/staging-values.yaml > helmchart/final-service-values.yaml
-
-      - name: Check final-service-values.yaml
-        run: |
-          echo "Contents of final-service-values.yaml:"
-          cat helmchart/final-service-values.yaml
-
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
         with:
