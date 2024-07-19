@@ -1,7 +1,7 @@
 namespace: staging
 apigateway:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
-  version: 9994848043-52
+  version: 10005035521-53
   replicaCount: 2
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
