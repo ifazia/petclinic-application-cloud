@@ -85,9 +85,9 @@ jobs:
             jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=${{ secrets.DB_PASSWORD_VISIT }}
           EOF
 
-      - name: Filter staging-values.yaml for service
+      - name: Create service-specific values.yaml
         run: |
-          yq eval-all --inplace 'select(di == 0) * select(di == 1)' helmchart/staging-values.yaml <(echo .${{ env.SERVICE_KEY }} )
+          yq eval '.${{ env.SERVICE_KEY }}' helmchart/staging-values.yaml > helmchart/service-values.yaml
 
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
@@ -96,7 +96,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-3
           cluster-name: petclinic-eks
-          config-files: helmchart/staging-values.yaml
+          config-files: helmchart/service-values.yaml
           chart-path: helmchart/
           name: petclinic-staging
           action: install
