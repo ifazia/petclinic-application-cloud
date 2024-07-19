@@ -109,3 +109,4 @@ jobs:
           dry-run: false
           timeout: 0s
           update-deps: true
+          namespace: staging
