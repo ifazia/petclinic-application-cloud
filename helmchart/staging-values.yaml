@@ -5,7 +5,7 @@ apigateway:
   replicaCount: 2
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
-  version: 10005369907-35
+  version: 10005432601-36
   replicaCount: 1
 databasecustomers:
   host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
