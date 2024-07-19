@@ -6,7 +6,7 @@ metadata:
   name: api-gateway
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: {{ .Values.apigateway.replicaCount }}
+  replicas: 2
   selector:
     matchLabels:
       app: api-gateway

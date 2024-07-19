@@ -2,7 +2,7 @@ namespace: staging
 apigateway:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
   version: 10005247924-54
-  replicaCount: 2
+  #replicaCount: 2
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
   version: 10005369907-35
@@ -16,7 +16,7 @@ databasecustomers:
 vetsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
   version: 9994563265-39
-  replicaCount: 1
+  #replicaCount: 1
 databasevets:
   host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
   name: vetdb
@@ -26,7 +26,7 @@ databasevets:
 visitsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
   version: 9989635725-13
-  replicaCount: 1
+  #replicaCount: 1
 databasevisits:
   host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
   name: visitdb
@@ -36,12 +36,12 @@ databasevisits:
 adminserver:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-admin-server
   version: latest
-  replicaCount: 1
+  #replicaCount: 1
 configserver:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-config-server
   version: latest
-  replicaCount: 1
+  #replicaCount: 1
 discoveryserver:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-discovery-server
   version: latest
-  replicaCount: 1
+  #replicaCount: 1

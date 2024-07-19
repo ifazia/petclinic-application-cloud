@@ -6,7 +6,7 @@ metadata:
   name: vets-service
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: {{ .Values.vetsservice.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app: vets-service
@@ -39,9 +39,9 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: kubernetes
         - name: DATABASE_URL
-          value: {{ .Values.vetsservice.database.jdbcUrl }}
+          value: {{ .Values.databasevets.jdbcUrl }}
         - name: SPRING_DATASOURCE_USERNAME
-          value: {{ .Values.vetsservice.database.username }}
+          value: {{ .Values.databasevets.username }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
              secretKeyRef:
