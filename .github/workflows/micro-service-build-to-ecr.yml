@@ -84,8 +84,13 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add helmchart/staging-values.yaml
-          git commit -m "Update image versions in helmchart/staging-values.yaml"
-          git push
+          git diff --cached --exit-code
+          if [ $? -ne 0 ]; then
+            git commit -m "Update image versions in helmchart/staging-values.yaml"
+            git push
+          else
+            echo "No changes detected in staging-values.yaml, skipping commit."
+          fi
 
   deploy-job:
     uses: ./.github/workflows/deploy-staging.yml
