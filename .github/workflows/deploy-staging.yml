@@ -19,11 +19,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install yq
-        run: |
-          sudo wget https://github.com/mikefarah/yq/releases/download/v4.13.4/yq_linux_amd64 -O /usr/bin/yq
-          sudo chmod +x /usr/bin/yq
-
       - name: Set service key based on service name
         id: set-service-key
         run: |
@@ -96,7 +91,7 @@ jobs:
           config-files: helmchart/final-service-values.yaml
           chart-path: helmchart/
           name: petclinic-staging
-          action: upgrade  # Assurez-vous que 'upgrade' est la bonne action
+          action: install
           dry-run: false
           timeout: 0s
           update-deps: true
