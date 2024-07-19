@@ -88,12 +88,11 @@ jobs:
       - name: Generate service-specific values.yaml
         run: |
           SERVICE_KEY=${{ env.SERVICE_KEY }}
-          # Ensure the SERVICE_KEY is correctly interpolated
-          yq eval '.${SERVICE_KEY}' helmchart/staging-values.yaml > helmchart/service-values.yaml
+          # Escape $SERVICE_KEY for yq
+          yq eval ".${SERVICE_KEY}" helmchart/staging-values.yaml > helmchart/service-values.yaml
 
       - name: Combine values
         run: |
-          # Ensure that we combine the correct files
           yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' helmchart/service-values.yaml helmchart/staging-values.yaml > helmchart/final-service-values.yaml
 
       - name: Deploy Helm to Staging
