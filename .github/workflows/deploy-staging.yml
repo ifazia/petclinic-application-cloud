@@ -55,34 +55,34 @@ jobs:
               image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
               version: ${{ inputs.service-version }}
               replicaCount: 1
-            databasecustomers:
-              host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-              name: customerdb
-              username: petcliniccustomer
-              password: \"${{ secrets.DB_PASSWORD_CUSTOMER }}\"
-              customerjdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=\${{ secrets.DB_PASSWORD_CUSTOMER }}
+              database:
+                host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+                name: customerdb
+                username: petcliniccustomer
+                password: \"${{ secrets.DB_PASSWORD_CUSTOMER }}\"
+              jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=\${{ secrets.DB_PASSWORD_CUSTOMER }}
           "; elif [ "$SERVICE_KEY" == "vetsservice" ]; then echo "
               vetsservice:
                 image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
                 version: ${{ inputs.service-version }}
                 replicaCount: 1
-              databasevets:
-                host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-                name: vetdb
-                username: petclinicvet
-                password: \"${{ secrets.DB_PASSWORD_VET }}\"
-                vetjdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=\${{ secrets.DB_PASSWORD_VET }}
+                database:
+                  host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+                  name: vetdb
+                  username: petclinicvet
+                  password: \"${{ secrets.DB_PASSWORD_VET }}\"
+                jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=\${{ secrets.DB_PASSWORD_VET }}
           "; elif [ "$SERVICE_KEY" == "visitsservice" ]; then echo "
               visitsservice:
                 image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
                 version: ${{ inputs.service-version }}
                 replicaCount: 1
-              databasevisits:
-                host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-                name: visitdb
-                username: petclinicvisit
-                password: \"${{ secrets.DB_PASSWORD_VISIT }}\"
-                visitjdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=\${{ secrets.DB_PASSWORD_VISIT }}
+                database:
+                  host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+                  name: visitdb
+                  username: petclinicvisit
+                  password: \"${{ secrets.DB_PASSWORD_VISIT }}\"
+                jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=\${{ secrets.DB_PASSWORD_VISIT }}
           "; else echo "
               Unsupported service: ${{ inputs.service-name }}
           "; fi)

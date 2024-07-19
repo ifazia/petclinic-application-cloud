@@ -6,7 +6,7 @@ metadata:
   name: visits-service
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.visitsservice.replicaCount }}
   selector:
     matchLabels:
       app: visits-service
@@ -39,9 +39,9 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: kubernetes
         - name: DATABASE_URL
-          value: {{ .Values.visitjdbcUrl }}
+          value: {{ .Values.visitsservice.jdbcUrl }}
         - name: SPRING_DATASOURCE_USERNAME
-          value: {{ .Values.databasevisits.username }}
+          value: {{ .Values.visitsservice.database.username }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
              secretKeyRef:

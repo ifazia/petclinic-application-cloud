@@ -1,35 +1,35 @@
 namespace: staging
 apigateway:
+  replicaCount: 2
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
   version: 10005247924-54
-  #replicaCount: 2
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
   version: 10005432601-36
   replicaCount: 1
-databasecustomers:
-  host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-  name: customerdb
-  username: petcliniccustomer
-  password: redacted
-customerjdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
+  database:
+    host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+    name: customerdb
+    username: petcliniccustomer
+    password: redacted
+  jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
 vetsservice:
+  replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
   version: 10005573818-40
-  #replicaCount: 1
-databasevets:
-  host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-  name: vetdb
-  username: petclinicvet
-  password: redacted
-vetjdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
+  database:
+    host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+    name: vetdb
+    username: petclinicvet
+    password: redacted
+  jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
 visitsservice:
+  replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
   version: 10005712149-16
-  #replicaCount: 1
-databasevisits:
-  host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-  name: visitdb
-  username: petclinicvisit
-  password: redacted
-visitjdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted
+  database:
+    host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+    name: visitdb
+    username: petclinicvisit
+    password: redacted
+  jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted

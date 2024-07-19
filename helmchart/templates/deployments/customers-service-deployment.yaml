@@ -6,7 +6,7 @@ metadata:
   name: customers-service
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.customersservice.replicaCount }}
   selector:
     matchLabels:
       app: customers-service
@@ -39,9 +39,9 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: kubernetes
         - name: SPRING_DATASOURCE_USERNAME
-          value: {{ .Values.databasecustomers.username }}
+          value: {{ .Values.customersservice.database.username }}
         - name: DATABASE_URL
-          value: {{ .Values.customerjdbcUrl }}
+          value: {{ .Values.customersservice.jdbcUrl }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
              secretKeyRef:
