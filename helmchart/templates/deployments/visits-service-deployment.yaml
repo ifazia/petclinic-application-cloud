@@ -6,7 +6,7 @@ metadata:
   name: visits-service
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1 #{{ .Values.visitsservice.replicaCount }}
+  replicas: {{ .Values.visitsservice.replicaCount }}
   selector:
     matchLabels:
       app: visits-service

@@ -1,10 +1,10 @@
 namespace: staging
 apigateway:
   replicaCount: 2
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
+  image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
   version: 10007940408-57
 customersservice:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
+  image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
   version: 10005432601-36
   replicaCount: 1
   database:
@@ -15,7 +15,7 @@ customersservice:
   jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
 vetsservice:
   replicaCount: 1
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
+  image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
   version: 10008136552-43
   database:
     host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
@@ -25,7 +25,7 @@ vetsservice:
   jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
 visitsservice:
   replicaCount: 1
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
+  image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
   version: 10008040679-17
   database:
     host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
