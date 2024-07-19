@@ -41,7 +41,7 @@ jobs:
               echo "SERVICE_KEY=visitsservice" >> $GITHUB_ENV
               ;;
             *)
-              echo "Unsupported service: ${{ inputs.service-name }}"  # Log an error message
+              echo "Unsupported service: ${{ inputs.service-name }}" >&2  # Log an error message to stderr
               exit 1  # Exit the script with an error
               ;;
           esac
@@ -49,6 +49,7 @@ jobs:
       - name: Generate base staging-values.yaml
         run: |
           cat > helmchart/staging-values.yaml <<EOF
+          namespace: staging
           apigateway:
             image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
             version: ${{ inputs.service-version }}
@@ -87,13 +88,22 @@ jobs:
 
       - name: Generate service-specific values.yaml
         run: |
-          SERVICE_KEY=${{ env.SERVICE_KEY }}
-          # Escape $SERVICE_KEY for yq
-          yq eval ".${SERVICE_KEY}" helmchart/staging-values.yaml > helmchart/service-values.yaml
+          # Check if SERVICE_KEY is set
+          if [ -z "${{ env.SERVICE_KEY }}" ]; then
+            echo "SERVICE_KEY is not set" >&2
+            exit 1
+          fi
+
+          # Generate service-specific values
+          yq eval ".${{ env.SERVICE_KEY }}" helmchart/staging-values.yaml > helmchart/service-values.yaml
 
       - name: Combine values
         run: |
+          # Combine values
           yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' helmchart/service-values.yaml helmchart/staging-values.yaml > helmchart/final-service-values.yaml
+
+      - name: Check final-service-values.yaml
+        run: cat helmchart/final-service-values.yaml || echo "final-service-values.yaml not found"
 
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
