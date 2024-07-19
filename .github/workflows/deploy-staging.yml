@@ -19,6 +19,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install yq
+        run: |
+          sudo wget https://github.com/mikefarah/yq/releases/download/v4.13.4/yq_linux_amd64 -O /usr/bin/yq
+          sudo chmod +x /usr/bin/yq
+
       - name: Set service key based on service name
         id: set-service-key
         run: |
@@ -41,52 +46,49 @@ jobs:
               ;;
           esac
 
-      - name: Generate staging-values.yaml
+      - name: Generate base staging-values.yaml
         run: |
           cat > helmchart/staging-values.yaml <<EOF
-          #namespace: staging
-          $(if [ "$SERVICE_KEY" == "apigateway" ]; then echo "
-            apigateway:
-              image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
-              version: ${{ inputs.service-version }}
-              replicaCount: 2
-          "; elif [ "$SERVICE_KEY" == "customersservice" ]; then echo "
-            customersservice:
-              image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
-              version: ${{ inputs.service-version }}
-              replicaCount: 1
-              database:
-                host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-                name: customerdb
-                username: petcliniccustomer
-                password: \"${{ secrets.DB_PASSWORD_CUSTOMER }}\"
-              jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=\${{ secrets.DB_PASSWORD_CUSTOMER }}
-          "; elif [ "$SERVICE_KEY" == "vetsservice" ]; then echo "
-            vetsservice:
-              image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
-              version: ${{ inputs.service-version }}
-              replicaCount: 1
-              database:
-                host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-                name: vetdb
-                username: petclinicvet
-                password: \"${{ secrets.DB_PASSWORD_VET }}\"
-              jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=\${{ secrets.DB_PASSWORD_VET }}
-          "; elif [ "$SERVICE_KEY" == "visitsservice" ]; then echo "
-            visitsservice:
-              image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
-              version: ${{ inputs.service-version }}
-              replicaCount: 1
-              database:
-                host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-                name: visitdb
-                username: petclinicvisit
-                password: \"${{ secrets.DB_PASSWORD_VISIT }}\"
-              jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=\${{ secrets.DB_PASSWORD_VISIT }}
-          "; else echo "
-              Unsupported service: ${{ inputs.service-name }}
-          "; fi)
+          apigateway:
+            image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
+            version: ${{ inputs.service-version }}
+            replicaCount: 2
+          customersservice:
+            image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
+            version: ${{ inputs.service-version }}
+            replicaCount: 1
+            database:
+              host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+              name: customerdb
+              username: petcliniccustomer
+              password: "${{ secrets.DB_PASSWORD_CUSTOMER }}"
+            jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=${{ secrets.DB_PASSWORD_CUSTOMER }}
+          vetsservice:
+            image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
+            version: ${{ inputs.service-version }}
+            replicaCount: 1
+            database:
+              host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+              name: vetdb
+              username: petclinicvet
+              password: "${{ secrets.DB_PASSWORD_VET }}"
+            jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=${{ secrets.DB_PASSWORD_VET }}
+          visitsservice:
+            image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
+            version: ${{ inputs.service-version }}
+            replicaCount: 1
+            database:
+              host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
+              name: visitdb
+              username: petclinicvisit
+              password: "${{ secrets.DB_PASSWORD_VISIT }}"
+            jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=${{ secrets.DB_PASSWORD_VISIT }}
           EOF
+
+      - name: Filter staging-values.yaml for service
+        run: |
+          SERVICE_KEY=${{ env.SERVICE_KEY }}
+          yq eval-all --inplace 'select(di == 0) * select(di == 1)' helmchart/staging-values.yaml <(yq eval 'del(. * {"${SERVICE_KEY}": .${SERVICE_KEY}})' helmchart/staging-values.yaml)
 
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
