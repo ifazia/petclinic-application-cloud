@@ -100,7 +100,9 @@ jobs:
           yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' helmchart/service-values.yaml helmchart/staging-values.yaml > helmchart/final-service-values.yaml
 
       - name: Check final-service-values.yaml
-        run: cat helmchart/final-service-values.yaml || echo "final-service-values.yaml not found"
+        run: |
+          echo "Contents of final-service-values.yaml:"
+          cat helmchart/final-service-values.yaml
 
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
@@ -112,7 +114,7 @@ jobs:
           config-files: helmchart/final-service-values.yaml
           chart-path: helmchart/
           name: petclinic-staging
-          action: upgrade  # Change to 'upgrade'
+          action: upgrade  # Assurez-vous que 'upgrade' est la bonne action
           dry-run: false
           timeout: 0s
           update-deps: true
