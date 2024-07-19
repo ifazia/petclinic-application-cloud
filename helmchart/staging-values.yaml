@@ -26,7 +26,7 @@ vetsservice:
 visitsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
-  version: 10009334541-19
+  version: 10010911545-20
   database:
     host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
     name: visitdb
