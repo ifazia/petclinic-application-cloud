@@ -15,7 +15,7 @@ customersservice:
   jdbcUrl: jdbc:mysql://customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
 vetsservice:
   replicaCount: 1
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
+  image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
   version: 10008195923-44
   database:
     host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
