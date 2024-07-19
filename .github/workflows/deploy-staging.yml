@@ -41,8 +41,8 @@ jobs:
               echo "SERVICE_KEY=visitsservice" >> $GITHUB_ENV
               ;;
             *)
-              echo "Unsupported service: ${{ inputs.service-name }}" >&2  # Log an error message to stderr
-              exit 1  # Exit the script with an error
+              echo "Unsupported service: ${{ inputs.service-name }}" >&2
+              exit 1
               ;;
           esac
 
@@ -88,18 +88,15 @@ jobs:
 
       - name: Generate service-specific values.yaml
         run: |
-          # Check if SERVICE_KEY is set
-          if [ -z "${{ env.SERVICE_KEY }}" ]; then
+          SERVICE_KEY=${{ env.SERVICE_KEY }}
+          if [ -z "${SERVICE_KEY}" ]; then
             echo "SERVICE_KEY is not set" >&2
             exit 1
           fi
-
-          # Generate service-specific values
-          yq eval ".${{ env.SERVICE_KEY }}" helmchart/staging-values.yaml > helmchart/service-values.yaml
+          yq eval ".${SERVICE_KEY}" helmchart/staging-values.yaml > helmchart/service-values.yaml
 
       - name: Combine values
         run: |
-          # Combine values
           yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' helmchart/service-values.yaml helmchart/staging-values.yaml > helmchart/final-service-values.yaml
 
       - name: Check final-service-values.yaml
@@ -115,7 +112,7 @@ jobs:
           config-files: helmchart/final-service-values.yaml
           chart-path: helmchart/
           name: petclinic-staging
-          action: install
+          action: upgrade  # Change to 'upgrade'
           dry-run: false
           timeout: 0s
           update-deps: true
