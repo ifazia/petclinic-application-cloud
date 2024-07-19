@@ -16,7 +16,6 @@ customersservice:
 vetsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
-<<<<<<< HEAD
   version: 10005573818-40
   database:
     host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
@@ -24,16 +23,7 @@ vetsservice:
     username: petclinicvet
     password: redacted
   jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
-=======
-  version: 10005849013-41
-  #replicaCount: 1
-databasevets:
-  host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
-  name: vetdb
-  username: petclinicvet
-  password: redacted
-vetjdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
->>>>>>> 0624c23a0b1a6475ee034d0fb551fdeffbb700a9
+
 visitsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
