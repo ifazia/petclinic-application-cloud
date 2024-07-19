@@ -91,7 +91,7 @@ jobs:
           config-files: helmchart/staging-values.yaml
           chart-path: helmchart/
           name: petclinic-staging
-          action: install
+          action: upgrade  
           dry-run: false
           timeout: 0s
           update-deps: true
