@@ -87,8 +87,7 @@ jobs:
 
       - name: Filter staging-values.yaml for service
         run: |
-          SERVICE_KEY=${{ env.SERVICE_KEY }}
-          yq eval-all --inplace 'select(di == 0) * select(di == 1)' helmchart/staging-values.yaml <(yq eval 'del(. * {"${SERVICE_KEY}": .${SERVICE_KEY}})' helmchart/staging-values.yaml)
+          yq eval-all --inplace 'select(di == 0) * select(di == 1)' helmchart/staging-values.yaml <(echo .${{ env.SERVICE_KEY }} )
 
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
