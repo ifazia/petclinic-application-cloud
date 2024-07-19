@@ -85,10 +85,15 @@ jobs:
             jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=${{ secrets.DB_PASSWORD_VISIT }}
           EOF
 
-      - name: Create service-specific values.yaml with hierarchy
+      - name: Generate service-specific values.yaml
         run: |
           SERVICE_KEY=${{ env.SERVICE_KEY }}
-          yq eval '{"$SERVICE_KEY": .${SERVICE_KEY}}' helmchart/staging-values.yaml > helmchart/service-values.yaml
+          # Ensure the SERVICE_KEY is correctly interpolated
+          yq eval '.${SERVICE_KEY}' helmchart/staging-values.yaml > helmchart/service-values.yaml
+
+      - name: Combine values
+        run: |
+          # Ensure that we combine the correct files
           yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' helmchart/service-values.yaml helmchart/staging-values.yaml > helmchart/final-service-values.yaml
 
       - name: Deploy Helm to Staging
@@ -98,7 +103,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-3
           cluster-name: petclinic-eks
-          config-files: helmchart/service-values.yaml
+          config-files: helmchart/final-service-values.yaml
           chart-path: helmchart/
           name: petclinic-staging
           action: install
