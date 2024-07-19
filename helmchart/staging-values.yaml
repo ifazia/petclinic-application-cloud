@@ -33,15 +33,3 @@ databasevisits:
   username: petclinicvisit
   password: redacted
   jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted
-adminserver:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-admin-server
-  version: latest
-  #replicaCount: 1
-configserver:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-config-server
-  version: latest
-  #replicaCount: 1
-discoveryserver:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-discovery-server
-  version: latest
-  #replicaCount: 1
