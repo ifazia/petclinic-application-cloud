@@ -73,12 +73,13 @@ jobs:
             echo "Error: staging-values.yaml not found."
             exit 1
           fi
+
       - name: Display git status
         run: git status
-  
+
       - name: Display git diff for staging-values.yaml
         run: git diff helmchart/staging-values.yaml
-  
+
       - name: Commit and push updated staging-values.yaml
         run: |
           git config --global user.name "github-actions"
@@ -90,10 +91,11 @@ jobs:
             git commit -m "Update image versions in helmchart/staging-values.yaml"
             git push
           fi
+
   deploy-job:
+    needs: build-and-publish-service
     uses: ./.github/workflows/deploy-staging.yml
     with:
       service-name: ${{ inputs.service-name }}
       service-version: ${{ github.run_id }}-${{ github.run_number }}
     secrets: inherit
-    needs: [build-and-publish-service]
