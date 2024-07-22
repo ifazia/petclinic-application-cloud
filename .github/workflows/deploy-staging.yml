@@ -81,6 +81,15 @@ jobs:
             jdbcUrl: jdbc:mysql://visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=${{ secrets.DB_PASSWORD_VISIT }}
           EOF
 
+      - name: Check if namespace exists
+        run: |
+          if kubectl get namespace staging; then
+            echo "Namespace 'staging' already exists."
+          else
+            echo "Creating namespace 'staging'."
+            kubectl create namespace staging
+          fi
+  
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
         with:
