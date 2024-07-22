@@ -65,7 +65,7 @@ jobs:
       - name: Update Image Versions
         run: |
           chmod +x ./update-values.sh
-          ./update-values.sh
+          ./update-values.sh ${{ inputs.service-name }} ${{ env.IMAGE_NAME }}
 
       - name: Check for updated staging-values.yaml
         run: |

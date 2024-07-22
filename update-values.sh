@@ -40,25 +40,18 @@ update_service_version() {
   yq eval ".${service_key}.version = \"${image_tag}\"" -i "$values_file"
 }
 
-# Liste des microservices à mettre à jour
-services=(
-  "spring-petclinic-api-gateway"
-  "spring-petclinic-customers-service"
-  "spring-petclinic-vets-service"
-  "spring-petclinic-visits-service"
-)
+# Paramètres du script
+service_name="$1"
+image_tag="$2"
 
-# Parcourir chaque microservice pour récupérer le tag d'image et mettre à jour le tag de version dans staging-values.yaml
-for service in "${services[@]}"; do
-  # Récupérer le tag d'image pour le service spécifié
-  image_tag=$(aws ecr-public describe-images --repository-name "$service" --query "reverse(sort_by(imageDetails, &imagePushedAt))[0].imageTags[0]" --output text)
-  if [ -z "$image_tag" ]; then
-    echo "Error: Failed to retrieve image tag for $service from ECR Public."
-    exit 1
-  fi
+# Vérifiez que les paramètres ne sont pas vides
+if [ -z "$service_name" ] || [ -z "$image_tag" ]; then
+  echo "Usage: $0 <service_name> <image_tag>"
+  exit 1
+fi
 
-  update_service_version "$service" "$image_tag"
-done
+# Mettre à jour la version du service spécifié
+update_service_version "$service_name" "$image_tag"
 
-echo "Values updated successfully."
+echo "Values updated successfully for $service_name."
 cat helmchart/staging-values.yaml
