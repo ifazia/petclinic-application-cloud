@@ -7,26 +7,31 @@ if ! command -v yq &> /dev/null; then
     chmod +x /usr/bin/yq
 fi
 
-# Fonction pour mettre à jour le tag de version dans staging-values.yaml
+# Fonction pour mettre à jour l'image et le tag de version dans staging-values.yaml
 update_service_version() {
   local service_name="$1"
   local image_tag="$2"
   local values_file="helmchart/staging-values.yaml"
   local service_key
+  local image_repo
 
-  # Map service name to the key used in the YAML file
+  # Map service name to the key used in the YAML file and image repository
   case "$service_name" in
     spring-petclinic-api-gateway)
       service_key="apigateway"
+      image_repo="public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway"
       ;;
     spring-petclinic-customers-service)
       service_key="customersservice"
+      image_repo="public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service"
       ;;
     spring-petclinic-vets-service)
       service_key="vetsservice"
+      image_repo="public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service"
       ;;
     spring-petclinic-visits-service)
       service_key="visitsservice"
+      image_repo="public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service"
       ;;
     *)
       echo "Error: Unknown service name $service_name"
@@ -34,9 +39,10 @@ update_service_version() {
       ;;
   esac
 
-  echo "Updating $service_key in $values_file to tag $image_tag"
+  echo "Updating $service_key in $values_file to image $image_repo:$image_tag"
 
-  # Utilisation de yq pour remplacer le tag de version dans le fichier YAML
+  # Utilisation de yq pour remplacer le champ image et version dans le fichier YAML
+  yq eval ".${service_key}.image = \"${image_repo}\"" -i "$values_file"
   yq eval ".${service_key}.version = \"${image_tag}\"" -i "$values_file"
 }
 
@@ -50,7 +56,7 @@ if [ -z "$service_name" ] || [ -z "$image_tag" ]; then
   exit 1
 fi
 
-# Mettre à jour la version du service spécifié
+# Mettre à jour l'image et la version du service spécifié
 update_service_version "$service_name" "$image_tag"
 
 echo "Values updated successfully for $service_name."
