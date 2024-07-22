@@ -2,10 +2,10 @@ namespace: staging
 apigateway:
   replicaCount: 2
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
-  version: spring-petclinic-api-gateway:10038544350-62
+  version: 10038544350-62
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
-  version: spring-petclinic-customers-service:10038155567-44
+  version: 10038155567-44
   replicaCount: 1
   database:
     host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
@@ -16,7 +16,7 @@ customersservice:
 vetsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
-  version: spring-petclinic-vets-service:10038399390-54
+  version: 10038638169-55
   database:
     host: vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
     name: vetdb
@@ -26,7 +26,7 @@ vetsservice:
 visitsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
-  version: spring-petclinic-visits-service:10037934999-21
+  version: 10037934999-21
   database:
     host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
     name: visitdb
