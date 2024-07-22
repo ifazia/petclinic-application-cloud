@@ -89,10 +89,8 @@ jobs:
           aws-region: eu-west-3
 
       - name: Update kubeconfig
-        uses: aws-actions/eks-update-kubeconfig@v1
-        with:
-          region: eu-west-3
-          cluster-name: petclinic-eks
+        run: |
+          aws eks update-kubeconfig --region eu-west-3 --name petclinic-eks
 
       - name: Check if namespace exists
         run: |
