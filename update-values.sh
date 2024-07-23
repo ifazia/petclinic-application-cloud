@@ -15,9 +15,10 @@ update_service_version() {
   local service_key
   local image_repo
 
-  echo $service_name
-  echo $image_tag
-  echo $image_repo
+  echo "$1"
+  echo "$2"
+  echo "$image_repo"
+  echo "$service_key"
   # Map service name to the key used in the YAML file and image repository
   case "$service_name" in
     spring-petclinic-api-gateway)
