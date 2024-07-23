@@ -38,12 +38,12 @@ update_service_version() {
       exit 1
       ;;
   esac
-
+  local image_version="${image_tag##*:}"  # Extrait la partie après le `:`
   echo "Updating $service_key in $values_file to image $image_repo and tag $image_tag"
 
   # Utilisation de yq pour remplacer le champ image et version dans le fichier YAML
   yq eval ".${service_key}.image.repository = \"${image_repo}\"" -i "$values_file"
-  yq eval ".${service_key}.image.tag = \"${image_tag}\"" -i "$values_file"
+  yq eval ".${service_key}.image.tag = \"${image_version}\"" -i "$values_file"
 }
 
 # Paramètres du script
