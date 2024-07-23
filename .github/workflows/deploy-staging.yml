@@ -19,6 +19,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check if namespace exists
+        id: check_namespace
+        run: |
+          if kubectl get namespace staging; then
+            echo "Namespace staging exists"
+          else
+            kubectl create namespace staging
+          fi
+          
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
         with:
