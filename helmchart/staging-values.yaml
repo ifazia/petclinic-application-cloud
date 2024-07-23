@@ -25,8 +25,8 @@ vetsservice:
   jdbcUrl: jdbc:mysql://vet-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
 visitsservice:
   replicaCount: 1
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
-  version: spring-petclinic-visits-service:10056402191-23
+  image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service:10061913766-27
+  version: 10061913766-27
   database:
     host: visit-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
     name: visitdb
