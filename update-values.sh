@@ -15,10 +15,6 @@ update_service_version() {
   local service_key
   local image_repo
 
-  echo "$1"
-  echo "$2"
-  echo "$image_repo"
-  echo "$service_key"
   # Map service name to the key used in the YAML file and image repository
   case "$service_name" in
     spring-petclinic-api-gateway)
@@ -46,8 +42,8 @@ update_service_version() {
   echo "Updating $service_key in $values_file to image $image_repo and tag $image_tag"
 
   # Utilisation de yq pour remplacer le champ image et version dans le fichier YAML
-  yq eval ".${service_key}.image = \"${image_repo}\"" -i "$values_file"
-  yq eval ".${service_key}.version = \"${image_tag}\"" -i "$values_file"
+  yq eval ".${service_key}.image.repository = \"${image_repo}\"" -i "$values_file"
+  yq eval ".${service_key}.image.tag = \"${image_tag}\"" -i "$values_file"
 }
 
 # Paramètres du script
@@ -61,7 +57,7 @@ if [ -z "$service_name" ] || [ -z "$image_tag" ]; then
 fi
 
 # Mettre à jour l'image et la version du service spécifié
-update_service_version "$image_tag"
+update_service_version "$service_name" "$image_tag"
 
 echo "Values updated successfully for $service_name."
 cat helmchart/staging-values.yaml
