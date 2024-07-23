@@ -55,9 +55,11 @@ if [ -z "$service_name" ] || [ -z "$image_tag" ]; then
   echo "Usage: $0 <service_name> <image_tag>"
   exit 1
 fi
-
+echo $service_name
+echo $image_tag
+echo $image_repo
 # Mettre à jour l'image et la version du service spécifié
-update_service_version "$service_name" "$image_tag"
+update_service_version "$image_tag"
 
 echo "Values updated successfully for $service_name."
 cat helmchart/staging-values.yaml
