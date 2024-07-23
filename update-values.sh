@@ -14,6 +14,7 @@ update_service_version() {
   local values_file="helmchart/staging-values.yaml"
   local service_key
   local image_repo
+  local image_version
 
   # Map service name to the key used in the YAML file and image repository
   case "$service_name" in
@@ -40,13 +41,13 @@ update_service_version() {
   esac
 
   # Séparer l'image et la version de l'argument image_tag
-  local image_version="${image_tag##*:}"  # Extrait la partie après le `:`
+  image_version="${image_tag##*:}"  # Extrait la partie après le `:`
   
   echo "Updating $service_key in $values_file to image $image_repo and tag $image_version"
 
-  # Utilisation de yq pour remplacer le champ image et version dans le fichier YAML
-  yq eval ".${service_key}.image.repository = \"${image_repo}\"" -i "$values_file"
-  yq eval ".${service_key}.image.tag = \"${image_version}\"" -i "$values_file"
+  # Utilisation de yq pour remplacer le champ image.repository et version dans le fichier YAML
+  yq eval ".${service_key}.image = \"${image_repo}:${image_version}\"" -i "$values_file"
+  yq eval ".${service_key}.version = \"${image_version}\"" -i "$values_file"
 }
 
 # Paramètres du script
