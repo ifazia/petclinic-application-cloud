@@ -4,13 +4,7 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    schema: classpath*:db/mysql/schema.sql
-    data: classpath*:db/mysql/data.sql
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-
-logging:
-  level:
-    org.springframework: INFO

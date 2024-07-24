@@ -42,7 +42,7 @@ spec:
               command: ["sh", "-c", "sleep 10"]
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: kubernetes
+          value: test
         - name: SPRING_DATASOURCE_USERNAME
           value: {{ .Values.customersservice.database.username }}
         - name: DATABASE_URL
