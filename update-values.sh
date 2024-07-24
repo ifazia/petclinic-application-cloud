@@ -35,30 +35,16 @@ update_service_version() {
       exit 1
       ;;
   esac
-
+  image_repo="public.ecr.aws/y6x2k4a9/$service_name"
   # Séparer l'image et la version de l'argument image_tag
   image_version="${image_tag##*:}"  # Extrait la partie après le `:`
   
-  if [[ "$image_tag" == *":"* ]]; then
-    image_repo="${image_tag%:*}"  # Extrait la partie avant le `:`
-  else
-    image_repo="$image_tag"  # Pas de `:`, tout est l'image
-  fi
-
-  # Pour vérifier que image_repo contient la partie du dépôt d'image
-  echo "Extracted image repository: ${image_repo}"
-  echo "Extracted image version: ${image_version}"
-
   echo "Updating $service_key in $values_file to image $image_repo and tag $image_version"
 
   # Utilisation de yq pour remplacer le champ image et version dans le fichier YAML
   yq eval ".${service_key}.image = \"${image_repo}\"" -i "$values_file"
-  if [ -n "$image_version" ]; then
-    yq eval ".${service_key}.version = \"${image_version}\"" -i "$values_file"
-  else
-    # Conserver la version existante si aucune nouvelle version n'est fournie
-    echo "No version provided. The existing version will be kept unchanged."
-  fi
+  yq eval ".${service_key}.version = \"${image_version}\"" -i "$values_file"
+ 
 }
 
 # Paramètres du script
