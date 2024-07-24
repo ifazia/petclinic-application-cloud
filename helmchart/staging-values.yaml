@@ -4,13 +4,8 @@ apigateway:
   image: public.ecr.aws/y6x2k4a9/spring-petclinic-api-gateway
   version: 10072637271-67
 customersservice:
-<<<<<<< HEAD
   image: public.ecr.aws/y6x2k4a9/spring-petclinic-customers-service
-  version: spring-petclinic-customers-service:10056217572-45
-=======
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
-  version: 10072926798-48
->>>>>>> 42c8c0915d81afe087e415b5c808d1b7f7749843
+  version: 10056217572-45
   replicaCount: 1
   database:
     host: customer-db.c34i6uggo2hc.eu-west-3.rds.amazonaws.com:3306
