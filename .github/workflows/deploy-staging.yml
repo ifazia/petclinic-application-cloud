@@ -30,12 +30,16 @@ jobs:
         run: |
           aws eks update-kubeconfig --region eu-west-3 --name petclinic-eks
 
-      - name: Check if namespace exists
+      - name: Check if namespace exists and update metadata
         id: check_namespace
         run: |
           if kubectl get namespace staging; then
-            echo "Namespace staging exists"
+            echo "Namespace staging exists, updating metadata..."
+            kubectl annotate namespace staging meta.helm.sh/release-name=petclinic-staging --overwrite
+            kubectl annotate namespace staging meta.helm.sh/release-namespace=staging --overwrite
+            kubectl label namespace staging app.kubernetes.io/managed-by=Helm --overwrite
           else
+            echo "Namespace staging does not exist, creating it..."
             kubectl create namespace staging
           fi
 
@@ -54,5 +58,3 @@ jobs:
           timeout: 0s
           update-deps: true
           namespace: staging
-
-      
