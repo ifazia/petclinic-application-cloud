@@ -16,43 +16,44 @@ update_service_version() {
   local image_repo
   local image_version
 
-  # Map service name to the key used in the YAML file
+  # Map service name to the key used in the YAML file and image repository
   case "$service_name" in
     spring-petclinic-api-gateway)
       service_key="apigateway"
+      image_repo="public.ecr.aws/y6x2k4a9/spring-petclinic-api-gateway"
       ;;
     spring-petclinic-customers-service)
       service_key="customersservice"
+      image_repo="public.ecr.aws/y6x2k4a9/spring-petclinic-customers-service"
       ;;
     spring-petclinic-vets-service)
       service_key="vetsservice"
+      image_repo="public.ecr.aws/y6x2k4a9/spring-petclinic-vets-service"
       ;;
     spring-petclinic-visits-service)
       service_key="visitsservice"
+      image_repo="public.ecr.aws/y6x2k4a9/spring-petclinic-visits-service"
       ;;
     *)
       echo "Error: Unknown service name $service_name"
       exit 1
       ;;
   esac
+
+  # Séparer l'image et la version de l'argument image_tag
   image_version="${image_tag##*:}"  # Extrait la partie après le `:`
-  # Vérifiez si l'image_tag contient un `:` et séparez en conséquence
   if [[ "$image_tag" == *":"* ]]; then
     image_repo="${image_tag%:*}"  # Extrait la partie avant le `:`
   else
-    image_repo="$image_tag"  # Si pas de `:`, alors c'est tout le dépôt d'image
+    image_repo="$image_tag"  # Pas de `:`, tout est l'image
   fi
-
+ 
   echo "Updating $service_key in $values_file to image $image_repo and tag $image_version"
 
   # Utilisation de yq pour remplacer le champ image et version dans le fichier YAML
   yq eval ".${service_key}.image = \"${image_repo}\"" -i "$values_file"
-  if [ -n "$image_version" ]; then
-    yq eval ".${service_key}.version = \"${image_version}\"" -i "$values_file"
-  else
-    # Si pas de version fournie, supprimer le champ version
-    yq eval "del(.${service_key}.version)" -i "$values_file"
-  fi
+  yq eval ".${service_key}.version = \"${image_version}\"" -i "$values_file"
+  
 }
 
 # Paramètres du script
