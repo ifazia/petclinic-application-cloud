@@ -10,7 +10,6 @@ RUN wget -O dockerize.tar.gz https://github.com/jwilder/dockerize/releases/downl
 RUN tar xzf dockerize.tar.gz
 RUN chmod +x dockerize
 
-
 # wget is not installed on adoptopenjdk:11-jre-hotspot
 FROM adoptopenjdk:11-jre-hotspot
 
@@ -22,7 +21,10 @@ COPY --from=builder application/dockerize ./
 ARG EXPOSED_PORT
 EXPOSE ${EXPOSED_PORT}
 
-ENV SPRING_PROFILES_ACTIVE docker,mysql
+# Copy configuration files
+COPY src/main/resources/application-test.yaml /app/config/application.yaml
+
+ENV SPRING_PROFILES_ACTIVE test
 
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
