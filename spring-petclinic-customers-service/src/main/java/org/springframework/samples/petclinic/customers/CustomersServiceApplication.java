@@ -23,7 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class CustomersServiceApplication {
-//just for tests
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(CustomersServiceApplication.class, args);
