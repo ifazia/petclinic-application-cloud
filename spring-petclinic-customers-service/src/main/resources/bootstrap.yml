@@ -40,7 +40,9 @@ spring:
 
 ---
 spring:
-  profiles: tas4k8s
+  config:
+    activate:
+      on-profile: tas4k8s
   cloud:
     config:
       enabled: false
