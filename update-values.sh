@@ -20,19 +20,19 @@ update_service_version() {
   case "$service_name" in
     spring-petclinic-api-gateway)
       service_key="apigateway"
-      image_repo="public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway"
+      image_repo="public.ecr.aws/y6x2k4a9/spring-petclinic-api-gateway"
       ;;
     spring-petclinic-customers-service)
       service_key="customersservice"
-      image_repo="public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service"
+      image_repo="public.ecr.aws/y6x2k4a9/spring-petclinic-customers-service"
       ;;
     spring-petclinic-vets-service)
       service_key="vetsservice"
-      image_repo="public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service"
+      image_repo="public.ecr.aws/y6x2k4a9/spring-petclinic-vets-service"
       ;;
     spring-petclinic-visits-service)
       service_key="visitsservice"
-      image_repo="public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service"
+      image_repo="public.ecr.aws/y6x2k4a9/spring-petclinic-visits-service"
       ;;
     *)
       echo "Error: Unknown service name $service_name"
