@@ -42,7 +42,7 @@ update_service_version() {
 
   # Séparer l'image et la version de l'argument image_tag
   image_version="${image_tag##*:}"  # Extrait la partie après le `:`
-  
+
   echo "Updating $service_key in $values_file to image $image_repo and tag $image_version"
 
   # Utilisation de yq pour remplacer le champ image.repository et version dans le fichier YAML
