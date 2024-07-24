@@ -41,7 +41,7 @@ update_service_version() {
   esac
 
   # Séparer l'image et la version de l'argument image_tag
-  image_repo="${image_tag%%:*}"  # Extrait la partie avant le `:`
+  image_repo="${image_tag%:*}"  # Extrait la partie avant le `:`
   image_version="${image_tag##*:}"  # Extrait la partie après le `:`
 
   echo "Updating $service_key in $values_file to image $image_repo and tag $image_version"
