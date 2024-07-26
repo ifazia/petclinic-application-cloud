@@ -16,6 +16,7 @@ spec:
       labels:
         app: customers-service
     spec:
+      serviceAccountName: rds-access-sa
       containers:
       - image: {{ .Values.customersservice.image }}:{{ .Values.customersservice.version }}
         name: customers-service
