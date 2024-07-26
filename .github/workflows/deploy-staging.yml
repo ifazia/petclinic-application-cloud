@@ -41,6 +41,9 @@ jobs:
           else
             echo "Namespace staging does not exist, creating it..."
             kubectl create namespace staging
+            kubectl annotate namespace staging meta.helm.sh/release-name=petclinic-staging
+            kubectl annotate namespace staging meta.helm.sh/release-namespace=staging
+            kubectl label namespace staging app.kubernetes.io/managed-by=Helm
           fi
 
       - name: Deploy Helm to Staging
