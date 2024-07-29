@@ -13,7 +13,7 @@ RUN chmod +x dockerize
 # wget is not installed on adoptopenjdk:11-jre-hotspot
 FROM adoptopenjdk:11-jre-hotspot
 
-WORKDIR application
+
 
 # Dockerize
 COPY --from=builder application/dockerize ./

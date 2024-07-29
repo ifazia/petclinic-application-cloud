@@ -178,7 +178,8 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-                  <layers>
+					<mainClass>org.springframework.samples.petclinic.vets.VetsServiceApplication</mainClass>
+				  <layers>
                     <enabled>true</enabled>
                   </layers>
 				</configuration>
