@@ -37,8 +37,29 @@ spec:
               command: ["sh", "-c", "sleep 10"]
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: kubernetes
+          value: kubernetes,test
         ports:
         - name: http
           containerPort: 8080
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config/application-primary.yaml
+          subPath: application-primary.yaml
+        - name: config-volume
+          mountPath: /config/application-secondary.yaml
+          subPath: application-secondary.yaml
+        - name: config-volume
+          mountPath: /config/application-tertiary.yaml
+          subPath: application-tertiary.yaml
+      volumes:
+      - name: config-volume
+        configMap:
+          name: petclinic-config
+          items:
+          - key: application-primary.yaml
+            path: application-primary.yaml
+          - key: application-secondary.yaml
+            path: application-secondary.yaml
+          - key: application-tertiary.yaml
+            path: application-tertiary.yaml
       restartPolicy: Always
