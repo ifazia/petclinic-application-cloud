@@ -4,16 +4,38 @@ metadata:
   name: petclinic-config
   namespace: {{ .Values.namespace }}
 data:
-  application.yaml: |-
-    server:
-      shutdown: graceful
-      lifecycle:
-        timeout-per-shutdown-phase: 15
-      port: 8080
-      compression:
-        enabled: true
-        mime-types: application/json,text/css,application/javascript
-        min-response-size: 2048
+  application-primary.yaml: |-
+    spring:
+      datasource:
+        url: jdbc:mysql://customer-db.czoc8a8mks78.eu-west-3.rds.amazonaws.com:3306/customerdb
+        username: ${SPRING_DATASOURCE_USERNAME}
+        password: ${SPRING_DATASOURCE_PASSWORD}
+        schema: classpath*:db/mysql/schema.sql
+        data: classpath*:db/mysql/data.sql
+        platform: mysql
+        initialization-mode: always
+
+  application-secondary.yaml: |-
+    spring:
+      datasource:
+        url: jdbc:mysql://vet-db.czoc8a8mks78.eu-west-3.rds.amazonaws.com:3306/vetdb
+        username: ${SPRING_DATASOURCE_USERNAME}
+        password: ${SPRING_DATASOURCE_PASSWORD}
+        schema: classpath*:db/mysql/schema.sql
+        data: classpath*:db/mysql/data.sql
+        platform: mysql
+        initialization-mode: always
+
+  application-tertiary.yaml: |-
+    spring:
+      datasource:
+        url: jdbc:mysql://visit-db.czoc8a8mks78.eu-west-3.rds.amazonaws.com:3306/visitdb
+        username: ${SPRING_DATASOURCE_USERNAME}
+        password: ${SPRING_DATASOURCE_PASSWORD}
+        schema: classpath*:db/mysql/schema.sql
+        data: classpath*:db/mysql/data.sql
+        platform: mysql
+        initialization-mode: always
 
     wavefront:
       application:
