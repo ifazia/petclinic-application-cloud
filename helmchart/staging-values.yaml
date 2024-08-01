@@ -5,31 +5,31 @@ apigateway:
   version: 10201953532-76
 customersservice:
   image: public.ecr.aws/y6x2k4a9/spring-petclinic-customers-service
-  version: 10177325516-75
+  version: 10202171261-79
   replicaCount: 1
   database:
-    host: customer-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
+    host: customer-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
     name: customerdb
     username: petcliniccustomer
     password: redacted
-  jdbcUrl: jdbc:mysql://customer-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
+  jdbcUrl: jdbc:mysql://customer-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
 vetsservice:
   replicaCount: 1
   image: public.ecr.aws/y6x2k4a9/spring-petclinic-vets-service
-  version: 10076175291-65
+  version: latest
   database:
-    host: vet-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
+    host: vet-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
     name: vetdb
     username: petclinicvet
     password: redacted
-  jdbcUrl: jdbc:mysql:/vet-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
+  jdbcUrl: jdbc:mysql:/vet-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
 visitsservice:
   replicaCount: 1
   image: public.ecr.aws/y6x2k4a9/spring-petclinic-visits-service
-  version: 10076396914-30
+  version: latest
   database:
-    host: visit-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
+    host: visit-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
     name: visitdb
     username: petclinicvisit
     password: redacted
-  jdbcUrl: jdbc:mysql://visit-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted
+  jdbcUrl: jdbc:mysql://visit-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted

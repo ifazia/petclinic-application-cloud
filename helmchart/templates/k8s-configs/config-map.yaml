@@ -7,7 +7,7 @@ data:
   application-primary.yaml: |-
     spring:
       datasource:
-        url: jdbc:mysql://customer-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306/customerdb
+        url: jdbc:mysql://customer-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306/customerdb
         username: ${SPRING_DATASOURCE_USERNAME}
         password: ${SPRING_DATASOURCE_PASSWORD}
         schema: classpath*:db/mysql/schema.sql
@@ -18,7 +18,7 @@ data:
   application-secondary.yaml: |-
     spring:
       datasource:
-        url: jdbc:mysql://vet-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306/vetdb
+        url: jdbc:mysql://vet-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306/vetdb
         username: ${SPRING_DATASOURCE_USERNAME}
         password: ${SPRING_DATASOURCE_PASSWORD}
         schema: classpath*:db/mysql/schema.sql
@@ -29,7 +29,7 @@ data:
   application-tertiary.yaml: |-
     spring:
       datasource:
-        url: jdbc:mysql://visit-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306/visitdb
+        url: jdbc:mysql://visit-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306/visitdb
         username: ${SPRING_DATASOURCE_USERNAME}
         password: ${SPRING_DATASOURCE_PASSWORD}
         schema: classpath*:db/mysql/schema.sql
