@@ -1,17 +1,9 @@
 spring:
   cloud:
     config:
-      enabled: false
+      uri: http://localhost:8888
   application:
-    name: api-gateway
-management:
-  metrics:
-    export:
-      wavefront:
-        apiToken: ""  # Gardez vide pour les tests
-  endpoints:
-    restart:
-      enabled: true
+    name: visits-service
 ---
 spring:
   config:
@@ -38,13 +30,29 @@ spring:
       secrets:
         enabled: true
 management:
-  endpoints:
-    web:
-      exposure:
-        include: restart
+  endpoint:
+    restart:
+      enabled: true
+  metrics:
+    export:
+      wavefront:
+        enabled: false
 ---
 spring:
-  profiles: test
-eureka:
-  client:
-    enabled: false
+  config:
+    activate:
+      on-profile: tas4k8s
+  cloud:
+    config:
+      enabled: false
+    kubernetes:
+      reload:
+        strategy: restart-context
+        enabled: true
+      config:
+        enabled: true
+        name: petclinic-config
+management:
+  endpoint:
+    restart:
+      enabled: true

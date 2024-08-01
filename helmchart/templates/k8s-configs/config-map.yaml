@@ -40,7 +40,7 @@ data:
     wavefront:
       application:
         name: spring-petclinic-k8s
-      freemium-account: true
+      freemium-account: false
 
     # Logging
     logging.level.org.springframework: INFO
