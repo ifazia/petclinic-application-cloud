@@ -25,3 +25,4 @@ class VisitResourceTest {
 	void contextLoads() {
 	}
 }
+//just for tests
