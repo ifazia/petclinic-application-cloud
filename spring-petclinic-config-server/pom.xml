@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.springframework.samples.petclinic.config</groupId>
-	<artifactId>spring-petclinic-config-server</artifactId>
-	<packaging>jar</packaging>
-	<description>Spring PetClinic Config Server</description>
+    <groupId>org.springframework.samples.petclinic.config</groupId>
+    <artifactId>spring-petclinic-config-server</artifactId>
+    <packaging>jar</packaging>
+    <description>Spring PetClinic Config Server</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -16,30 +17,25 @@
     </parent>
 
     <properties>
-        <spring-boot.build-image.imageName>${REPOSITORY_PREFIX}/spring-petclinic-config-server</spring-boot.build-image.imageName>
         <spring-cloud.version>2021.0.0</spring-cloud.version>
         <spring-cloud-services.version>3.3.0</spring-cloud-services.version>
+        <spring-boot.build-image.imageName>${REPOSITORY_PREFIX}/spring-petclinic-config-server</spring-boot.build-image.imageName>
     </properties>
 
-	<dependencies>
+    <dependencies>
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- Spring Cloud -->
+        <!-- Spring Cloud Config -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
-		</dependency>
 
-        <!-- Third-party librairies -->
+        <!-- Third-party libraries -->
         <dependency>
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-core</artifactId>
@@ -47,16 +43,12 @@
 
         <!-- Testing -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-	</dependencies>
+    </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -74,13 +66,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.assertj</groupId>
-                <artifactId>assertj-core</artifactId>
-                <version>${assertj.version}</version>
-                <scope>test</scope>
-            </dependency>
-       </dependencies>
+        </dependencies>
     </dependencyManagement>
 
     <build>
@@ -90,25 +76,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                  <layers>
-                    <enabled>true</enabled>
-                  </layers>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
+                    <skip>true</skip> <!-- Ignorer la phase de repackage -->
                 </configuration>
                 <executions>
                     <execution>
-                        <!-- Spring Boot Actuator displays build-related information if a
-                            META-INF/build-info.properties file is present -->
                         <goals>
                             <goal>build-info</goal>
                         </goals>
-                        <configuration>
-                            <additionalProperties>
-                                <encoding.source>${project.build.sourceEncoding}</encoding.source>
-                                <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
-                                <java.source>${maven.compiler.source}</java.source>
-                                <java.target>${maven.compiler.target}</java.target>
-                            </additionalProperties>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

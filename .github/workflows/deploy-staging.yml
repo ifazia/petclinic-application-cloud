@@ -24,11 +24,11 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-3
+          aws-region: us-east-1
 
       - name: Update kubeconfig
         run: |
-          aws eks update-kubeconfig --region eu-west-3 --name petclinic-eks
+          aws eks update-kubeconfig --region us-east-1 --name petclinic-eks
 
       - name: Check if namespace exists and update metadata
         id: check_namespace
@@ -51,7 +51,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-3
+          aws-region: us-east-1
           cluster-name: petclinic-eks
           config-files: helmchart/staging-values.yaml
           chart-path: helmchart/

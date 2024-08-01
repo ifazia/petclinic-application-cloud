@@ -10,7 +10,7 @@ customersservice:
   version: latest #9339664015-9
   replicaCount: 1
   database:
-    host: customer-db.czoc8a8mks78.eu-west-3.rds.amazonaws.com:3306
+    host: customer-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
     name: customerdb
     username: petcliniccustomer
     password: redacted
@@ -20,7 +20,7 @@ vetsservice:
   version: latest #9339762516-6
   replicaCount: 1
   database:
-    host: vet-db.czoc8a8mks78.eu-west-3.rds.amazonaws.com:3306
+    host: vet-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
     name: vetdb
     username: petclinicvet
     password: redacted
@@ -30,7 +30,7 @@ visitsservice:
   version: latest #9339762528-5
   replicaCount: 1
   database:
-    host: visit-db.czoc8a8mks78.eu-west-3.rds.amazonaws.com:3306
+    host: visit-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
     name: visitdb
     username: petclinicvisit
     password: redacted
