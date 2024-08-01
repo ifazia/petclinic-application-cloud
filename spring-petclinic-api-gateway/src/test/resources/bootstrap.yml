@@ -11,7 +11,7 @@ management:
         apiToken: ""  # Gardez vide pour les tests
   endpoints:
     restart:
-      enabled: true
+      enabled: true  # Activer le point de redémarrage
 ---
 spring:
   config:
