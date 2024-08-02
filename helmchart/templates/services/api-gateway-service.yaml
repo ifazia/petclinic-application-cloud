@@ -6,7 +6,7 @@ metadata:
   name: api-gateway-service
   namespace: {{ .Values.namespace }}
 spec:
-  type: NodePort
+  type: loadBalancer
   selector:
     app: api-gateway
   ports:
