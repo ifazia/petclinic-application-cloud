@@ -4,10 +4,6 @@ spring:
   cloud:
     config:
       enabled: false
-  logging:
-    level:
-      root: DEBUG 
-
 management:
   metrics:
     export:
