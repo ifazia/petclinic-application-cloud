@@ -233,7 +233,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>org.springframework.samples.petclinic.gateway.ApiGatewayApplication</mainClass> <!-- Remplacez par la classe principale de votre API Gateway -->
+                    <mainClass>org.springframework.samples.petclinic.api.ApiGatewayApplication</mainClass> <!-- Remplacez par la classe principale de votre API Gateway -->
                     <layers>
                         <enabled>true</enabled>
                     </layers>

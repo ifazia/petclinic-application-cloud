@@ -24,7 +24,7 @@ EXPOSE ${EXPOSED_PORT}
 # Copy configuration files
 COPY src/main/resources/application-test.yaml /app/config/application.yaml
 
-ENV SPRING_PROFILES_ACTIVE test
+ENV SPRING_PROFILES_ACTIVE docker,mysql
 
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
