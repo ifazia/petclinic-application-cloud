@@ -20,7 +20,6 @@
         <spring-boot-admin.version>2.5.5</spring-boot-admin.version>
         <spring-cloud.version>2021.0.0</spring-cloud.version>
         <spring-cloud-services.version>3.3.0</spring-cloud-services.version>
-
         <spring-boot.build-image.imageName>${REPOSITORY_PREFIX}/spring-petclinic-admin-server</spring-boot.build-image.imageName>
     </properties>
 

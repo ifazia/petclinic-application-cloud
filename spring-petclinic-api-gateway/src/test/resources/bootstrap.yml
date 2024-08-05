@@ -51,7 +51,8 @@ management:
       enabled: true
 ---
 spring:
-  profiles: test
+  activate:
+      on-profile: test
 eureka:
   client:
     enabled: false

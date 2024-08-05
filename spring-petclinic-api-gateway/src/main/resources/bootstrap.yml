@@ -9,7 +9,7 @@ management:
   metrics:
     export:
       wavefront:
-        apiToken: ""
+        enabled: false
   endpoint:
     restart:
       enabled: true
