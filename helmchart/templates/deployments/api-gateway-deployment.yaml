@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: api-gateway
   name: api-gateway
   namespace: {{ .Values.namespace }}
 spec:
@@ -10,7 +8,6 @@ spec:
   selector:
     matchLabels:
       app: api-gateway
-  strategy: {}
   template:
     metadata:
       labels:
@@ -22,15 +19,16 @@ spec:
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
-            port: 8080
             path: /actuator/health/liveness
+            port: 8080
           initialDelaySeconds: 90
           periodSeconds: 5
         readinessProbe:
           httpGet:
-            port: 8080
             path: /actuator/health/readiness
-          initialDelaySeconds: 15
+            port: 8080
+          initialDelaySeconds: 30  # Augmenté pour s'assurer que l'application est prête
+          periodSeconds: 10
         lifecycle:
           preStop:
             exec:
@@ -62,4 +60,3 @@ spec:
             path: application-secondary.yaml
           - key: application-tertiary.yaml
             path: application-tertiary.yaml
-      restartPolicy: Always
