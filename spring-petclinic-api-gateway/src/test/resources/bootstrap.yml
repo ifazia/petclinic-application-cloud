@@ -8,7 +8,7 @@ management:
   metrics:
     export:
       wavefront:
-        apiToken: ""  # Gardez vide pour les tests
+        enabled: false  # Désactiver l'exportation vers Wavefront
   endpoints:
     restart:
       enabled: true  # Activer le point de redémarrage
