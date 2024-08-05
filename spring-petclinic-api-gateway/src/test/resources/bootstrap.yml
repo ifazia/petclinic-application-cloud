@@ -12,6 +12,7 @@ management:
   endpoints:
     restart:
       enabled: true
+      
     web:
       exposure:
         include: restart,info,health,env,refresh
@@ -44,7 +45,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: restart,info,health,env
+        include: restart
+  endpoint:
+    restart:
+      enabled: true
 ---
 spring:
   profiles: test
