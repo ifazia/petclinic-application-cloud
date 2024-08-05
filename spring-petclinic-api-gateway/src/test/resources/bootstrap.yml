@@ -8,10 +8,13 @@ management:
   metrics:
     export:
       wavefront:
-        enabled: false  # Désactiver l'exportation vers Wavefront
+        enabled: false
   endpoints:
     restart:
-      enabled: true  # Activer le point de redémarrage
+      enabled: true
+    web:
+      exposure:
+        include: restart,info,health,env
 ---
 spring:
   config:
@@ -41,7 +44,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: restart
+        include: restart,info,health,env
 ---
 spring:
   profiles: test
