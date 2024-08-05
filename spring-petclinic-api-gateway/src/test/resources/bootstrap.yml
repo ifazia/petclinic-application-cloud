@@ -1,9 +1,13 @@
 spring:
+  application:
+    name: api-gateway
   cloud:
     config:
       enabled: false
-  application:
-    name: api-gateway
+  logging:
+    level:
+      root: DEBUG 
+
 management:
   metrics:
     export:
@@ -12,10 +16,9 @@ management:
   endpoints:
     restart:
       enabled: true
-      
     web:
       exposure:
-        include: restart,info,health,env,refresh
+        include: restart, info, health, env, refresh
 ---
 spring:
   config:
@@ -45,13 +48,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: restart
+        include: '*'
   endpoint:
     restart:
       enabled: true
 ---
 spring:
-  activate:
+  config:
+    activate:
       on-profile: test
 eureka:
   client:
