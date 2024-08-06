@@ -13,4 +13,3 @@ class ApiGatewayApplicationTests {
 	}
 
 }
-//just for tests
