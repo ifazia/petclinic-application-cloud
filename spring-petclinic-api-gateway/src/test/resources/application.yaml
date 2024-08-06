@@ -1,0 +1,9 @@
+spring:
+  config:
+    import: 
+      - "configmap:application-primary"
+      - "configmap:application-secondary"
+      - "configmap:application-tertiary"
+
+  application:
+    name: api-gateway
