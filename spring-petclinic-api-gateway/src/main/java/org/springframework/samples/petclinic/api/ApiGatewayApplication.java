@@ -43,6 +43,8 @@ import io.github.resilience4j.timelimiter.TimeLimiterConfig;
  * @author Maciej Szarlinski
  */
 @SpringBootApplication
+@EnableAutoConfiguration(exclude = {WavefrontMetricsExportAutoConfiguration.class})
+
 public class ApiGatewayApplication {
 
     public static void main(String[] args) {
