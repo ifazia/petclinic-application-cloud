@@ -2,7 +2,7 @@ namespace: staging
 apigateway:
   replicaCount: 2
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
-  version: 10263718621-93
+  version: 10267035840-94
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
   version: 10218674798-83
