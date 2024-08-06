@@ -56,15 +56,5 @@ spec:
           limits:
             memory: "1Gi"
             cpu: "500m"
-        volumeMounts:
-        - name: config-volume
-          mountPath: /config/application-secondary.yaml
-          subPath: application-secondary.yaml
-      volumes:
-      - name: config-volume
-        configMap:
-          name: petclinic-config
-          items:
-          - key: application-secondary.yaml
-            path: application-secondary.yaml
+        
       restartPolicy: Always

@@ -14,7 +14,7 @@ management:
       enabled: true
     web:
       exposure:
-        include: restart, info, health, env, refresh
+        include: restart,info,health,env,refresh
 ---
 spring:
   config:

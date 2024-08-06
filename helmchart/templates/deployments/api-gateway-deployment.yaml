@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: api-gateway
   namespace: {{ .Values.namespace }}
+  labels:
+    app: api-gateway
 spec:
   replicas: 2
   selector:
@@ -14,8 +16,8 @@ spec:
         app: api-gateway
     spec:
       containers:
-      - image: {{ .Values.apigateway.image }}:{{ .Values.apigateway.version }}
-        name: api-gateway
+      - name: api-gateway
+        image: {{ .Values.apigateway.image }}:{{ .Values.apigateway.version }}
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -39,24 +41,4 @@ spec:
         ports:
         - name: http
           containerPort: 8080
-        volumeMounts:
-        - name: config-volume
-          mountPath: /config/application-primary.yaml
-          subPath: application-primary.yaml
-        - name: config-volume
-          mountPath: /config/application-secondary.yaml
-          subPath: application-secondary.yaml
-        - name: config-volume
-          mountPath: /config/application-tertiary.yaml
-          subPath: application-tertiary.yaml
-      volumes:
-      - name: config-volume
-        configMap:
-          name: petclinic-config
-          items:
-          - key: application-primary.yaml
-            path: application-primary.yaml
-          - key: application-secondary.yaml
-            path: application-secondary.yaml
-          - key: application-tertiary.yaml
-            path: application-tertiary.yaml
+        
