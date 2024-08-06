@@ -34,16 +34,16 @@ import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
-
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
+
 
 
 /**
  * @author Maciej Szarlinski
  */
+
 @SpringBootApplication
-@EnableAutoConfiguration(exclude = {WavefrontMetricsExportAutoConfiguration.class})
 
 public class ApiGatewayApplication {
 
@@ -89,3 +89,4 @@ public class ApiGatewayApplication {
             .build());
     }
 }
+//just for tests 

@@ -68,8 +68,8 @@ A Wavefront account has been provisioned successfully and the API token has been
 
 To share this account, make sure the following is added to your configuration:
 
-	management.metrics.export.wavefront.api-token=2e41f7cf-1111-2222-3333-7397a56113ca
-	management.metrics.export.wavefront.uri=https://wavefront.surf
+management.metrics.export.wavefront.api-token=2e41f7cf-1111-2222-3333-7397a56113ca
+management.metrics.export.wavefront.uri=https://wavefront.surf
 
 Connect to your Wavefront dashboard using this one-time use link:
 https://wavefront.surf/us/AAA4s5f8xJ9yD
