@@ -42,9 +42,7 @@ import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 /**
  * @author Maciej Szarlinski
  */
-@SpringBootApplication(exclude = { 
-    org.springframework.boot.actuate.autoconfigure.wavefront.WavefrontAutoConfiguration.class
-})
+@SpringBootApplication
 public class ApiGatewayApplication {
 
     public static void main(String[] args) {

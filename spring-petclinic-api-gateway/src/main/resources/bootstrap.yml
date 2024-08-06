@@ -4,7 +4,6 @@ spring:
       uri: http://localhost:8888
   application:
     name: api-gateway
-#this is a bug that needs to be resolved
 management:
   metrics:
     export:
