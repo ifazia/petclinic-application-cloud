@@ -42,9 +42,11 @@ import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 /**
  * @author Maciej Szarlinski
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = { 
+    org.springframework.boot.actuate.autoconfigure.wavefront.WavefrontAutoConfiguration.class
+})
 public class ApiGatewayApplication {
-//just for tests
+
     public static void main(String[] args) {
         SpringApplication.run(ApiGatewayApplication.class, args);
     }
@@ -60,7 +62,7 @@ public class ApiGatewayApplication {
     public WebClient.Builder loadBalancedWebClientBuilder() {
         return WebClient.builder();
     }
-//just for test
+
     @Value("classpath:/static/index.html")
     private Resource indexHtml;
 
@@ -75,7 +77,7 @@ public class ApiGatewayApplication {
                 request -> ServerResponse.ok().contentType(MediaType.TEXT_HTML).bodyValue(indexHtml));
         return router;
     }
-//just for tests
+
     /**
      * Default Resilience4j circuit breaker configuration
      */

@@ -7,8 +7,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>3.0.0</version>
+        <relativePath/>
     </parent>
 
     <groupId>org.springframework.samples.petclinic.client</groupId>
@@ -20,7 +20,7 @@
         <java.version>17</java.version>
         <spring-cloud.version>2021.0.0</spring-cloud.version>
         <spring-cloud-services.version>3.3.0</spring-cloud-services.version>
-        <wavefront.version>2.2.2</wavefront.version>
+        <wavefront.version>3.0.0</wavefront.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <spring-boot.build-image.imageName>${REPOSITORY_PREFIX}/spring-petclinic-api-gateway</spring-boot.build-image.imageName>
     </properties>
@@ -34,11 +34,13 @@
         <dependency>
             <groupId>com.wavefront</groupId>
             <artifactId>wavefront-spring-boot-starter</artifactId>
+            <version>${wavefront.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -64,21 +66,21 @@
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
         <dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing</artifactId>
-			<version>1.0.0</version> <!-- Mettez à jour avec la version compatible -->
-		</dependency>
-		   <!-- Resilience4j -->
-		   <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
-		</dependency>
-	
-		<!-- Spring WebFlux -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webflux</artifactId>
-		</dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing</artifactId>
+            <version>1.0.0</version> <!-- Mettez à jour avec la version compatible -->
+        </dependency>
+        <!-- Resilience4j -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+        </dependency>
+        <!-- Spring WebFlux -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        
         <!-- Third parties -->
         <dependency>
             <groupId>mysql</groupId>
@@ -134,7 +136,7 @@
             <dependency>
                 <groupId>com.wavefront</groupId>
                 <artifactId>wavefront-spring-boot-bom</artifactId>
-                <version>${wavefront.version}</version>
+                <version>3.0.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -231,7 +233,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.1.0</version>
                 <configuration>
                     <mainClass>org.springframework.samples.petclinic.api.ApiGatewayApplication</mainClass> <!-- Remplacez par la classe principale de votre API Gateway -->
                     <layers>
