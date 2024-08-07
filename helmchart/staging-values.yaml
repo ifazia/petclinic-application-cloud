@@ -16,7 +16,7 @@ customersservice:
 vetsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
-  version: 10286486575-75
+  version: 10287703004-76
   database:
     host: vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
     name: vetdb
