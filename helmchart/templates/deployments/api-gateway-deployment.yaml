@@ -23,23 +23,17 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: database-secret
-                key: {{- if .Values.customersservice -}}:
-                      dbcustomerusername
-                    {{- else if .Values.vetsservice -}}:
-                      dbvetusername
-                    {{- else if .Values.visitsservice -}}:
-                      dbvisitusername
+                key: {{- if .Values.customersservice -}} dbcustomerusername
+                    {{- else if .Values.vetsservice -}} dbvetusername
+                    {{- else if .Values.visitsservice -}} dbvisitusername
                     {{- end }}
           - name: SPRING_DATASOURCE_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: database-secret
-                key: {{- if .Values.customersservice -}}:
-                      dbcustomerpassword
-                    {{- else if .Values.vetsservice -}}:
-                      dbvetpassword
-                    {{- else if .Values.visitsservice -}}:
-                      dbvisitpassword
+                key: {{- if .Values.customersservice -}} dbcustomerpassword
+                    {{- else if .Values.vetsservice -}} dbvetpassword
+                    {{- else if .Values.visitsservice -}} dbvisitpassword
                     {{- end }}
           - name: SPRING_CONFIG_LOCATION
             value: /config/application-primary.yaml,/config/application-secondary.yaml,/config/application-tertiary.yaml
