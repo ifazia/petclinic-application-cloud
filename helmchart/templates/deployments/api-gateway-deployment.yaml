@@ -41,6 +41,10 @@ spec:
                     {{- else if .Values.visitsservice -}}:
                       dbvisitpassword
                     {{- end }}
+          - name: SPRING_CONFIG_LOCATION
+            value: /config/application-primary.yaml,/config/application-secondary.yaml,/config/application-tertiary.yaml
+          - name: SPRING_PROFILES_ACTIVE
+            value: kubernetes,test
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -58,9 +62,6 @@ spec:
           preStop:
             exec:
               command: ["sh", "-c", "sleep 10"]
-        env:
-        - name: SPRING_PROFILES_ACTIVE
-          value: kubernetes,test
         ports:
         - name: http
           containerPort: 8080
