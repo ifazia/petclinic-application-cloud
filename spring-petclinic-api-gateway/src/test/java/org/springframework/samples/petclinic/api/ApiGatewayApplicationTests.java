@@ -6,6 +6,11 @@ import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
 @SpringBootTest
+@TestPropertySource(locations = {
+    "classpath:application-primary.yaml",
+    "classpath:application-secondary.yaml",
+    "classpath:application-tertiary.yaml"
+})
 class ApiGatewayApplicationTests {
 
 	@Test
