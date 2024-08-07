@@ -6,7 +6,7 @@ metadata:
   labels:
     app: api-gateway
 spec:
-  replicas: 2
+  replicas: {{ .Values.apigateway.replicaCount | default 2 }}
   selector:
     matchLabels:
       app: api-gateway

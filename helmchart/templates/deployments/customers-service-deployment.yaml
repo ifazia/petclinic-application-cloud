@@ -6,7 +6,7 @@ metadata:
   name: customers-service
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: {{ .Values.customersservice.replicaCount }}
+  replicas: {{ .Values.customersservice.replicaCount | default 1 }}
   selector:
     matchLabels:
       app: customers-service

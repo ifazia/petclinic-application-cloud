@@ -1,5 +1,5 @@
 spring:
-  config:
+config:
     import: "configmap:petclinic-config/application-tertiary.yaml"
   datasource:
     url: jdbc:mysql://visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/visitdb

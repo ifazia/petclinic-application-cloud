@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: "configmap:petclinic-config/application-primary.yaml"
   datasource:
     url: jdbc:mysql://customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/customerdb
     username: ${SPRING_DATASOURCE_USERNAME}

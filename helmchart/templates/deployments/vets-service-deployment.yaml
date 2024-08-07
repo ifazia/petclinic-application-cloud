@@ -6,7 +6,7 @@ metadata:
   name: vets-service
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: {{ .Values.vetsservice.replicaCount }}
+  replicas: {{ .Values.vetsservice.replicaCount | default 1 }}
   selector:
     matchLabels:
       app: vets-service
