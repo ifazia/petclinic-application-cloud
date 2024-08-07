@@ -23,22 +23,22 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: database-secret
-                key: {{- if .Values.customersservice }}
-                        dbcustomerusername
-                     {{- else if .Values.vetsservice }}
-                        dbvetusername
-                     {{- else if .Values.visitsservice }}
-                        dbvisitusername
-                     {{- end }}
-        - name: SPRING_DATASOURCE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: database-secret
-              key: {{- if .Values.customersservice }}
+                key: {{- if .Values.customersservice -}}:
+                      dbcustomerusername
+                    {{- else if .Values.vetsservice -}}:
+                      dbvetusername
+                    {{- else if .Values.visitsservice -}}:
+                      dbvisitusername
+                    {{- end }}
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: database-secret
+                key: {{- if .Values.customersservice -}}:
                       dbcustomerpassword
-                    {{- else if .Values.vetsservice }}
+                    {{- else if .Values.vetsservice -}}:
                       dbvetpassword
-                    {{- else if .Values.visitsservice }}
+                    {{- else if .Values.visitsservice -}}:
                       dbvisitpassword
                     {{- end }}
         imagePullPolicy: Always
@@ -66,7 +66,6 @@ spec:
           containerPort: 8080
         volumeMounts:
         - name: config-volume
-          mountPath: /config
           subPath: application-primary.yaml
           mountPath: /config/application-primary.yaml
         - name: config-volume
