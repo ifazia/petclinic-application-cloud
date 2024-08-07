@@ -1,6 +1,6 @@
 spring:
   config:
-    import: "configmap:application-primary"
+    import: "configmap:petclinic-config/application-primary.yaml"
   datasource:
     url: jdbc:mysql://customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/customerdb
     username: ${SPRING_DATASOURCE_USERNAME}
@@ -8,6 +8,5 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      
-ddl-auto: update
+      ddl-auto: update
     show-sql: true

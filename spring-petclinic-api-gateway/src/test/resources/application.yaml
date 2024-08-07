@@ -1,9 +1,9 @@
 spring:
   config:
     import: 
-      - "configmap:application-primary"
-      - "configmap:application-secondary"
-      - "configmap:application-tertiary"
+      - "configmap:petclinic-config/application-primary.yaml"
+      - "configmap:petclinic-config/application-secondary.yaml"
+      - "configmap:petclinic-config/application-tertiary.yaml"
 
   application:
     name: api-gateway
