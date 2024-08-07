@@ -19,16 +19,28 @@ spec:
       - name: api-gateway
         image: {{ .Values.apigateway.image }}:{{ .Values.apigateway.version }}
         env:
-        - name: SPRING_DATASOURCE_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: database-secret
-              key: {{- if .Values.customersservice }}dbcustomerusername{{- else if .Values.vetsservice }}dbvetusername{{- else if .Values.visitsservice }}dbvisitusername{{- end }}
+          - name: SPRING_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: database-secret
+                key: {{- if .Values.customersservice }}
+                        dbcustomerusername
+                     {{- else if .Values.vetsservice }}
+                        dbvetusername
+                     {{- else if .Values.visitsservice }}
+                        dbvisitusername
+                     {{- end }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
               name: database-secret
-              key: {{- if .Values.customersservice }}dbcustomerpassword{{- else if .Values.vetsservice }}dbvetpassword{{- else if .Values.visitsservice }}dbvisitpassword{{- end }}
+              key: {{- if .Values.customersservice }}
+                      dbcustomerpassword
+                    {{- else if .Values.vetsservice }}
+                      dbvetpassword
+                    {{- else if .Values.visitsservice }}
+                      dbvisitpassword
+                    {{- end }}
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
