@@ -89,8 +89,8 @@ jobs:
             echo "No changes detected in staging-values.yaml, skipping commit."
           else
             git commit -m "Update image versions in helmchart/staging-values.yaml"
-            git push
-          fi
+            git pull --rebase origin main 
+          git push
 
   deploy-job:
     needs: build-and-publish-service
