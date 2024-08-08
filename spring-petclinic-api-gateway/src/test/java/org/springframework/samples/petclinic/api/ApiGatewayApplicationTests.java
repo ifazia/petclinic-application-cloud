@@ -3,14 +3,10 @@ package org.springframework.samples.petclinic.api;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
+import org.springframework.test.context.TestPropertySource;
 @ActiveProfiles("test")
 @SpringBootTest
-@TestPropertySource(locations = {
-    "classpath:application-primary.yaml",
-    "classpath:application-secondary.yaml",
-    "classpath:application-tertiary.yaml"
-})
+
 class ApiGatewayApplicationTests {
 
 	@Test

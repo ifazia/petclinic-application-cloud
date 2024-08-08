@@ -7,29 +7,17 @@ customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
   version: 10286630188-89
   replicaCount: 1
-  database:
-    host: customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
-    name: customerdb
-    username: petcliniccustomer
-    password: redacted
-  jdbcUrl: jdbc:mysql://customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
 vetsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
   version: 10287703004-76
-  database:
-    host: vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
-    name: vetdb
-    username: petclinicvet
-    password: redacted
-  jdbcUrl: jdbc:mysql:/vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
 visitsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
   version: 10218842529-39
-  database:
-    host: visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
-    name: visitdb
-    username: petclinicvisit
-    password: redacted
-  jdbcUrl: jdbc:mysql://visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted
+database:
+  host: petclinic-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
+  name: petclinicdb
+  username: cGV0Y2xpbmljZGJ1c2VyMjAyNA==
+  password: redacted
+jdbcUrl: jdbc:mysql://petclinic-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/petclinicdb?user=cGV0Y2xpbmljZGJ1c2VyMjAyNA==&password=redacted

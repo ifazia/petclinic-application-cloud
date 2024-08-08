@@ -59,17 +59,3 @@ spec:
         ports:
         - name: http
           containerPort: 8080
-        volumeMounts:
-        - name: config-volume
-          subPath: application-primary.yaml
-          mountPath: /config/application-primary.yaml
-        - name: config-volume
-          subPath: application-secondary.yaml
-          mountPath: /config/application-secondary.yaml
-        - name: config-volume
-          subPath: application-tertiary.yaml
-          mountPath: /config/application-tertiary.yaml
-      volumes:
-      - name: config-volume
-        configMap:
-          name: petclinic-config
