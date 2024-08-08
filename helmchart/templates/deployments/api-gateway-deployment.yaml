@@ -20,23 +20,14 @@ spec:
         image: {{ .Values.apigateway.image }}:{{ .Values.apigateway.version }}
         env:
           - name: SPRING_DATASOURCE_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: database-secret
-                key: {{- if .Values.customersservice -}} dbcustomerusername
-                    {{- else if .Values.vetsservice -}} dbvetusername
-                    {{- else if .Values.visitsservice -}} dbvisitusername
-                    {{- end }}
+            value: {{ .Values.database.username }}
+          - name: DATABASE_URL
+            value: {{ .Values.jdbcUrl }}
           - name: SPRING_DATASOURCE_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: database-secret
-                key: {{- if .Values.customersservice -}} dbcustomerpassword
-                    {{- else if .Values.vetsservice -}} dbvetpassword
-                    {{- else if .Values.visitsservice -}} dbvisitpassword
-                    {{- end }}
-          - name: SPRING_CONFIG_LOCATION
-            value: /config/application-primary.yaml,/config/application-secondary.yaml,/config/application-tertiary.yaml
+                key: dbpassword
           - name: SPRING_PROFILES_ACTIVE
             value: kubernetes,test
         imagePullPolicy: Always
