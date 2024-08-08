@@ -48,8 +48,8 @@ data:
           export:
             prometheus:
               enabled: true
-            wavefront:
-              enabled: false
+            #wavefront:
+              #enabled: false
 
       customers-service-id: http://customers-service.{{ .Values.namespace }}.svc.cluster.local:8080
       visits-service-id: http://vists-service.{{ .Values.namespace }}.svc.cluster.local:8080
