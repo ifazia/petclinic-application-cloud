@@ -242,7 +242,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.3.2</version>
                 <configuration>
-                    <mainClass>org.springframework.samples.petclinic.api.ApiGatewayApplicationTests</mainClass>
+                    <mainClass>org.springframework.samples.petclinic.api.ApiGatewayApplication</mainClass>
                     <layers>
                         <enabled>true</enabled>
                     </layers>
