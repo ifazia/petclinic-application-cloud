@@ -18,6 +18,7 @@ visitsservice:
 database:
   host: petclinic-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
   name: petclinicdb
-  username: cGV0Y2xpbmljZGJ1c2VyMjAyNA==
+  username: petclinicdbuser2024
   password: redacted
-jdbcUrl: jdbc:mysql://petclinic-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/petclinicdb?user=cGV0Y2xpbmljZGJ1c2VyMjAyNA==&password=redacted
+jdbcUrl: jdbc:mysql://petclinic-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/petclinicdb
+#?user=petclinicdbuser2024==&password=redacted
