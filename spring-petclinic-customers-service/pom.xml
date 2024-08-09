@@ -53,7 +53,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+            <version>1.10.2</version>
+        </dependency>
         <!-- Spring Cloud -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
