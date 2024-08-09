@@ -33,10 +33,6 @@ management:
   endpoint:
     restart:
       enabled: true
-  metrics:
-    export:
-      wavefront:
-        enabled: false
 ---
 spring:
   config:
