@@ -15,7 +15,7 @@ metadata:
   namespace: {{ .Values.namespace }}
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: rds-access-sa
   namespace: {{ .Values.namespace }}
   apiGroup: ""
 roleRef:
