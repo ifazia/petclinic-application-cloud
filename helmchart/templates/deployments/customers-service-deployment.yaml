@@ -21,26 +21,6 @@ spec:
       - image: {{ .Values.customersservice.image }}:{{ .Values.customersservice.version }}
         name: customers-service
         imagePullPolicy: Always
-        livenessProbe:
-          httpGet:
-            port: 8080
-            path: /actuator/health/liveness
-          initialDelaySeconds: 120
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3 
-        readinessProbe:
-          httpGet:
-            port: 8080
-            path: /actuator/health/readiness
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3  
-        lifecycle:
-          preStop:
-            exec:
-              command: ["sh", "-c", "sleep 10"]
         env:
         - name: SPRING_PROFILES_ACTIVE
           value:  kubernetes,test
