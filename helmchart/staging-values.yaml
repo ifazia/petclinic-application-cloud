@@ -5,7 +5,7 @@ apigateway:
   version: 10304432389-113
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
-  version: 10366742585-100
+  version: 10367084564-101
   replicaCount: 1
 vetsservice:
   replicaCount: 1
