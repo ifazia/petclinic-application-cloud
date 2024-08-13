@@ -20,22 +20,7 @@ spec:
       - image: {{ .Values.vetsservice.image }}:{{ .Values.vetsservice.version }}
         name: vets-service
         imagePullPolicy: Always
-        livenessProbe:
-          httpGet:
-            port: 8080
-            path: /actuator/health/liveness
-          initialDelaySeconds: 90
-          periodSeconds: 5
-        readinessProbe:
-          httpGet:
-            port: 8080
-            path: /actuator/health/readiness
-          initialDelaySeconds: 15
-        lifecycle:
-          preStop:
-            exec:
-              command: ["sh", "-c", "sleep 10"]
-        env:
+      env:
         - name: SPRING_PROFILES_ACTIVE
           value:  kubernetes,test
         - name: SPRING_DATASOURCE_USERNAME
