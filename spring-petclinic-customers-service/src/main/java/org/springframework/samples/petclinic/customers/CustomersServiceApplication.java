@@ -22,8 +22,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Maciej Szarlinski
  */
 @SpringBootApplication
-@EntityScan(basePackages = "org.springframework.samples.petclinic.customers.model")
-@EnableJpaRepositories(basePackages = "org.springframework.samples.petclinic.customers.repository")
 public class CustomersServiceApplication {
 
 
