@@ -25,13 +25,13 @@ spec:
           value:  kubernetes,test
         - name: SPRING_DATASOURCE_USERNAME
           value: {{ .Values.database.username }}
-        - name: DATABASE_URL
-          value: {{ .Values.jdbcUrl }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
               name: database-secret
               key: dbpassword
+        - name: SPRING_DATASOURCE_URL
+          value: {{ .Values.jdbcUrl }}
         ports:
         - containerPort: 8080
         resources:
