@@ -16,11 +16,12 @@ spec:
       labels:
         app: vets-service
     spec:
+      serviceAccountName: rds-access-sa
       containers:
       - image: {{ .Values.vetsservice.image }}:{{ .Values.vetsservice.version }}
         name: vets-service
         imagePullPolicy: Always
-      env:
+        env:
         - name: SPRING_PROFILES_ACTIVE
           value:  kubernetes,test
         - name: SPRING_DATASOURCE_USERNAME
