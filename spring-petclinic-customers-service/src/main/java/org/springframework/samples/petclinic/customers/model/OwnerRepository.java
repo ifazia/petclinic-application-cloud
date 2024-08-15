@@ -16,10 +16,12 @@
 package org.springframework.samples.petclinic.customers.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.samples.petclinic.customers.model.Owner;
 
 /**
- * Repository class for <code>Owner</code> domain objects All method names are compliant with Spring Data naming
- * conventions so this interface can easily be extended for Spring Data See here: http://static.springsource.org/spring-data/jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.query-creation
+ * Repository class for <code>Owner</code> domain objects. All method names are compliant with Spring Data naming
+ * conventions so this interface can easily be extended for Spring Data.
+ * See here: http://static.springsource.org/spring-data/jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.query-creation
  *
  * @author Ken Krebs
  * @author Juergen Hoeller

@@ -35,7 +35,7 @@ import java.util.Optional;
 @Timed("petclinic.pet")
 @RequiredArgsConstructor
 @Slf4j
-class PetResource {
+public class PetResource {
 
     private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;

@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -25,11 +24,5 @@ public class InsecurityConfiguration {
             .httpBasic().disable()
             .csrf().disable();
         return http.build();
-    }
-
-    @Bean
-    public void configure(WebSecurity web) throws Exception {
-        log.warn("configuring insecure WebSecurity");
-        web.ignoring().requestMatchers("/**"); // Utilisez requestMatchers au lieu de antMatchers
     }
 }
