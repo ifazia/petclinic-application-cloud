@@ -11,6 +11,6 @@ applications:
       JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{ enabled: false }'
       SPRING_PROFILES_ACTIVE: cloud
     services:
-      - config 
-      - registry 
-      # - wavefront
+      - config
+      - registry
+      - wavefront

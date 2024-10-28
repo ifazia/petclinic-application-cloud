@@ -39,13 +39,10 @@ import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 
 
-
 /**
  * @author Maciej Szarlinski
  */
-
 @SpringBootApplication
-
 public class ApiGatewayApplication {
 
     public static void main(String[] args) {
@@ -90,4 +87,3 @@ public class ApiGatewayApplication {
             .build());
     }
 }
-
