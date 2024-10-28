@@ -6,7 +6,7 @@ metadata:
   labels:
     app: api-gateway
 spec:
-  replicas: {{ .Values.apigateway.replicaCount | default 2 }}
+  replicas: {{ .Values.apigateway.replicaCount | default 1 }}
   selector:
     matchLabels:
       app: api-gateway
@@ -19,24 +19,6 @@ spec:
       - name: api-gateway
         image: {{ .Values.apigateway.image }}:{{ .Values.apigateway.version }}
         env:
-          - name: SPRING_DATASOURCE_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: database-secret
-                key: {{- if .Values.customersservice -}} dbcustomerusername
-                    {{- else if .Values.vetsservice -}} dbvetusername
-                    {{- else if .Values.visitsservice -}} dbvisitusername
-                    {{- end }}
-          - name: SPRING_DATASOURCE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: database-secret
-                key: {{- if .Values.customersservice -}} dbcustomerpassword
-                    {{- else if .Values.vetsservice -}} dbvetpassword
-                    {{- else if .Values.visitsservice -}} dbvisitpassword
-                    {{- end }}
-          - name: SPRING_CONFIG_LOCATION
-            value: /config/application-primary.yaml,/config/application-secondary.yaml,/config/application-tertiary.yaml
           - name: SPRING_PROFILES_ACTIVE
             value: kubernetes,test
         imagePullPolicy: Always
@@ -51,25 +33,20 @@ spec:
             path: /actuator/health/readiness
             port: 8080
           initialDelaySeconds: 30
-          periodSeconds: 10
+          #periodSeconds: 10
         lifecycle:
           preStop:
             exec:
               command: ["sh", "-c", "sleep 10"]
+        resources:
+          limits:
+            memory: 1Gi
+            cpu: 500m
+          requests:
+            cpu: 500m
+            memory: 1Gi
         ports:
         - name: http
           containerPort: 8080
-        volumeMounts:
-        - name: config-volume
-          subPath: application-primary.yaml
-          mountPath: /config/application-primary.yaml
-        - name: config-volume
-          subPath: application-secondary.yaml
-          mountPath: /config/application-secondary.yaml
-        - name: config-volume
-          subPath: application-tertiary.yaml
-          mountPath: /config/application-tertiary.yaml
-      volumes:
-      - name: config-volume
-        configMap:
-          name: petclinic-config
+      restartPolicy: Always
+status: {}

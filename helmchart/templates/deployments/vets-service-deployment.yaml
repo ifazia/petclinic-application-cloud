@@ -16,6 +16,7 @@ spec:
       labels:
         app: vets-service
     spec:
+      serviceAccountName: rds-access-sa
       containers:
       - image: {{ .Values.vetsservice.image }}:{{ .Values.vetsservice.version }}
         name: vets-service
@@ -35,26 +36,25 @@ spec:
           preStop:
             exec:
               command: ["sh", "-c", "sleep 10"]
+        resources:
+          limits:
+            memory: 1Gi
+            cpu: 500m
+          requests:
+            cpu: 500m
+            memory: 1Gi
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: kubernetes
-        - name: DATABASE_URL
-          value: {{ .Values.vetsservice.jdbcUrl }}
+          value:  kubernetes,test
         - name: SPRING_DATASOURCE_USERNAME
-          value: {{ .Values.vetsservice.database.username }}
+          value: {{ .Values.database.username }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
-             secretKeyRef:
-               name: database-secret
-               key: dbvetpassword
+            secretKeyRef:
+              name: database-secret
+              key: dbpassword
+        - name: SPRING_DATASOURCE_URL
+          value: {{ .Values.jdbcUrl }}
         ports:
         - containerPort: 8080
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "1Gi"
-            cpu: "500m"
-        
       restartPolicy: Always

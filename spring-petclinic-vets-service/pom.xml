@@ -27,7 +27,7 @@
 
 		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
 
-		<spring-boot.build-image.imageName>${REPOSITORY_PREFIX}/spring-petclinic-vets-service</spring-boot.build-image.imageName>
+		<spring-boot.build-image.imageName>${secrets.ECR_REGISTRY}/spring-petclinic-vets-service</spring-boot.build-image.imageName>
 	</properties>
 
 	<dependencies>
@@ -178,8 +178,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>org.springframework.samples.petclinic.vets.VetsServiceApplication</mainClass>
-				  <layers>
+                  <layers>
                     <enabled>true</enabled>
                   </layers>
 				</configuration>

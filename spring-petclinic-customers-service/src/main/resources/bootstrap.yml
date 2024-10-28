@@ -1,17 +1,9 @@
 spring:
   cloud:
     config:
-      uri: http://config-server:8888
+      uri: http://localhost:8888
   application:
     name: customers-service
-management:
-  metrics:
-    export:
-      wavefront:
-        enabled: false
-  endpoint:
-    restart:
-      enabled: true
 ---
 spring:
   config:
@@ -35,9 +27,10 @@ spring:
       config:
         enabled: true
         name: petclinic-config
-      secrets:
-        enabled: true
-
+management:
+  endpoint:
+    restart:
+      enabled: true
 ---
 spring:
   config:
@@ -47,9 +40,8 @@ spring:
     config:
       enabled: false
     kubernetes:
-      enabled: true
       reload:
-        strategy: restart_context
+        strategy: restart-context
         enabled: true
       config:
         enabled: true

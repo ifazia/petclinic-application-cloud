@@ -1,36 +1,35 @@
 namespace: production
-
 apigateway:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
-  version: latest #9339762518-5
-  replicaCount: 2
-
+  replicaCount: 1
+  image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
+  version: 10269734377-97
 customersservice:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
-  version: latest #9339664015-9
+  image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
+  version: 10286630188-89
   replicaCount: 1
   database:
-    host: customer-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
+    host: customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
     name: customerdb
     username: petcliniccustomer
     password: redacted
-
+  jdbcUrl: jdbc:mysql://customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/customerdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=customerdb
 vetsservice:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
-  version: latest #9339762516-6
   replicaCount: 1
+  image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
+  version: 10287703004-76
   database:
-    host: vet-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
+    host: vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
     name: vetdb
     username: petclinicvet
     password: redacted
-
+  jdbcUrl: jdbc:mysql://vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/vetdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=vetdb
 visitsservice:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
-  version: latest #9339762528-5
   replicaCount: 1
+  image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
+  version: 10218842529-39
   database:
-    host: visit-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
+    host: visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
     name: visitdb
     username: petclinicvisit
     password: redacted
+  jdbcUrl: jdbc:mysql://visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/visitdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=visitdb

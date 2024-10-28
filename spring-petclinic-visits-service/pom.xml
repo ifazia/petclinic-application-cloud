@@ -24,7 +24,7 @@
 		<spring-cloud.version>2021.0.0</spring-cloud.version>
 		<wavefront.version>2.2.2</wavefront.version>
 
-		<spring-boot.build-image.imageName>${REPOSITORY_PREFIX}/spring-petclinic-visits-service</spring-boot.build-image.imageName>
+		<spring-boot.build-image.imageName>${secrets.ECR_REGISTRY}/spring-petclinic-visits-service</spring-boot.build-image.imageName>
         <spring-cloud-services.version>3.3.0</spring-cloud-services.version>
     </properties>
 

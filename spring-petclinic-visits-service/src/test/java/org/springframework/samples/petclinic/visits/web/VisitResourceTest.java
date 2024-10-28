@@ -1,5 +1,11 @@
 package org.springframework.samples.petclinic.visits.web;
 
+import static java.util.Arrays.*;
+import static org.mockito.BDDMockito.*;
+import static org.springframework.samples.petclinic.visits.model.Visit.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +28,32 @@ class VisitResourceTest {
     VisitRepository visitRepository;
 
     @Test
-	void contextLoads() {
-	}
+    void shouldFetchVisits() throws Exception {
+        given(visitRepository.findByPetIdIn(asList(111, 222)))
+            .willReturn(
+                asList(
+                    visit()
+                        .id(1)
+                        .petId(111)
+                        .build(),
+                    visit()
+                        .id(2)
+                        .petId(222)
+                        .build(),
+                    visit()
+                        .id(3)
+                        .petId(222)
+                        .build()
+                )
+            );
+
+        mvc.perform(get("/pets/visits?petId=111,222"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.items[0].id").value(1))
+            .andExpect(jsonPath("$.items[1].id").value(2))
+            .andExpect(jsonPath("$.items[2].id").value(3))
+            .andExpect(jsonPath("$.items[0].petId").value(111))
+            .andExpect(jsonPath("$.items[1].petId").value(222))
+            .andExpect(jsonPath("$.items[2].petId").value(222));
+    }
 }

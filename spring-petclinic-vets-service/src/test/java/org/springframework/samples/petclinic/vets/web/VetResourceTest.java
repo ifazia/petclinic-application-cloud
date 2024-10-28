@@ -15,11 +15,18 @@
  */
 package org.springframework.samples.petclinic.vets.web;
 
+import static java.util.Arrays.*;
+import static org.mockito.BDDMockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.samples.petclinic.vets.model.Vet;
 import org.springframework.samples.petclinic.vets.model.VetRepository;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -32,7 +39,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(VetResource.class)
 @ActiveProfiles("test")
 class VetResourceTest {
-// just for test
+
     @Autowired
     MockMvc mvc;
 
@@ -40,6 +47,15 @@ class VetResourceTest {
     VetRepository vetRepository;
 
     @Test
-	void contextLoads() {
-	}
+    void shouldGetAListOfVets() throws Exception {
+
+        Vet vet = new Vet();
+        vet.setId(1);
+
+        given(vetRepository.findAll()).willReturn(asList(vet));
+
+        mvc.perform(get("/vets").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].id").value(1));
+    }
 }

@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS service_instance_db;
+
+USE service_instance_db;
+
 CREATE TABLE IF NOT EXISTS types (
   id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(80),

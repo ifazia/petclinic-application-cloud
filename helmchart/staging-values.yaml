@@ -1,6 +1,6 @@
 namespace: staging
 apigateway:
-  replicaCount: 2
+  replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
   version: 10269734377-97
 customersservice:
@@ -12,7 +12,7 @@ customersservice:
     name: customerdb
     username: petcliniccustomer
     password: redacted
-  jdbcUrl: jdbc:mysql://customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/customerdb?user=petcliniccustomer&password=redacted
+  jdbcUrl: jdbc:mysql://customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/customerdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=customerdb
 vetsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
@@ -22,7 +22,7 @@ vetsservice:
     name: vetdb
     username: petclinicvet
     password: redacted
-  jdbcUrl: jdbc:mysql:/vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/vetdb?user=petclinicvet&password=redacted
+  jdbcUrl: jdbc:mysql://vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/vetdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=vetdb
 visitsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
@@ -32,4 +32,4 @@ visitsservice:
     name: visitdb
     username: petclinicvisit
     password: redacted
-  jdbcUrl: jdbc:mysql://visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/visitdb?user=petclinicvisit&password=redacted
+  jdbcUrl: jdbc:mysql://visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/visitdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=visitdb
