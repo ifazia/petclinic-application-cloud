@@ -1,9 +1,0 @@
-spring:
-  config:
-    import: 
-      - "configmap:petclinic-config/application-primary.yaml"
-      - "configmap:petclinic-config/application-secondary.yaml"
-      - "configmap:petclinic-config/application-tertiary.yaml"
-
-  application:
-    name: api-gateway

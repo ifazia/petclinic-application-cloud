@@ -4,14 +4,12 @@ spring:
       uri: http://localhost:8888
   application:
     name: api-gateway
+#this is a bug that needs to be resolved
 management:
   metrics:
     export:
       wavefront:
-        enabled: false
-  endpoint:
-    restart:
-      enabled: true
+        apiToken: ""
 ---
 spring:
   config:
@@ -35,8 +33,6 @@ spring:
       config:
         enabled: true
         name: petclinic-config
-      secrets:
-        enabled: true
 management:
   endpoint:
     restart:
