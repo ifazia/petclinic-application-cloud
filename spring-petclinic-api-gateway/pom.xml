@@ -33,8 +33,8 @@
 		<webjars-angular.version>1.6.4</webjars-angular.version>
 		<webjars-angular-ui-router.version>1.0.3</webjars-angular-ui-router.version>
 		<wro4j.version>1.8.0</wro4j.version>
-        <spring-boot.build-image.imageName>${secrets.ECR_REGISTRY}/spring-petclinic-api-gateway</spring-boot.build-image.imageName>
-
+        <spring-boot.build-image.imageName>${ECR_REGISTRY}/spring-petclinic-api-gateway</spring-boot.build-image.imageName>
+		
 	</properties>
 
 	<dependencies>
