@@ -32,8 +32,8 @@
 		<webjars-jquery.version>3.1.1-1</webjars-jquery.version>
 		<webjars-angular.version>1.6.4</webjars-angular.version>
 		<webjars-angular-ui-router.version>1.0.3</webjars-angular-ui-router.version>
-		<spring-boot.build-image.imageName>${env.ECR_REGISTRY}/spring-petclinic-api-gateway</spring-boot.build-image.imageName>
-
+		<ecr.registry>${env.ECR_REGISTRY}</ecr.registry>
+    	<spring-boot.build-image.imageName>${ecr.registry}/${project.artifactId}</spring-boot.build-image.imageName>
 	</properties>
 
 	<dependencies>
@@ -198,6 +198,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.6.3</version>
 				<configuration>
 			      <layers>
 			        <enabled>true</enabled>
