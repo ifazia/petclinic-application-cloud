@@ -27,7 +27,8 @@
         <wavefront.version>2.2.2</wavefront.version>
 
         <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
-        <spring-boot.build-image.imageName>${secrets.ECR_REGISTRY}/spring-petclinic-customers-service</spring-boot.build-image.imageName>
+		<ecr.registry>public.ecr.aws/y6x2k4a9</ecr.registry>
+    	<spring-boot.build-image.imageName>${ecr.registry}/${project.artifactId}</spring-boot.build-image.imageName>
     </properties>
 
 	<dependencies>
@@ -269,6 +270,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.6.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-image</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
