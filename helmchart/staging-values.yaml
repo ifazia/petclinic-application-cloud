@@ -3,23 +3,23 @@ apigateway:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
   version: 10269734377-97
-  #commentaires à enlever une fois le certificat AC validé
-  #ingress:
+  
+  ingress:
     # Subnets for the ingress controller
-    #subnets: "subnet-12345678,subnet-23456789"
+    subnets: "subnet-0beb1689abc5da850,subnet-0092390fafc75e77c"
     # ACM certificate ARN for HTTPS
-    #certificateArn: "arn:aws:acm:us-west-2:123456789012:certificate/abcd1234-5678-90ab-cdef-1234567890ab"
+    certificateArn: "arn:aws:acm:us-east-1:590184139086:certificate/1ca337f2-c0ca-49bc-980c-75ec86d608bb"
     # Hostname for the ingress controller
-    #host: "petclinic.example.com"
-  #alb:
+    host: "petclinicapp.net"
+  alb:
     # Tags to associate with the Application Load Balancer
-    #tags: "Name=alb-name"
+    tags: "Name=alb-name"
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
   version: 10286630188-89
   replicaCount: 1
   database:
-    host: customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
+    host: customer-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
     name: customerdb
     username: admin
 vetsservice:
@@ -27,7 +27,7 @@ vetsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
   version: 10287703004-76
   database:
-    host: vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
+    host: vet-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
     name: vetdb
     username: admin
 visitsservice:
@@ -35,6 +35,6 @@ visitsservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
   version: 10218842529-39
   database:
-    host: visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
+    host: visit-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
     name: visitdb
     username: admin
