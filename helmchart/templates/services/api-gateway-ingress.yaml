@@ -27,7 +27,7 @@ metadata:
 # enlever les commentaires pour le code une fois le certificat acm validé
 spec:
   rules:
-  - host: {{ .Values.ingress.host }}
+  - host: {{ .Values.apigateway.ingress.host }}
     http:
       paths:
       - path: /
