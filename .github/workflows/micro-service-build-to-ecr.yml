@@ -60,11 +60,11 @@ jobs:
 
       - name: Tagging built image
         run: |
-          docker tag ${{ env.IMAGE_ID }} ${ECR_REGISTRY}/${{ env.IMAGE_NAME }}
+          docker tag ${{ env.IMAGE_ID }} ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Pushing ${{ inputs.service-name }} to Amazon ECR
         run: |
-          docker push ${ECR_REGISTRY}/${{ env.IMAGE_NAME }}
+          docker push ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Update Image Versions
         run: |
