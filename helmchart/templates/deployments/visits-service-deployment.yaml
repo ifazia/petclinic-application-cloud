@@ -46,7 +46,7 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value:  kubernetes
         - name: SPRING_DATASOURCE_USERNAME
-          value: {{ .Values.visitsservice.database.username }}
+          value: {{.Values.visitsservice.database.username }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
