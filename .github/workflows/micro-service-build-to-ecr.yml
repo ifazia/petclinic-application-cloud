@@ -10,12 +10,13 @@ on:
 jobs:
   build-and-publish-service:
     runs-on: ubuntu-22.04
+   
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+      
       - name: Setting up Java for the Runner
         uses: actions/setup-java@v4
         with:
@@ -44,7 +45,9 @@ jobs:
         run: |
           cd ${{ inputs.service-name }}
           chmod +x ./mvnw
-          ./mvnw spring-boot:build-image -Pk8s -DREPOSITORY_PREFIX=${{ secrets.ECR_REGISTRY }}
+          IMAGE_NAME="${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}"
+          echo "Building image: $IMAGE_NAME"
+          ./mvnw spring-boot:build-image -Pk8s -Dspring-boot.build-image.imageName=$IMAGE_NAME
           IMAGE_ID=$(docker images -q ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:latest)
           if [ -z "$IMAGE_ID" ]; then
             echo "Error: Image not found."
@@ -56,11 +59,11 @@ jobs:
 
       - name: Tagging built image
         run: |
-          docker tag ${{ env.IMAGE_ID }} ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker tag ${{ env.IMAGE_ID }} ${ECR_REGISTRY}/${{ env.IMAGE_NAME }}
 
       - name: Pushing ${{ inputs.service-name }} to Amazon ECR
         run: |
-          docker push ${{ secrets.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker push ${ECR_REGISTRY}/${{ env.IMAGE_NAME }}
 
       - name: Update Image Versions
         run: |

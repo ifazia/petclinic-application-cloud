@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.visits;
+package org.springframework.samples.petclinic.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.config.server.EnableConfigServer;
 
 /**
  * @author Maciej Szarlinski
  */
+@EnableConfigServer
 @SpringBootApplication
-public class VisitsServiceApplication {
+public class ConfigServerApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(VisitsServiceApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(ConfigServerApplication.class, args);
+	}
 }

@@ -23,9 +23,9 @@
 		<spring-boot.version>2.6.3</spring-boot.version>
 		<spring-cloud.version>2021.0.0</spring-cloud.version>
 		<wavefront.version>2.2.2</wavefront.version>
-
-		<spring-boot.build-image.imageName>${secrets.ECR_REGISTRY}/spring-petclinic-visits-service</spring-boot.build-image.imageName>
-        <spring-cloud-services.version>3.3.0</spring-cloud-services.version>
+		<ecr.registry>${env.ECR_REGISTRY}</ecr.registry>
+		<ecr.registry>public.ecr.aws/y6x2k4a9</ecr.registry>
+    	<spring-boot.build-image.imageName>${ecr.registry}/${project.artifactId}</spring-boot.build-image.imageName>
     </properties>
 
 	<dependencies>
@@ -179,6 +179,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.6.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-image</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 

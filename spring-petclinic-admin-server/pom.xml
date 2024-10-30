@@ -15,12 +15,12 @@
         <version>2.6.3</version>
         <relativePath/>
     </parent>
-    
     <properties>
         <spring-boot-admin.version>2.5.5</spring-boot-admin.version>
         <spring-cloud.version>2021.0.0</spring-cloud.version>
         <spring-cloud-services.version>3.3.0</spring-cloud-services.version>
-        <spring-boot.build-image.imageName>${REPOSITORY_PREFIX}/spring-petclinic-admin-server</spring-boot.build-image.imageName>
+        <ecr.registry>public.ecr.aws/y6x2k4a9</ecr.registry>
+    	<spring-boot.build-image.imageName>${ecr.registry}/${project.artifactId}</spring-boot.build-image.imageName>
     </properties>
 
     <dependencies>
@@ -50,7 +50,7 @@
             <version>${spring-boot-admin.version}</version>
         </dependency>
 
-        <!-- Third-party libraries -->
+        <!-- Third-party librairies -->
         <dependency>
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-core</artifactId>
@@ -74,112 +74,50 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
-
     <build>
         <finalName>admin-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.3</version>
                 <configuration>
                     <layers>
                         <enabled>true</enabled>
                     </layers>
-                    <skip>true</skip> <!-- Ignore the repackage step -->
                 </configuration>
                 <executions>
                     <execution>
-                        <id>build-image</id>
+                        <!-- Spring Boot Actuator displays build-related information if a
+                            META-INF/build-info.properties file is present -->
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                        <configuration>
+                            <additionalProperties>
+                                <encoding.source>${project.build.sourceEncoding}</encoding.source>
+                                <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+                                <java.source>${maven.compiler.source}</java.source>
+                                <java.target>${maven.compiler.target}</java.target>
+                            </additionalProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.6.3</version>
+                <executions>
+                    <execution>
                         <goals>
                             <goal>build-image</goal>
                         </goals>
-                        <configuration>
-                            <imageName>${REPOSITORY_PREFIX}/${project.artifactId}</imageName>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-    
-    <profiles>
-        <profile>
-            <id>local</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.springframework.cloud</groupId>
-                            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>org.springframework.cloud</groupId>
-                            <artifactId>spring-cloud-netflix-ribbon</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>com.netflix.ribbon</groupId>
-                            <artifactId>ribbon-eureka</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>org.springframework.cloud</groupId>
-                            <artifactId>spring-cloud-netflix-hystrix</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>cloud</id>
-            <dependencies>
-                <!-- Spring Cloud Services -->
-                <dependency>
-                    <groupId>io.pivotal.spring.cloud</groupId>
-                    <artifactId>spring-cloud-services-starter-config-client</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>io.pivotal.spring.cloud</groupId>
-                    <artifactId>spring-cloud-services-starter-service-registry</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.springframework.cloud</groupId>
-                            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>org.springframework.cloud</groupId>
-                            <artifactId>spring-cloud-netflix-ribbon</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>com.netflix.ribbon</groupId>
-                            <artifactId>ribbon-eureka</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>org.springframework.cloud</groupId>
-                            <artifactId>spring-cloud-netflix-hystrix</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>k8s</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-kubernetes-client-config</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
 </project>

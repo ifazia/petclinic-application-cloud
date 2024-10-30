@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.visits;
+package org.springframework.samples.petclinic.admin;
 
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-/**
- * @author Maciej Szarlinski
- */
 @SpringBootApplication
-public class VisitsServiceApplication {
-
+@EnableAdminServer
+@EnableDiscoveryClient
+public class SpringBootAdminApplication {
     public static void main(String[] args) {
-        SpringApplication.run(VisitsServiceApplication.class, args);
+        SpringApplication.run(SpringBootAdminApplication.class, args);
     }
+
 }

@@ -35,7 +35,7 @@ update_service_version() {
       exit 1
       ;;
   esac
-  image_repo="public.ecr.aws/i7s8l3z4/$service_name"
+  image_repo="public.ecr.aws/y6x2k4a9/$service_name"
   # Séparer l'image et la version de l'argument image_tag
   image_version="${image_tag##*:}"  # Extrait la partie après le `:`
   

@@ -8,4 +8,4 @@ import org.springframework.context.annotation.Configuration;
 public class DiscoveryConfig {
 
 }
-//just for tests
+//just for test

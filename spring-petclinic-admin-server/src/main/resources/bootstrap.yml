@@ -4,7 +4,6 @@ spring:
       uri: http://localhost:8888
   application:
     name: admin-server
-
 ---
 spring:
   config:

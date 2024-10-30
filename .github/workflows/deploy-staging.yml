@@ -46,6 +46,15 @@ jobs:
             kubectl label namespace staging app.kubernetes.io/managed-by=Helm
           fi
 
+      - name: Create or Update Database Secret
+        env:
+          DB_PASSWORD_BASE64: ${{ secrets.DB_PASSWORD_BASE64 }}
+        run: |
+          kubectl create secret generic database-secret \
+            --namespace staging \
+            --from-literal=dbpassword=$(echo $DB_PASSWORD_BASE64 | base64 --decode) \
+            --dry-run=client -o yaml | kubectl apply -f -
+
       - name: Deploy Helm to Staging
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9
         with:
