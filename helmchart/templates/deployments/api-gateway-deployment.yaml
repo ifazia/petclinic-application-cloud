@@ -20,7 +20,7 @@ spec:
         image: {{ .Values.apigateway.image }}:{{ .Values.apigateway.version }}
         env:
           - name: SPRING_PROFILES_ACTIVE
-            value: kubernetes,test
+            value: kubernetes
         imagePullPolicy: Always
         livenessProbe:
           httpGet:

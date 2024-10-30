@@ -3,6 +3,17 @@ apigateway:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
   version: 10269734377-97
+  #commentaires à enlever une fois le certificat AC validé
+  #ingress:
+    # Subnets for the ingress controller
+    #subnets: "subnet-12345678,subnet-23456789"
+    # ACM certificate ARN for HTTPS
+    #certificateArn: "arn:aws:acm:us-west-2:123456789012:certificate/abcd1234-5678-90ab-cdef-1234567890ab"
+    # Hostname for the ingress controller
+    #host: "petclinic.example.com"
+  #alb:
+    # Tags to associate with the Application Load Balancer
+    #tags: "Name=alb-name"
 customersservice:
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
   version: 10286630188-89
@@ -10,9 +21,7 @@ customersservice:
   database:
     host: customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
     name: customerdb
-    username: petcliniccustomer
-    password: redacted
-  jdbcUrl: jdbc:mysql://customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/customerdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=customerdb
+    username: admin
 vetsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
@@ -20,9 +29,7 @@ vetsservice:
   database:
     host: vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
     name: vetdb
-    username: petclinicvet
-    password: redacted
-  jdbcUrl: jdbc:mysql://vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/vetdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=vetdb
+    username: admin
 visitsservice:
   replicaCount: 1
   image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
@@ -30,6 +37,4 @@ visitsservice:
   database:
     host: visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
     name: visitdb
-    username: petclinicvisit
-    password: redacted
-  jdbcUrl: jdbc:mysql://visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/visitdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=visitdb
+    username: admin

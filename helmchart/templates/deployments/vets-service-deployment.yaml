@@ -45,16 +45,16 @@ spec:
             memory: 1Gi
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value:  kubernetes,test
+          value:  kubernetes
         - name: SPRING_DATASOURCE_USERNAME
-          value: {{ .Values.database.username }}
+          value: {{ .Values.vetsservice.database.username }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
               name: database-secret
               key: dbpassword
         - name: SPRING_DATASOURCE_URL
-          value: {{ .Values.jdbcUrl }}
+          value: jdbc:mysql://{{ .Values.vetsservice.database.dbname }}.{{ .Values.vetsservice.database.dbhost }}/{{ .Values.vetsservice.database.dbname }}?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=vets-db
         ports:
         - containerPort: 8080
       restartPolicy: Always
