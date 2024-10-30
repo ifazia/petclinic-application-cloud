@@ -1,12 +1,12 @@
 namespace: dev
 
 apigateway:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
   version: latest
   replicaCount: 2
 
 customersservice:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
   version: latest
   replicaCount: 1
   database:
@@ -16,7 +16,7 @@ customersservice:
     password: redacted
 
 vetsservice:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
   version: latest
   replicaCount: 1
   database:
@@ -26,7 +26,7 @@ vetsservice:
     password: redacted
 
 visitsservice:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
   version: latest
   replicaCount: 1
   database:

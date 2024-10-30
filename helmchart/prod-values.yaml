@@ -1,10 +1,10 @@
 namespace: production
 apigateway:
   replicaCount: 1
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-api-gateway
   version: 10269734377-97
 customersservice:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-customers-service
   version: 10286630188-89
   replicaCount: 1
   database:
@@ -15,7 +15,7 @@ customersservice:
   jdbcUrl: jdbc:mysql://customer-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/customerdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=customerdb
 vetsservice:
   replicaCount: 1
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-vets-service
   version: 10287703004-76
   database:
     host: vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306
@@ -25,7 +25,7 @@ vetsservice:
   jdbcUrl: jdbc:mysql://vet-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306/vetdb?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=vetdb
 visitsservice:
   replicaCount: 1
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-visits-service
   version: 10218842529-39
   database:
     host: visit-db.c5mqwqo0utao.us-east-1.rds.amazonaws.com:3306

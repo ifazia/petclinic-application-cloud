@@ -1,7 +1,7 @@
 namespace: staging
 apigateway:
   replicaCount: 1
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-api-gateway
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-api-gateway
   version: 10269734377-97
   
   ingress:
@@ -15,7 +15,7 @@ apigateway:
     # Tags to associate with the Application Load Balancer
     tags: "Name=alb-name"
 customersservice:
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-customers-service
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-customers-service
   version: 10286630188-89
   replicaCount: 1
   database:
@@ -24,7 +24,7 @@ customersservice:
     username: admin
 vetsservice:
   replicaCount: 1
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-vets-service
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-vets-service
   version: 10287703004-76
   database:
     host: vet-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
@@ -32,7 +32,7 @@ vetsservice:
     username: admin
 visitsservice:
   replicaCount: 1
-  image: public.ecr.aws/i7s8l3z4/spring-petclinic-visits-service
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-visits-service
   version: 10218842529-39
   database:
     host: visit-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
