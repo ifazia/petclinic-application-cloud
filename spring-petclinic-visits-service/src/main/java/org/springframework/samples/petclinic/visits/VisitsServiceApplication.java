@@ -17,7 +17,6 @@ package org.springframework.samples.petclinic.visits;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author Maciej Szarlinski
@@ -29,4 +28,3 @@ public class VisitsServiceApplication {
         SpringApplication.run(VisitsServiceApplication.class, args);
     }
 }
-//just for test

@@ -2,7 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: petclinic-config
-  namespace: {{ .Values.namespace }}
+  namespace: #{{ .Values.namespace }}
 data:
   application.yaml: |-
     server:
@@ -49,7 +49,7 @@ data:
           prometheus:
             enabled: true
           wavefront:
-            enabled: true
+            enabled: false
 
     customers-service-id: https://customers-service.{{ .Values.namespace }}.svc.cluster.local:443
     visits-service-id: https://visits-service.{{ .Values.namespace }}.svc.cluster.local:443
