@@ -47,7 +47,8 @@ jobs:
           chmod +x ./mvnw
           IMAGE_NAME="${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}"
           echo "Building image: $IMAGE_NAME"
-          ./mvnw spring-boot:build-image -Pk8s -Dspring-boot.build-image.imageName=$IMAGE_NAME
+          #./mvnw spring-boot:build-image -Pk8s -Dspring-boot.build-image.imageName=$IMAGE_NAME
+          ./mvnw spring-boot:build-image -Pk8s -DREPOSITORY_PREFIX=${{ secrets.ECR_REGISTRY }} -Dimage.tag=${{ github.run_id }}-${{ github.run_number }}
           IMAGE_ID=$(docker images -q ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:latest)
           if [ -z "$IMAGE_ID" ]; then
             echo "Error: Image not found."
