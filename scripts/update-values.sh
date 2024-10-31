@@ -7,11 +7,11 @@ if ! command -v yq &> /dev/null; then
     chmod +x /usr/bin/yq
 fi
 
-# Fonction pour mettre à jour l'image et le tag de version dans staging-values.yaml
+# Fonction pour mettre à jour l'image et le tag de version dans prod-values.yaml
 update_service_version() {
   local service_name="$1"
   local image_tag="$2"
-  local values_file="helmchart/staging-values.yaml"
+  local values_file="helmchart/prod-values.yaml"
   local service_key
   local image_repo
   local image_version
@@ -61,4 +61,4 @@ fi
 update_service_version "$service_name" "$image_tag"
 
 echo "Values updated successfully for $service_name."
-cat helmchart/staging-values.yaml
+cat helmchart/prod-values.yaml
