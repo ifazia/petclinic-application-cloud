@@ -8,7 +8,16 @@
 	<artifactId>spring-petclinic-vets-service</artifactId>
 	<packaging>jar</packaging>
 	<description>Spring PetClinic Vets Service</description>
-
+	<repositories>
+		<repository>
+			<id>spring-public</id>
+			<url>https://repo.spring.io/public</url>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -27,7 +36,7 @@
 
 		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
 		<ecr.registry>public.ecr.aws/y6x2k4a9</ecr.registry>
-    	<spring-boot.build-image.imageName>${ecr.registry}/${project.artifactId}</spring-boot.build-image.imageName>
+		<spring-boot.build-image.imageName>${ecr.registry}/${project.artifactId}</spring-boot.build-image.imageName>
 	</properties>
 
 	<dependencies>
@@ -142,7 +151,7 @@
 			<dependency>
 				<groupId>io.pivotal.spring.cloud</groupId>
 				<artifactId>spring-cloud-services-dependencies</artifactId>
-				<version>${spring-cloud-services.version}</version>
+				<version>2.1.0.RELEASE</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -178,9 +187,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-                  <layers>
-                    <enabled>true</enabled>
-                  </layers>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
 				</configuration>
 				<executions>
 					<execution>
@@ -200,18 +209,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build-image</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			
 		</plugins>
 	</build>
 

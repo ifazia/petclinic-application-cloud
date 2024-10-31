@@ -21,17 +21,17 @@ spec:
       - image: {{ .Values.customersservice.image }}:{{ .Values.customersservice.version }}
         name: customers-service
         imagePullPolicy: Always
-        livenessProbe:
-          httpGet:
-            port: 8080
-            path: /actuator/health/liveness
-          initialDelaySeconds: 90
-          periodSeconds: 5
-        readinessProbe:
-          httpGet:
-            port: 8080
-            path: /actuator/health/readiness
-          initialDelaySeconds: 15
+        #livenessProbe:
+          #httpGet:
+            #port: 8080
+            #path: /actuator/health/liveness
+          #initialDelaySeconds: 90
+          #periodSeconds: 5
+        #readinessProbe:
+          #httpGet:
+            #port: 8080
+            #path: /actuator/health/readiness
+          #initialDelaySeconds: 15
         lifecycle:
           preStop:
             exec:
@@ -54,7 +54,7 @@ spec:
               name: database-secret
               key: dbpassword
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://{{ .Values.customersservice.database.dbname }}.{{ .Values.customersservice.database.dbhost }}/{{ .Values.customersservice.database.dbname }}?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=customers-db
+          value: jdbc:mysql://{{ .Values.customersservice.database.dbhost }}/{{ .Values.customersservice.database.dbname }}?queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor&zipkinServiceName=customers-db
         ports:
         - containerPort: 8080
       restartPolicy: Always
