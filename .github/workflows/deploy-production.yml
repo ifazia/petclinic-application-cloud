@@ -54,6 +54,15 @@ jobs:
             --namespace production \
             --from-literal=dbpassword=$(echo $DB_PASSWORD_BASE64 | base64 --decode) \
             --dry-run=client -o yaml | kubectl apply -f -
+      
+      - name: Create Grafana Admin Secret
+        env:
+          GRAFANA_ADMIN_PASSWORD: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}
+        run: |
+          kubectl create secret generic grafana-admin-secret \
+            --namespace monitoring \
+            --from-literal=admin-password=$GRAFANA_ADMIN_PASSWORD \
+            --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Deploy Helm to production
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.9

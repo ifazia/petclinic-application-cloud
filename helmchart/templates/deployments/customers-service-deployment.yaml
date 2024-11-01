@@ -5,6 +5,10 @@ metadata:
     app: customers-service
   name: customers-service
   namespace: {{ .Values.namespace }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/actuator/prometheus"
+    prometheus.io/port: "8081"
 spec:
   replicas: {{ .Values.customersservice.replicaCount | default 1 }}
   selector:
