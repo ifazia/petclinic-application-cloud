@@ -5,7 +5,7 @@ apigateway:
   version: 11610609388-42
   ingress:
     # Subnets for the ingress controller
-    subnets: "subnet-0beb1689abc5da850,subnet-0092390fafc75e77c"
+    #subnets: "${module.vpc.public_subnets}"
     # ACM certificate ARN for HTTPS
     certificateArn: "arn:aws:acm:us-east-1:590184139086:certificate/1ca337f2-c0ca-49bc-980c-75ec86d608bb"
     # Hostname for the ingress controller
