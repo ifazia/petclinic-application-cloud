@@ -1,36 +1,39 @@
 namespace: dev
-
 apigateway:
-  image: public.ecr.aws/y6x2k4a9/spring-petclinic-api-gateway #iguetoulene/spring-petclinic-api-gateway
-  version: latest
-  replicaCount: 2
-
+  replicaCount: 1
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-api-gateway
+  version: 11650471206-43
+  ingress:
+    # Subnets for the ingress controller
+    #subnets: "${module.vpc.public_subnets}"
+    # ACM certificate ARN for HTTPS
+    certificateArn: "arn:aws:acm:us-east-1:590184139086:certificate/e31267f5-3eb8-4c38-b7a3-8f33f145ee1e"
+    # Hostname for the ingress controller
+    host: "petclinicapp.net"
+  alb:
+    # Tags to associate with the Application Load Balancer
+    tags: "Name=alb-name"
 customersservice:
-  image: public.ecr.aws/y6x2k4a9/spring-petclinic-customers-service #iguetoulene/spring-petclinic-customers-service
-  version: latest
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-customers-service
+  version: 11630625770-5
   replicaCount: 1
   database:
-    host: customer-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
+    host: customer-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
     name: customerdb
-    username: petcliniccustomer
-    password: redacted
-
+    username: admin
 vetsservice:
-  image: public.ecr.aws/y6x2k4a9/spring-petclinic-vets-service #iguetoulene/spring-petclinic-vets-service
-  version: latest
   replicaCount: 1
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-vets-service
+  version: 11609614805-4
   database:
-    host: vet-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
+    host: vet-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
     name: vetdb
-    username: petclinicvet
-    password: redacted
-
+    username: admin
 visitsservice:
-  image: public.ecr.aws/y6x2k4a9/spring-petclinic-visits-service #iguetoulene/spring-petclinic-visits-service
-  version: latest
   replicaCount: 1
+  image: public.ecr.aws/y6x2k4a9/spring-petclinic-visits-service
+  version: 11597462723-9
   database:
-    host: visit-db.czoc8a8mks78.us-east-1.rds.amazonaws.com:3306
+    host: visit-db.cd0oecqow1gr.us-east-1.rds.amazonaws.com:3306
     name: visitdb
-    username: petclinicvisit
-    password: redacted
+    username: admin
