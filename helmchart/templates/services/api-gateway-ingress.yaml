@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-gateway-ingress
-  namespace: production #{{ .Values.namespace }}
+  namespace: {{ .Values.namespace }}
   annotations:
     #kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
