@@ -31,4 +31,3 @@ public class CustomersServiceApplication {
 
 
 }
-//just for tests
