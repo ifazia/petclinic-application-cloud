@@ -2,16 +2,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-gateway-ingress
-  namespace: {{ .Values.namespace }}
+  namespace: production #{{ .Values.namespace }}
   annotations:
-    kubernetes.io/ingress.class: alb
+    #kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.apigateway.ingress.certificateArn }}
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:590184139086:certificate/5f92d975-9aac-4a98-a05e-2e56ed5fb532" #{{ .Values.apigateway.ingress.certificateArn }}
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
-    #alb.ingress.kubernetes.io/subnets: {{ .Values.apigateway.ingress.subnets }}
-    alb.ingress.kubernetes.io/tags: {{ .Values.apigateway.alb.tags }}
+    alb.ingress.kubernetes.io/subnets:  '["subnet-007cc19617429addd","subnet-0eb7a2f23aee54c8d"]' #{{ .Values.apigateway.ingress.subnets }}
+    alb.ingress.kubernetes.io/tags: "Name=alb-petclinic" #{{ .Values.apigateway.alb.tags }}
 #spec:
   #ingressClassName: alb
   #rules:
@@ -26,8 +26,9 @@ metadata:
                 #number: 80
 # enlever les commentaires pour le code une fois le certificat acm validé
 spec:
+  ingressClassName: alb
   rules:
-  - host: {{ .Values.apigateway.ingress.host }}
+  - host: "petclinicapp.net" #{{ .Values.apigateway.ingress.host }}
     http:
       paths:
       - path: /
