@@ -7,7 +7,7 @@ apigateway:
     # Subnets for the ingress controller
     subnets: "${module.vpc.public_subnets}"
     # ACM certificate ARN for HTTPS
-    certificateArn: "arn:aws:acm:us-east-1:590184139086:certificate/5f92d975-9aac-4a98-a05e-2e56ed5fb532"
+    certificateArn: "arn:aws:acm:us-east-1:590184139086:certificate/39654292-d547-4f49-942f-f86de419c831"
     # Hostname for the ingress controller
     host: "petclinicapp.net"
   alb:
