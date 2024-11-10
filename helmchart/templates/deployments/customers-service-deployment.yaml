@@ -4,7 +4,7 @@ metadata:
   labels:
     app: customers-service
   name: customers-service
-  namespace: petclinic #{{ .Values.namespace }}
+  namespace: {{ .Values.namespace }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/path: "/actuator/prometheus"

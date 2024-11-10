@@ -11,6 +11,31 @@ scrape_configs:
   static_configs:
   - targets: ['localhost:9090']
 
+ # Job de scraping pour les noeuds Kubernetes
+  - job_name: 'kubernetes-nodes'
+    kubernetes_sd_configs:
+      - role: node
+
+  # Job de scraping pour les pods Kubernetes
+  - job_name: 'kubernetes-pods'
+    kubernetes_sd_configs:
+      - role: pod
+      
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter.monitoring.svc.cluster.local:9100']
+
+  - job_name: 'kube-state-metrics'
+    static_configs:
+      - targets: ['kube-state-metrics.monitoring.svc.cluster.local:8080']
+  # Job pour la collecte des métriques des services Spring Petclinic via Actuator
+  - job_name: 'spring-petclinic-services'
+    metrics_path: /actuator/prometheus
+    kubernetes_sd_configs:
+      - role: endpoints
+
+  # Configuration de scraping des métriques HTTP pour les services spécifiques Petclinic
+
 - job_name: api-gateway
   metrics_path: /actuator/prometheus
   static_configs:

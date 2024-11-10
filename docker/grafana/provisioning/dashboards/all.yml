@@ -1,11 +1,61 @@
-apiVersion: 1
+#apiVersion: 1
 
-providers:
-- name: 'default'
-  orgId: 1
-  folder: ''
-  type: file
-  disableDeletion: false
-  updateIntervalSeconds: 10 #how often Grafana will scan for changed dashboards
-  options:
-    path: /var/lib/grafana/dashboards
+#providers:
+#- name: 'default'
+  #orgId: 1
+  #folder: ''
+  #type: file
+  #disableDeletion: false
+  #updateIntervalSeconds: 10 #how often Grafana will scan for changed dashboards
+  #options:
+    #path: /var/lib/grafana/dashboards
+
+
+apiVersion: 1
+kind: GrafanaDashboard
+metadata:
+  name: petclinic-metrics-dashboard
+  namespace: monitoring
+spec:
+  dashboards:
+    - name: petclinic-dashboard
+      json: |
+        {
+          "dashboard": {
+            "id": null,
+            "uid": "petclinic-dashboard",
+            "title": "Petclinic Application Metrics",
+            "panels": [
+              {
+                "title": "CPU Usage",
+                "type": "graph",
+                "targets": [
+                  {
+                    "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"\",pod!=\"\"}[5m])) by (pod)",
+                    "refId": "A"
+                  }
+                ]
+              },
+              {
+                "title": "Memory Usage",
+                "type": "graph",
+                "targets": [
+                  {
+                    "expr": "sum(container_memory_usage_bytes{container!=\"\",pod!=\"\"}) by (pod)",
+                    "refId": "B"
+                  }
+                ]
+              },
+              {
+                "title": "HTTP Error Rate",
+                "type": "graph",
+                "targets": [
+                  {
+                    "expr": "sum(rate(http_requests_total{status=\"500\", job=\"spring-petclinic\"}[5m])) by (status)",
+                    "refId": "C"
+                  }
+                ]
+              }
+            ]
+          }
+        }
