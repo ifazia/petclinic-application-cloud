@@ -87,4 +87,3 @@ public class ApiGatewayApplication {
             .build());
     }
 }
-//just for tests

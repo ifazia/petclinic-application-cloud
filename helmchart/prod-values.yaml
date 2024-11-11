@@ -6,8 +6,8 @@ apigateway:
   ingress:
     #Subnets for the ingress controller
     subnets:
-      - "subnet-04418d92fe9eb385c"
-      - "subnet-03fe8f2b2edf66247"
+      - "subnet-06f09664af41ea0ba"
+      - "subnet-05f3307849360a9ce"
     # ACM certificate ARN for HTTPS
     certificateArn: "arn:aws:acm:us-east-1:590184139086:certificate/39654292-d547-4f49-942f-f86de419c831"
     # Hostname for the ingress controller
