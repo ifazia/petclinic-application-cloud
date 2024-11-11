@@ -10,13 +10,13 @@ on:
 jobs:
   build-and-publish-service:
     runs-on: ubuntu-22.04
-   
+
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Setting up Java for the Runner
         uses: actions/setup-java@v4
         with:
@@ -47,7 +47,6 @@ jobs:
           chmod +x ./mvnw
           IMAGE_NAME="${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}"
           echo "Building image: $IMAGE_NAME"
-          #./mvnw spring-boot:build-image -Pk8s -Dspring-boot.build-image.imageName=$IMAGE_NAME
           ./mvnw spring-boot:build-image -Pk8s -DREPOSITORY_PREFIX=${{ secrets.ECR_REGISTRY }} -Dimage.tag=${{ github.run_id }}-${{ github.run_number }}
           IMAGE_ID=$(docker images -q ${{ secrets.ECR_REGISTRY }}/${{ inputs.service-name }}:latest)
           if [ -z "$IMAGE_ID" ]; then
@@ -71,19 +70,6 @@ jobs:
           chmod +x ./scripts/update-values.sh
           ./scripts/update-values.sh ${{ inputs.service-name }} ${{ env.IMAGE_NAME }}
 
-      - name: Check for updated prod-values.yaml
-        run: |
-          if [ ! -f "helmchart/prod-values.yaml" ]; then
-            echo "Error: prod-values.yaml not found."
-            exit 1
-          fi
-
-      - name: Display git status
-        run: git status
-
-      - name: Display git diff for prod-values.yaml
-        run: git diff helmchart/prod-values.yaml
-
       - name: Commit and push updated prod-values.yaml
         run: |
           git config --global user.name "github-actions"
@@ -98,8 +84,34 @@ jobs:
 
   deploy-job:
     needs: build-and-publish-service
-    uses: ./.github/workflows/deploy-production.yml
-    with:
-      service-name: ${{ inputs.service-name }}
-      service-version: ${{ github.run_id }}-${{ github.run_number }}
-    secrets: inherit
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.7.5"
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Apply Terraform to get subnet IDs
+        id: tf-output
+        run: |
+          terraform apply -auto-approve
+          PUBLIC_SUBNET_IDS=$(terraform output -json public_subnet_ids | jq -c '.')
+          echo "PUBLIC_SUBNET_IDS=$PUBLIC_SUBNET_IDS" >> $GITHUB_ENV
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install my-release ./my-chart \
+            --set publicSubnetIds=${{ env.PUBLIC_SUBNET_IDS }}

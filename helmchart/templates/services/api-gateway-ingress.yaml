@@ -7,7 +7,7 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing        # ALB public (internet-facing)
     alb.ingress.kubernetes.io/target-type: ip                  # Utilisation des IPs des pods comme cibles
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'   # Écoute uniquement sur le port HTTP 80
-    alb.ingress.kubernetes.io/subnets: '["subnet-04418d92fe9eb385c", "subnet-03fe8f2b2edf66247"]'   #{{ .Values.apigateway.ingress.subnets }} # Subnets publics
+    alb.ingress.kubernetes.io/subnets: {{ .Values.apigateway.ingress.subnets | join(",") }} # Subnets publics #
     alb.ingress.kubernetes.io/tags: "Name=alb-petclinic"     #{{ .Values.apigateway.alb.tags }}  # Tags pour le Load Balancer
 spec:
   ingressClassName: alb

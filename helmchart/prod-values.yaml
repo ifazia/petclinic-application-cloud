@@ -4,8 +4,10 @@ apigateway:
   image: public.ecr.aws/y6x2k4a9/spring-petclinic-api-gateway
   version: 11767462224-50
   ingress:
-    # Subnets for the ingress controller
-    subnets: "${module.vpc.public_subnets}"
+    #Subnets for the ingress controller
+    subnets:
+      - "subnet-04418d92fe9eb385c"
+      - "subnet-03fe8f2b2edf66247"
     # ACM certificate ARN for HTTPS
     certificateArn: "arn:aws:acm:us-east-1:590184139086:certificate/39654292-d547-4f49-942f-f86de419c831"
     # Hostname for the ingress controller
