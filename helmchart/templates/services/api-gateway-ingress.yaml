@@ -2,23 +2,22 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-gateway-ingress
-  namespace: production
+  namespace: {{ .Values.namespace }}
   annotations:
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/ssl-redirect: "true"
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]' #, {"HTTPS": 443}
-    alb.ingress.kubernetes.io/ssl-certificates: arn:aws:acm:us-east-1:590184139086:certificate/98715d52-364b-4abc-9578-8fe7edeb12ba
+    alb.ingress.kubernetes.io/scheme: internet-facing        # ALB public (internet-facing)
+    alb.ingress.kubernetes.io/target-type: ip                  # Utilisation des IPs des pods comme cibles
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'   # Écoute uniquement sur le port HTTP 80
+    alb.ingress.kubernetes.io/subnets:  {{ .Values.apigateway.ingress.subnets | join "," }} # Subnets publics #
+    alb.ingress.kubernetes.io/tags: "Name=alb-petclinic"     #{{ .Values.apigateway.alb.tags }}  # Tags pour le Load Balancer
 spec:
+  ingressClassName: alb
   rules:
-    - host: petclinicapp.net
-      http:
+    - http:
         paths:
-          - path: /api/*
-            pathType: Prefix
-            backend:
-              service:
-                name: api-gateway-service
-                port:
-                  number: 80
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: api-gateway-service        # Nom du service à exposer
+              port:
+                number: 80                     # Port du service backend
