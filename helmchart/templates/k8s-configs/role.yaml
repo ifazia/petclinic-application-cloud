@@ -1,16 +1,8 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: rds-access-sa
-  namespace: production #{{ .Values.namespace }}
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::590184139086:role/rds-access-role
----
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: namespace-reader
-  namespace: production # {{ .Values.namespace }}
+  namespace: production #{{ .Values.namespace }}
 rules:
   - apiGroups: ["", "extensions", "apps"]
     resources: ["configmaps", "pods", "services", "endpoints", "secrets"]
@@ -23,10 +15,10 @@ metadata:
   namespace: production #{{ .Values.namespace }}
 subjects:
 - kind: ServiceAccount
-  name: rds-access-sa
+  name: default
   namespace: production #{{ .Values.namespace }}
   apiGroup: ""
 roleRef:
   kind: Role
   name: namespace-reader
-  apiGroup: ""
+  apiGroup: ""         
