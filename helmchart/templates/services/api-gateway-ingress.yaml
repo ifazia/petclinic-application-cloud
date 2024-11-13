@@ -2,12 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-gateway-ingress
-  namespace: {{ .Values.namespace }}
+  namespace: production #{{ .Values.namespace }}
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing        # ALB public (internet-facing)
     alb.ingress.kubernetes.io/target-type: ip                  # Utilisation des IPs des pods comme cibles
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'   # Écoute uniquement sur le port HTTP 80
-    alb.ingress.kubernetes.io/subnets:  {{ .Values.apigateway.ingress.subnets | join "," }} # Subnets publics #
+    alb.ingress.kubernetes.io/subnets: {{ .Values.apigateway.ingress.subnets | join "," }} # Subnets publics #
     alb.ingress.kubernetes.io/tags: "Name=alb-petclinic"     #{{ .Values.apigateway.alb.tags }}  # Tags pour le Load Balancer
 spec:
   ingressClassName: alb

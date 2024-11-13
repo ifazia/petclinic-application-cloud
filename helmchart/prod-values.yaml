@@ -6,10 +6,10 @@ apigateway:
   ingress:
     #Subnets for the ingress controller
     subnets:
-      - "subnet-06f09664af41ea0ba"
-      - "subnet-05f3307849360a9ce"
+      - "subnet-06d01e0162701f562"
+      - "subnet-0316f0cfc4c120b72"
     # ACM certificate ARN for HTTPS
-    certificateArn: "arn:aws:acm:us-east-1:590184139086:certificate/39654292-d547-4f49-942f-f86de419c831"
+    certificateArn: "arn:aws:acm:us-east-1:590184139086:certificate/498db921-397c-4231-bc3d-d942c7d7b598"
     # Hostname for the ingress controller
     host: "petclinicapp.net"
   alb:
