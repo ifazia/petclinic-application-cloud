@@ -6,7 +6,7 @@ metadata:
   name: api-gateway-service
   namespace: {{ .Values.namespace }}
 spec:
-  type: ClusterIP #LoadBalancer
+  type: NodePort #ClusterIP
   selector:
     app: api-gateway
   ports:
