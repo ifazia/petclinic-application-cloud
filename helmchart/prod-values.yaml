@@ -2,7 +2,7 @@ namespace: production
 apigateway:
   replicaCount: 1
   image: public.ecr.aws/y6x2k4a9/spring-petclinic-api-gateway
-  version: 11853303359-64
+  version: 11857642381-65
   ingress:
     #Subnets for the ingress controller
     subnets:
